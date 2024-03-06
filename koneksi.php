@@ -2,7 +2,7 @@
 $host = "anzio-db.id.domainesia.com";//nama server	
 $username = "mandir36_staging";//usernya
 $password = "mandir36_staging";//password
-$database = "mandir36_db_ecat_staging";//database
+$database = "mandir36_mandir36_db_ecat_staging_staging";//database
 
 $host2 = "anzio-db.id.domainesia.com"; 
 $username2 = "mandir36_staging";  

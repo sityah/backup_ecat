@@ -2,7 +2,7 @@
 $host = "localhost";
 $username = "root";
 $password = "";
-$database = "db_ecat";
+$database = "mandir36_db_ecat_staging";
 
 // Buat koneksi ke database
 $koneksi = mysqli_connect($host, $username, $password, $database);

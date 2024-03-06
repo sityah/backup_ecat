@@ -190,11 +190,11 @@
                                                                     tps.status_tmp,
                                                                     tpr.harga_produk,
                                                                     tm.nama_merk  
-                                                                FROM db_ecat.tmp_produk_spk_pl AS tps
-                                                                LEFT JOIN db_ecat.tb_spk_pl AS sr ON sr.id_spk_pl = tps.id_spk_pl
-                                                                LEFT JOIN db_inventory.stock_produk_ecat AS spr ON tps.id_produk_ecat = spr.id_produk_ecat
-                                                                LEFT JOIN db_inventory.tb_produk_ecat AS tpr ON tps.id_produk_ecat = tpr.id_produk_ecat
-                                                                LEFT JOIN db_inventory.tb_merk AS tm ON tpr.id_merk = tm.id_merk 
+                                                                FROM mandir36_db_ecat_staging.tmp_produk_spk_pl AS tps
+                                                                LEFT JOIN mandir36_db_ecat_staging.tb_spk_pl AS sr ON sr.id_spk_pl = tps.id_spk_pl
+                                                                LEFT JOIN mandir36_staging.stock_produk_ecat AS spr ON tps.id_produk_ecat = spr.id_produk_ecat
+                                                                LEFT JOIN mandir36_staging.tb_produk_ecat AS tpr ON tps.id_produk_ecat = tpr.id_produk_ecat
+                                                                LEFT JOIN mandir36_staging.tb_merk AS tm ON tpr.id_merk = tm.id_merk 
                                                                 WHERE sr.id_spk_pl = '$id_spk_pl' AND tps.status_tmp = 1";
                                                         $result = mysqli_query($koneksi, $query);
 
@@ -248,11 +248,11 @@
                                             tps.status_tmp,
                                             tpr.harga_produk,
                                             tm.nama_merk  
-                                        FROM db_ecat.tmp_produk_spk_pl AS tps
-                                        LEFT JOIN db_ecat.tb_spk_pl AS sr ON sr.id_spk_pl = tps.id_spk_pl
-                                        LEFT JOIN db_inventory.stock_produk_ecat AS spr ON tps.id_produk_ecat = spr.id_produk_ecat
-                                        LEFT JOIN db_inventory.tb_produk_ecat AS tpr ON tps.id_produk_ecat = tpr.id_produk_ecat
-                                        LEFT JOIN db_inventory.tb_merk AS tm ON tpr.id_merk = tm.id_merk 
+                                        FROM mandir36_db_ecat_staging.tmp_produk_spk_pl AS tps
+                                        LEFT JOIN mandir36_db_ecat_staging.tb_spk_pl AS sr ON sr.id_spk_pl = tps.id_spk_pl
+                                        LEFT JOIN mandir36_staging.stock_produk_ecat AS spr ON tps.id_produk_ecat = spr.id_produk_ecat
+                                        LEFT JOIN mandir36_staging.tb_produk_ecat AS tpr ON tps.id_produk_ecat = tpr.id_produk_ecat
+                                        LEFT JOIN mandir36_staging.tb_merk AS tm ON tpr.id_merk = tm.id_merk 
                                         WHERE sr.id_spk_pl = '$id_spk_pl' AND tps.status_tmp = 0";
                                 $result = mysqli_query($koneksi2, $sql);
 
@@ -556,7 +556,7 @@
                         <td class="text-center text-nowrap">
                             <?php
                             // Tambahkan logika PHP untuk memeriksa apakah produk sudah ada dalam tabel tmp_produk_spk_ecat
-                            $query_check_product = "SELECT COUNT(*) as count FROM db_ecat.tmp_produk_spk_pl WHERE id_spk_pl = '$id_spk_pl' AND id_produk_ecat = '$id_produk'";
+                            $query_check_product = "SELECT COUNT(*) as count FROM mandir36_db_ecat_staging.tmp_produk_spk_pl WHERE id_spk_pl = '$id_spk_pl' AND id_produk_ecat = '$id_produk'";
                             $result_check_product = mysqli_query($koneksi, $query_check_product);
                             $row_check_product = mysqli_fetch_assoc($result_check_product);
                             $count = $row_check_product['count'];

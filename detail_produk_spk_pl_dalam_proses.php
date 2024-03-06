@@ -184,15 +184,15 @@
                                                                     tpr.harga_produk,
                                                                     tm.nama_merk
                                                                 FROM 
-                                                                    db_ecat.transaksi_produk_pl AS tps
+                                                                    mandir36_db_ecat_staging.transaksi_produk_pl AS tps
                                                                 LEFT JOIN 
-                                                                    db_ecat.tb_spk_pl AS sr ON sr.id_spk_pl = tps.id_spk
+                                                                    mandir36_db_ecat_staging.tb_spk_pl AS sr ON sr.id_spk_pl = tps.id_spk
                                                                 LEFT JOIN 
-                                                                    db_inventory.stock_produk_ecat AS spr ON tps.id_produk = spr.id_produk_ecat
+                                                                    mandir36_staging.stock_produk_ecat AS spr ON tps.id_produk = spr.id_produk_ecat
                                                                 LEFT JOIN 
-                                                                    db_inventory.tb_produk_ecat AS tpr ON tps.id_produk = tpr.id_produk_ecat
+                                                                    mandir36_staging.tb_produk_ecat AS tpr ON tps.id_produk = tpr.id_produk_ecat
                                                                 LEFT JOIN 
-                                                                    db_inventory.tb_merk AS tm ON tpr.id_merk = tm.id_merk
+                                                                    mandir36_staging.tb_merk AS tm ON tpr.id_merk = tm.id_merk
                                                                 WHERE 
                                                                     sr.id_spk_pl = '$id_spk_pl' AND sr.status_spk_pl = 'Dalam Proses'";
                                                         $result = mysqli_query($koneksi, $query);

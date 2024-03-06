@@ -29,11 +29,11 @@
                         tps.status_tmp,
                         tpr.harga_produk,
                         tm.nama_merk  
-                    FROM db_ecat.tmp_produk_spk_ecat AS tps
-                    LEFT JOIN db_ecat.tb_spk_ecat AS sr ON sr.id_spk_ecat = tps.id_spk_ecat
-                    LEFT JOIN db_inventory.stock_produk_ecat AS spr ON tps.id_produk_ecat = spr.id_produk_ecat
-                    LEFT JOIN db_inventory.tb_produk_ecat AS tpr ON tps.id_produk_ecat = tpr.id_produk_ecat
-                    LEFT JOIN db_inventory.tb_merk AS tm ON tpr.id_merk = tm.id_merk 
+                    FROM mandir36_db_ecat_staging.tmp_produk_spk_ecat AS tps
+                    LEFT JOIN mandir36_db_ecat_staging.tb_spk_ecat AS sr ON sr.id_spk_ecat = tps.id_spk_ecat
+                    LEFT JOIN mandir36_staging.stock_produk_ecat AS spr ON tps.id_produk_ecat = spr.id_produk_ecat
+                    LEFT JOIN mandir36_staging.tb_produk_ecat AS tpr ON tps.id_produk_ecat = tpr.id_produk_ecat
+                    LEFT JOIN mandir36_staging.tb_merk AS tm ON tpr.id_merk = tm.id_merk 
                     WHERE sr.id_spk_ecat = '$spkId' AND tps.status_tmp = 1";
             $result = mysqli_query($koneksi, $query);
 
