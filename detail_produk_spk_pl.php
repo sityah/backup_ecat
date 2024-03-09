@@ -504,7 +504,7 @@
                 <th class="text-center p-3" style="width: 10%; color: #ffffff;">Aksi</th>
             </tr>
         </thead>
-            <tbody>
+            <tbody id="productTableBody">
                 <?php
                 include "koneksi.php";
                 //$id = $_GET['id'];
@@ -575,6 +575,9 @@
                 <?php } ?>
             </tbody>
         </table>
+        <nav aria-label="Page navigation">
+          <ul class="pagination justify-content-center" id="pagination"></ul>
+        </nav>
         </div>
       </div>
     </div>
@@ -584,33 +587,101 @@
     new DataTable('#pl_modal');
 </script>
 <script>
+  $(document).ready(function() {
+    // Mendefinisikan variabel global untuk menyimpan data produk dan informasi pagination
+    var productsData = [];
+    var currentPage = 1;
+    var productsPerPage = 10; // Ubah sesuai kebutuhan Anda
+
+    // Fungsi untuk menampilkan produk pada halaman tertentu
+    function displayProducts(page) {
+      var startIndex = (page - 1) * productsPerPage;
+      var endIndex = startIndex + productsPerPage;
+      var displayedProducts = productsData.slice(startIndex, endIndex);
+
+      var tableBody = $('#productTableBody');
+      tableBody.empty();
+
+      $.each(displayedProducts, function(index, product) {
+        var row = '<tr>' +
+                    '<td class="text-center text-nowrap">' + product.no + '</td>' +
+                    '<td class="text-nowrap">' + product.nama_produk + '</td>' +
+                    '<td class="text-center text-nowrap">' + product.satuan + '</td>' +
+                    '<td class="text-center text-nowrap">' + product.nama_merk + '</td>' +
+                    '<td class="text-center text-nowrap">' + product.stock + '</td>' +
+                    '<td class="text-center text-nowrap">' +
+                      '<button class="btn-pilih btn btn-primary btn-sm" data-id="' + product.id_produk + '" data-spk="' + product.id_spk_pl + '">Pilih</button>' +
+                    '</td>' +
+                  '</tr>';
+        tableBody.append(row);
+      });
+    }
+
+    // Fungsi untuk membuat pagination
+    function setupPagination(totalProducts) {
+      var totalPages = Math.ceil(totalProducts / productsPerPage);
+      var pagination = $('#pagination');
+      pagination.empty();
+
+      for (var i = 1; i <= totalPages; i++) {
+        var pageLink = '<li class="page-item"><a class="page-link" href="#" data-page="' + i + '">' + i + '</a></li>';
+        pagination.append(pageLink);
+      }
+
+      // Tambahkan event listener untuk setiap halaman
+      pagination.find('a').click(function() {
+        currentPage = parseInt($(this).data('page'));
+        displayProducts(currentPage);
+      });
+    }
+
+    // Memuat data produk dari server
+    function loadProducts() {
+      $.ajax({
+        type: 'GET',
+        url: 'load_products.php', // Ganti dengan URL yang sesuai
+        success: function(response) {
+          productsData = response.products;
+          setupPagination(productsData.length);
+          displayProducts(currentPage);
+        },
+        error: function() {
+          alert('Terjadi kesalahan saat memuat data produk.');
+        }
+      });
+    }
+
+    // Memuat data produk saat dokumen siap
+    loadProducts();
+
+    // Event handler untuk tombol pilih
+    $(document).on('click', '.btn-pilih', function() {
+      var id_spk = $(this).data('spk');
+      var id_produk = $(this).data('id');
+      var clickedButton = $(this);
+
+      // Lakukan operasi pemilihan produk
+      $.ajax({
+        type: 'POST',
+        url: 'simpan_produk_pl.php',
+        data: {
+          id_spk: id_spk,
+          id_produk: id_produk
+        },
+        success: function(response) {
+            clickedButton.hide();
+        },
+        error: function() {
+          alert('Terjadi kesalahan saat menyimpan data produk.');
+        }
+      });
+    });
+  });
+</script>
+<script>
     function refreshPage() {
         location.reload();
     }
-</script>
-<script>
-    $(document).ready(function () {
-        $('.btn-pilih').click(function () {
-            var id_spk = $(this).data('spk');
-            var id_produk = $(this).data('id');
-
-            $.ajax({
-                type: 'POST',
-                url: 'simpan_produk_pl.php',
-                data: {
-                    id_spk: id_spk,
-                    id_produk: id_produk
-                },
-                success: function (response) {
-                    // Jika respons berhasil, nonaktifkan tombol yang diklik
-                    $('.btn-pilih[data-spk="' + id_spk + '"][data-id="' + id_produk + '"]').prop('hidden', true);
-                },
-                error: function () {
-                    alert('Terjadi kesalahan saat menyimpan data produk.');
-                }
-            });
-        });
-    });
 </script>
 
 <!-- Modal Edit -->

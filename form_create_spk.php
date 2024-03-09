@@ -278,7 +278,7 @@ $spkuuid2 = "SPKPL$tahun2$bulan2$uuid2$hari2";
                 var newSPKNumber = latestSPKNumber + 1;
 
                 // Format nomor SPK baru hanya dengan mengganti angka di bagian depan
-                var formattedNoSPK = ("000" + newSPKNumber).slice(-3) + "/SPK/ECAT/" + getRomanNumeral(currentMonth) + "/" + currentYear;
+                var formattedNoSPK = ("000" + newSPKNumber).slice(-3) + "/SPK/KM/ECAT/" + getRomanNumeral(currentMonth) + "/" + currentYear;
 
                 // Menetapkan nilai nomor SPK pada input form
                 inputNoSPK.value = formattedNoSPK;
@@ -314,7 +314,7 @@ $spkuuid2 = "SPKPL$tahun2$bulan2$uuid2$hari2";
                 var newSPKNumberPL = latestSPKNumberPL + 1;
 
                 // Format nomor SPK PL baru hanya dengan mengganti angka di bagian depan
-                var formattedNoSPK_PL = ("000" + newSPKNumberPL).slice(-3) + "/SPK/ECAT/PL/" + getRomanNumeral(currentMonth) + "/" + currentYear;
+                var formattedNoSPK_PL = ("000" + newSPKNumberPL).slice(-3) + "/SPK/KM/ECAT/PL/" + getRomanNumeral(currentMonth) + "/" + currentYear;
 
                 // Menetapkan nilai nomor SPK PL pada input form
                 inputNoSPK_PL.value = formattedNoSPK_PL;
