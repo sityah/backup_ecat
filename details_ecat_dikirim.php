@@ -266,9 +266,8 @@
                                                         </button>
                                                         <button type="button" class="btn btn-outline-primary" onclick="printInvoice('invoice')">Invoice</button>
                                                         <button type="button" class="btn btn-outline-primary" onclick="printInvoice('pdf')">PDF</button>
-                                                        <button type="button" class="btn btn-outline-primary" data-bs-toggle="" data-bs-target="#">
-                                                            <i class="tf-icons bx bx-printer"></i> Kwitansi
-                                                        </button>
+                                                        <button type="button" class="btn btn-outline-primary" onclick="printInvoice('kwitansi')">Kwitansi</button>
+                                                        <button type="button" class="btn btn-outline-primary" onclick="printInvoice('surat jalan')">Surat Jalan</button>
                                                         <button type="button" class="btn btn-outline-primary" data-bs-toggle="" data-bs-target="#">
                                                             <i class="tf-icons bx bx-printer"></i> Surat Jalan
                                                         </button>
@@ -541,54 +540,19 @@
     <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap5.min.js"></script>
     <script>
         function printInvoice(type) {
-            // Assuming you have the invoice ID stored in a variable called id_inv_ecat
             var id_inv_ecat = <?php echo json_encode($id_inv_ecat); ?>;
 
             if (type === 'invoice') {
-                // Redirect to the print page with the invoice ID as a parameter
                 window.location.href = "cetak_invoice_ecat.php?id_inv_ecat=" + id_inv_ecat;
             } else if (type === 'pdf') {
-                // Redirect to the PDF page with the invoice ID as a parameter
                 window.location.href = "cetak_pdf_ecat.php?id_inv_ecat=" + id_inv_ecat;
+            } else if (type === 'kwitansi') {
+                window.location.href = "cetak_kwitansi_ecat.php?id_inv_ecat=" + id_inv_ecat;
+            } else if (type === 'surat jalan') {
+                window.location.href = "cetak_surat_jalan_ecat.php?id_inv_ecat=" + id_inv_ecat;
             }
-        }
+        } 
     </script>
-
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
-    <script>
-        // Fungsi untuk mengonversi halaman menjadi PDF dan mengunduhnya
-        function generatePDF() {
-            // URL untuk mengambil konten dari cetak_invoice_ecat.php
-            const url = 'cetak_invoice_ecat.php';
-
-            // Permintaan AJAX untuk mendapatkan konten dari cetak_invoice_ecat.php
-            fetch(url)
-                .then(response => response.text()) // Mengubah respons menjadi teks
-                .then(data => {
-                    // Konten yang akan diubah menjadi PDF
-                    const element = document.createElement('div');
-                    element.innerHTML = data;
-
-                    // Opsi konfigurasi untuk HTML2PDF
-                    const opt = {
-                        margin: 1,
-                        filename: 'invoice.pdf',
-                        image: { type: 'jpeg', quality: 0.98 },
-                        html2canvas: { scale: 2 },
-                        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-                    };
-
-                    // Mengonversi halaman menjadi PDF
-                    html2pdf().set(opt).from(element).save();
-                })
-                .catch(error => {
-                    console.error('Error fetching data:', error);
-                });
-        }
-
-        // Menambahkan event listener untuk tombol PDF
-        document.getElementById('pdfButton').addEventListener('click', generatePDF);
-    </script> -->
 
     <script>
         function formatNumber(input) {

@@ -265,9 +265,8 @@
                                                         </button>
                                                         <button type="button" class="btn btn-outline-primary" onclick="printInvoice('invoice')">Invoice</button>
                                                         <button type="button" class="btn btn-outline-primary" onclick="printInvoice('pdf')">PDF</button>
-                                                        <button type="button" class="btn btn-outline-primary" data-bs-toggle="" data-bs-target="#">
-                                                            <i class="tf-icons bx bx-printer"></i> Kwitansi
-                                                        </button>
+                                                        <button type="button" class="btn btn-outline-primary" onclick="printInvoice('kwitansi')">Kwitansi</button>
+                                                        <button type="button" class="btn btn-outline-primary" onclick="printInvoice('surat jalan')">Surat Jalan</button>
                                                     </div>
                                                     <!-- Modal Ubah Driver -->
                                                     <div class="modal fade" id="editNamaPetugasModal" tabindex="-1" aria-labelledby="inputNamaPetugasModalLabel" aria-hidden="true">
@@ -546,6 +545,10 @@
             } else if (type === 'pdf') {
                 // Redirect to the PDF page with the invoice ID as a parameter
                 window.location.href = "cetak_pdf_pl.php?id_inv_pl=" + id_inv_pl;
+            } else if (type === 'kwitansi') {
+                window.location.href = "cetak_kwitansi_pl.php?id_inv_pl=" + id_inv_pl;
+            } else if (type === 'surat jalan') {
+                window.location.href = "cetak_surat_jalan_pl.php?id_inv_pl=" + id_inv_pl;
             }
         }
     </script>
