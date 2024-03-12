@@ -268,9 +268,6 @@
                                                         <button type="button" class="btn btn-outline-primary" onclick="printInvoice('pdf')">PDF</button>
                                                         <button type="button" class="btn btn-outline-primary" onclick="printInvoice('kwitansi')">Kwitansi</button>
                                                         <button type="button" class="btn btn-outline-primary" onclick="printInvoice('surat jalan')">Surat Jalan</button>
-                                                        <button type="button" class="btn btn-outline-primary" data-bs-toggle="" data-bs-target="#">
-                                                            <i class="tf-icons bx bx-printer"></i> Surat Jalan
-                                                        </button>
                                                     </div>
                                                     <!-- Modal Ubah Driver -->
                                                     <div class="modal fade" id="editNamaPetugasModal" tabindex="-1" aria-labelledby="inputNamaPetugasModalLabel" aria-hidden="true">
