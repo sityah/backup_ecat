@@ -333,6 +333,7 @@
                                                             echo "<td>
                                                                     <button type='button' class='btn btn-warning btn-sm mt-2 btn-edit' 
                                                                         data-id='" . $row['id_transaksi_ecat'] . "'    
+                                                                        data-spk='" . $row['id_spk_ecat'] . "' 
                                                                         data-nama='" . $row['nama_produk_spk'] . "'
                                                                         data-harga='" . $row['harga'] . "'>
                                                                         <i class='bx bx-edit-alt'></i>
@@ -417,6 +418,9 @@
                                         echo '
                                         <div class="card-body p-2">
                                             <div class="row p-1">
+                                                <div class="col-sm-12 mb-2">
+                                                    <input type="hidden" name="id_spk" value="' . $row["id_spk_ecat"] . '">
+                                                </div>
                                                 <div class="col-sm-1 mb-2">
                                                     <input type="text" class="form-control text-center bg-light mobile" id="no_' . $counter . '" value="' . $counter . '" readonly>
                                                 </div>
@@ -747,6 +751,7 @@
                 <input type="hidden" name="id_inv_ecat" value="<?php echo $id_inv_ecat; ?>">
                 <div class="modal-body">
                     <div class="mb-3 mt-2">
+                        <input type="hidden" id="id_spk" name="id_spk" class="form-control" value="<?php echo $row['id_spk_ecat']; ?>" required>
                         <input type="hidden" id="id_transaksi_ecat" name="id_transaksi_ecat" class="form-control" value="<?php echo $row['id_transaksi_ecat']; ?>" required>
                         <div class="row">
                             <div class="col mb-3">
@@ -793,11 +798,13 @@
     // Handler Tombol Edit
     $('.btn-edit').on('click', function () {
         var id = $(this).data('id');
+        var spk = $(this).data('spk');
         var produk = $(this).data('nama');
         // Parse harga to ensure it's treated as a number
         var harga = parseFloat($(this).data('harga'));
 
         $('#id_transaksi_ecat').val(id);
+        $('#id_spk').val(spk);
         $('#nama').val(produk);
         
         // Memformat harga ke dalam format mata uang

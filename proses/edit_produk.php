@@ -16,6 +16,7 @@
             $nama = $_POST['nama_produk_spk'];
             $harga = $_POST['harga'];
             $id_inv_ecat = $_POST['id_inv_ecat'];
+            $id_spk_ecat = $_POST['id_spk'];
 
             $query = "SELECT * FROM transaksi_produk_ecat WHERE id_transaksi_ecat = '$id_transaksi_ecat'";
             $result = mysqli_query($koneksi, $query);
@@ -39,13 +40,15 @@
                                                             WHERE id_transaksi_ecat='$id_transaksi_ecat'");
 
                 // Mengambil total harga dari transaksi_produk_pl berdasarkan id_inv_pl
-                $query_total_harga = "SELECT SUM(total_harga) AS total_harga FROM transaksi_produk_ecat WHERE id_transaksi_ecat = '$id_transaksi_ecat'";
+                $query_total_harga = "SELECT SUM(total_harga) AS total_harga FROM transaksi_produk_ecat WHERE id_spk = '$id_spk_ecat'";
                 $result_total_harga = mysqli_query($koneksi, $query_total_harga);
                 $data_total_harga = mysqli_fetch_array($result_total_harga);
                 $total_harga_ecat = $data_total_harga['total_harga'];
 
                 // Update total_spk_pl di tb_spk_pl berdasarkan id_inv_pl
-                $update_total_spk_ecat = mysqli_query($koneksi, "UPDATE tb_spk_ecat SET total_spk_ecat = '$total_harga_ecat' WHERE id_inv_ecat = '$id_inv_ecat'");
+                $update_total_spk_ecat = mysqli_query($koneksi, "UPDATE tb_spk_ecat AS spk
+                                                                SET spk.total_spk_ecat = (SELECT IFNULL(SUM(tp.total_harga), 0) FROM transaksi_produk_ecat AS tp WHERE tp.id_spk = spk.id_spk_ecat)
+                                                                WHERE spk.id_inv_ecat = '$id_inv_ecat'");
 
                 if ($update_total_spk_ecat) {
                     echo "<script>

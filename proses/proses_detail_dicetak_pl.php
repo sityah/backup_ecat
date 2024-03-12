@@ -15,6 +15,7 @@
             $new_nama_produk_array = $_POST['nama_produk'];
             $new_harga_produk_array = $_POST['harga_produk']; 
             $id_inv_pl = $_POST['id_inv_pl'];
+            $id_spk_pl = $_POST['id_spk'];
 
             $success = true;
 
@@ -50,13 +51,15 @@
                 $result_update_total_harga = mysqli_query($koneksi, $query_update_total_harga);
 
                 // Mengambil total harga dari transaksi_produk_pl untuk id_inv_pl tertentu
-                $query_total_harga_pl = "SELECT SUM(total_harga) AS total_harga_pl FROM transaksi_produk_pl WHERE id_transaksi_pl = '$id_transaksi_pl'";
+                $query_total_harga_pl = "SELECT SUM(total_harga) AS total_harga_pl FROM transaksi_produk_pl WHERE id_spk = '$id_spk_pl'";
                 $result_total_harga_pl = mysqli_query($koneksi, $query_total_harga_pl);
                 $row_total_harga_pl = mysqli_fetch_assoc($result_total_harga_pl);
                 $total_harga_pl = $row_total_harga_pl['total_harga_pl'];
 
                 // Update total_spk_pl di tb_spk_pl
-                $query_update_total_spk_pl = "UPDATE tb_spk_pl SET total_spk_pl = '$total_harga_pl' WHERE id_inv_pl = '$id_inv_pl'";
+                $query_update_total_spk_pl = "UPDATE tb_spk_pl AS spk
+                                            SET spk.total_spk_pl = (SELECT IFNULL(SUM(tp.total_harga), 0) FROM transaksi_produk_pl AS tp WHERE tp.id_spk = spk.id_spk_pl)
+                                            WHERE spk.id_inv_pl = '$id_inv_pl'";
                 $result_update_total_spk_pl = mysqli_query($koneksi, $query_update_total_spk_pl);
 
                 if (!$result_update_total_spk_pl) {
