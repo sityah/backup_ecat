@@ -162,7 +162,7 @@
                     <div class="row mb-3 mt-2">
                         <div class="col">
                             <label class="form-label"><strong>Nama Sales *</strong></label>
-                            <input type="text" name="nama_sales" class="form-control capitalize" pattern="[A-Za-z]+" placeholder="Masukkan Nama Lengkap">
+                            <input type="text" name="nama_sales" class="form-control capitalize" placeholder="Masukkan Nama Lengkap">
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -194,7 +194,7 @@
                         <!-- Provinsi -->
                         <div class="col-sm mb-3">
                             <label class="form-label"><strong>Wilayah / Provinsi *</strong></label>
-                            <select class="form-select" id="id_provinsi_select" name="id_provinsi_select" >
+                            <select class="form-select" id="id_provinsi_select" name="id_provinsi_select" required>
                                 <option value="">Pilih Wilayah/Provinsi</option>
                                 <?php
                                 include "koneksi.php";
@@ -209,7 +209,7 @@
                         <!-- Kota/Kabupaten -->
                         <div class="col-sm mb-3">
                             <label id="id_kota_kab_label" class="form-label"><strong>Kota / Kabupaten *</strong></label>
-                            <select name="id_kota_kab_select" id="id_kota_kab_select" class="form-select" >
+                            <select name="id_kota_kab_select" id="id_kota_kab_select" class="form-select" required>
                                 <option value="">Pilih Kota/Kabupaten</option>
                             </select>
                         </div>
@@ -217,13 +217,13 @@
                     <div class="row mb-3">
                         <div class="col">
                             <label class="form-label"><strong>No Telp *</strong></label>
-                            <input type="text" name="no_telp_sales" class="form-control" pattern="[0-9]+" minlength="11" maxlength="13" placeholder="Contoh: 0856xxxxxxxxx" >
+                            <input type="text" name="no_telp_sales" class="form-control" pattern="[0-9]+" minlength="11" maxlength="13" placeholder="Contoh: 0856xxxxxxxxx" required>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col">
                             <label class="form-label"><strong>Email *</strong></label>
-                            <input type="text" name="email_sales" class="form-control" pattern=".+@.+" placeholder="name@example.com" oninvalid="this.setCustomValidity('Please include an \'@\' in the email address')" oninput="this.setCustomValidity('')">
+                            <input type="text" name="email_sales" class="form-control" pattern=".+@.+" placeholder="name@example.com" oninvalid="this.setCustomValidity('Please include an \'@\' in the email address')" oninput="this.setCustomValidity('')" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -457,8 +457,78 @@
         // Inisialisasi DataTable pada halaman pertama load
         new DataTable('#ecat');
 
+    //     // Function DETAILS
+    //     $('.btn-details').on('click', function() {
+    //         var sales = $(this).data('sales');
+    //         var jenis = $(this).data('jenis');
+    //         var instansi = $(this).data('instansi');
+    //         var npwp = $(this).data('npwp');
+    //         var kota = $(this).data('kota');
+    //         var wilayah = $(this).data('wilayah');
+    //         var telp = $(this).data('telp');
+    //         var email = $(this).data('email');
+    //         var status = $(this).data('status');
+    //         var createdby = $(this).data('createdby');
+    //         var created = $(this).data('created');
+    //         var updateby = $(this).data('updateby');
+    //         var update = $(this).data('update');
+
+    //         $('#dataSales').text(sales);
+    //         $('#dataJenis').text(jenis);
+    //         $('#dataInstansi').text(instansi);
+    //         $('#dataNpwp').text(npwp);
+    //         $('#dataKota').text(kota);
+    //         $('#dataWilayah').text(wilayah);
+    //         $('#dataTelpSales').text(telp);
+    //         $('#dataEmailSales').text(email);
+    //         $('#dataStatus').text(status);
+    //         $('#dataCreatedBy').text(createdby);
+    //         $('#dataCreated').text(created);
+    //         $('#dataUpdateBy').text(updateby);
+    //         $('#dataUpdate').text(update);
+
+    //         $('#modalToggle').modal('show'); 
+    //     });
+    // });
+
+    //     // Function DELETE
+    //     $('.btn-delete').on('click', function() {
+    //         var salesId = $(this).data('id');
+    //         var namaInstitusi = $(this).closest('tr').find('td:nth-child(2)').text(); // Ganti dengan selector yang sesuai
+        
+    //         // Set ID dan nama instansi untuk digunakan di tombol "Ya, Hapus"
+    //         $('#modalDeleteBtn').data('id', salesId);
+    //         $('#modalDeleteBtn').data('instansi', namaInstitusi);
+        
+    //         // Set pesan konfirmasi dengan nama instansi yang akan dihapus
+    //         var modalText = "Apakah anda yakin hapus data Sales '<b>" + namaInstitusi + "</b>'?";
+    //         $('#modalDelete .modal-body p').html(modalText + '<br><input type="hidden" id="salesIdInput" name="id_sales" value="' + salesId + '" style="display:none;">');
+        
+    //         $('#modalDelete').on('hidden.bs.modal', function() {
+    //         });
+        
+    //         $('#modalDelete').modal('show');
+    //     });
+        
+    //     $('#modalDeleteBtn').on('click', function() {
+    //         var salesId = $(this).data('id');
+    //         var namaInstitusi = $(this).data('instansi');
+        
+    //         $('#modalDelete').modal('hide');
+        
+    //         // Lakukan operasi hapus di sini menggunakan customerId 
+    //         // Untuk tujuan pengujian, Anda dapat mencetak customerId ke konsol
+    //         console.log("Menghapus pelanggan dengan ID:", salesId);
+    //         console.log("Instansi yang dihapus:", namaInstitusi);
+        });
+    </script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        // Inisialisasi DataTable
+        var table = $('#ecat').DataTable();
+
         // Function DETAILS
-        $('.btn-details').on('click', function() {
+        $('#ecat').on('click', '.btn-details', function() {
             var sales = $(this).data('sales');
             var jenis = $(this).data('jenis');
             var instansi = $(this).data('instansi');
@@ -489,11 +559,9 @@
 
             $('#modalToggle').modal('show'); 
         });
-    });
-
 
         // Function DELETE
-        $('.btn-delete').on('click', function() {
+        $('#ecat').on('click', '.btn-delete', function() {
             var salesId = $(this).data('id');
             var namaInstitusi = $(this).closest('tr').find('td:nth-child(2)').text(); // Ganti dengan selector yang sesuai
         
@@ -522,7 +590,44 @@
             console.log("Menghapus pelanggan dengan ID:", salesId);
             console.log("Instansi yang dihapus:", namaInstitusi);
         });
-    </script>
+
+        // Fungsi untuk memperbarui details setelah tabel dirender ulang
+        table.on('draw.dt', function () {
+            $('#ecat').on('click', '.btn-details', function() {
+                var sales = $(this).data('sales');
+                var jenis = $(this).data('jenis');
+                var instansi = $(this).data('instansi');
+                var npwp = $(this).data('npwp');
+                var kota = $(this).data('kota');
+                var wilayah = $(this).data('wilayah');
+                var telp = $(this).data('telp');
+                var email = $(this).data('email');
+                var status = $(this).data('status');
+                var createdby = $(this).data('createdby');
+                var created = $(this).data('created');
+                var updateby = $(this).data('updateby');
+                var update = $(this).data('update');
+
+                $('#dataSales').text(sales);
+                $('#dataJenis').text(jenis);
+                $('#dataInstansi').text(instansi);
+                $('#dataNpwp').text(npwp);
+                $('#dataKota').text(kota);
+                $('#dataWilayah').text(wilayah);
+                $('#dataTelpSales').text(telp);
+                $('#dataEmailSales').text(email);
+                $('#dataStatus').text(status);
+                $('#dataCreatedBy').text(createdby);
+                $('#dataCreated').text(created);
+                $('#dataUpdateBy').text(updateby);
+                $('#dataUpdate').text(update);
+
+                $('#modalToggle').modal('show'); 
+            });
+        });
+    });
+</script>
+
 </body>
 </html>
 

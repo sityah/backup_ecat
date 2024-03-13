@@ -33,11 +33,11 @@
                                         <thead>
                                             <tr>
                                                 <th scope="col" style="width: 5%;">No</th>
-                                                <th scope="col" style="width: 30%;">Nama Perusahaan</th>
-                                                <th scope="col" style="width: 30%;">Alamat</th>
-                                                <th scope="col" style="width: 15%;">No. Telp</th>
+                                                <th scope="col" style="width: 25%;">Nama Perusahaan</th>
+                                                <th scope="col" style="width: 35%;">Alamat</th>
+                                                <th scope="col" style="width: 10%;">No. Telp</th>
                                                 <th scope="col" style="width: 10%;">Email</th>
-                                                <th scope="col" style="width: 10%;">Aksi</th>
+                                                <th scope="col" style="width: 15%;">Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>

@@ -145,7 +145,7 @@
                         <div class="row mb-3">
                             <div class="col">
                                 <label class="form-label"><strong>Nama Contact Person *</strong></label>
-                                <input type="text" name="nama_cp" class="form-control capitalize" pattern="[A-Za-z]+" placeholder="Masukkan Nama Lengkap" required>
+                                <input type="text" name="nama_cp" class="form-control capitalize" placeholder="Masukkan Nama Lengkap" required>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -298,39 +298,73 @@
     <script type="text/javascript">
         $(document).ready(function() {
             // Inisialisasi DataTable
-            new DataTable('#ecat');
+            var table = $('#ecat').DataTable();
 
-        // Function DETAILS
-        $('.btn-details').on('click', function() {
-            var cp = $(this).data('cp');
-            var satker = $(this).data('satker');
-            var npwp = $(this).data('npwp');
-            var kota = $(this).data('kota');
-            var wilayah = $(this).data('wilayah');
-            var telp = $(this).data('telp');
-            var email = $(this).data('email');
-            var status = $(this).data('status');
-            var createdby = $(this).data('createdby');
-            var created = $(this).data('created');
-            var updateby = $(this).data('updateby');
-            var updated = $(this).data('updated');
+            // Function DETAILS
+            $('#ecat').on('click', '.btn-details', function() {
+                var cp = $(this).data('cp');
+                var satker = $(this).data('satker');
+                var npwp = $(this).data('npwp');
+                var kota = $(this).data('kota');
+                var wilayah = $(this).data('wilayah');
+                var telp = $(this).data('telp');
+                var email = $(this).data('email');
+                var status = $(this).data('status');
+                var createdby = $(this).data('createdby');
+                var created = $(this).data('created');
+                var updateby = $(this).data('updateby');
+                var updated = $(this).data('updated');
 
-            $('#dataCp').text(cp);
-            $('#dataSatker').text(satker);
-            $('#dataNpwp').text(npwp);
-            $('#dataKota').text(kota);
-            $('#dataWilayah').text(wilayah);
-            $('#dataTelp').text(telp);
-            $('#dataEmail').text(email);
-            $('#dataStatus').text(status);
-            $('#dataCreatedBy').text(createdby);
-            $('#dataCreated').text(created);
-            $('#dataUpdateBy').text(updateby);
-            $('#dataUpdated').text(updated);
+                $('#dataCp').text(cp);
+                $('#dataSatker').text(satker);
+                $('#dataNpwp').text(npwp);
+                $('#dataKota').text(kota);
+                $('#dataWilayah').text(wilayah);
+                $('#dataTelp').text(telp);
+                $('#dataEmail').text(email);
+                $('#dataStatus').text(status);
+                $('#dataCreatedBy').text(createdby);
+                $('#dataCreated').text(created);
+                $('#dataUpdateBy').text(updateby);
+                $('#dataUpdated').text(updated);
 
-            $('#modalToggle').modal('show'); 
+                $('#modalToggle').modal('show');
             });
-        }); 
+
+            // Fungsi untuk memperbarui details setelah tabel dirender ulang
+            table.on('draw.dt', function () {
+                $('[data-bs-toggle="modal"]').on('click', function () {
+                    var $this = $(this);
+                    var cp = $this.data('cp');
+                    var satker = $this.data('satker');
+                    var npwp = $this.data('npwp');
+                    var kota = $this.data('kota');
+                    var wilayah = $this.data('wilayah');
+                    var telp = $this.data('telp');
+                    var email = $this.data('email');
+                    var status = $this.data('status');
+                    var createdby = $this.data('createdby');
+                    var created = $this.data('created');
+                    var updateby = $this.data('updateby');
+                    var updated = $this.data('updated');
+
+                    $('#dataCp').text(cp);
+                    $('#dataSatker').text(satker);
+                    $('#dataNpwp').text(npwp);
+                    $('#dataKota').text(kota);
+                    $('#dataWilayah').text(wilayah);
+                    $('#dataTelp').text(telp);
+                    $('#dataEmail').text(email);
+                    $('#dataStatus').text(status);
+                    $('#dataCreatedBy').text(createdby);
+                    $('#dataCreated').text(created);
+                    $('#dataUpdateBy').text(updateby);
+                    $('#dataUpdated').text(updated);
+
+                    $('#modalToggle').modal('show');
+                });
+            });
+        });
 
         // Function DELETE
         $('.btn-delete').on('click', function() {
