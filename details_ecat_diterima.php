@@ -321,7 +321,7 @@
         }
     </script>
 
-    <!-- Modal untuk menampilkan gambar bukti terima -->
+    <!-- Modal Bukti Terima -->
     <div class="modal fade" id="modalBuktiTerima" tabindex="-1" aria-labelledby="modalBuktiTerimaLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
@@ -330,17 +330,28 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <!-- Tempat untuk menampilkan gambar bukti terima -->
-                    <img id="buktiTerimaImg" src="" alt="Bukti Terima" style="max-width: 100%;">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <div class="border p-3">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <img id="buktiTerimaImg" src="" alt="Bukti Terima" style="max-width: 100%;">
+                            </div>
+                            <div class="col-md-6 d-flex flex-column justify-content-center align-items-start">
+                                <div class="text-center">
+                                    <p><strong>Penerima:</strong> <span id="penerimaInfo"></span></p>
+                                </div>
+                                <div class="text-center">
+                                    <p><strong>Tgl Diterima:</strong> <span id="tglDiterimaInfo"></span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
+        // Function untuk menampilkan modal bukti terima
         $('#modalBuktiTerima').on('show.bs.modal', function(event) {
             var button = $(event.relatedTarget); 
             var idInvEcat = button.data('inv'); 
@@ -349,7 +360,33 @@
             imgSrc = 'Uploads/' + idInvEcat + '.png'; 
             $('#buktiTerimaImg').attr('src', imgSrc); 
         });
+
+        // Function untuk memperbesar (zoom) gambar ketika diklik
+        $(document).on('click', '#buktiTerimaImg', function() {
+            $('#modalBuktiTerima').modal('hide'); // Menutup modal bukti terima
+            $('#modalZoom').modal('show'); // Menampilkan modal zoom
+            $('#zoomedImage').attr('src', $(this).attr('src'));
+        });
+
+        // Function untuk menampilkan kembali modal bukti terima ketika modal zoom ditutup
+        $('#modalZoom').on('hide.bs.modal', function() {
+            $('#modalBuktiTerima').modal('show'); 
+        });
     </script>
+
+    <!-- Modal Zoom untuk memperbesar gambar -->
+    <div class="modal fade" id="modalZoom" tabindex="-1" aria-labelledby="modalZoomLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body d-flex justify-content-center align-items-center">
+                    <img id="zoomedImage" src="" alt="Zoomed Image" style="max-width: 1000px; height: 450px; margin-bottom: 30px;">
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Modal Komplain -->
     <div class="modal fade" id="komplainModal" tabindex="-1" aria-labelledby="komplainModalLabel" aria-hidden="true">
