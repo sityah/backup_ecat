@@ -1,8 +1,8 @@
 <?php
-$host = "localhost";
-$username = "root";
-$password = "";
-$database = "mandir36_db_ecat_staging";
+$host = "anzio-db.id.domainesia.com";//nama server	
+$username = "mandir36_staging";//usernya
+$password = "mandir36_staging";//password
+$database = "mandir36_db_ecat_staging";//database
 
 // Buat koneksi ke database
 $koneksi = mysqli_connect($host, $username, $password, $database);
