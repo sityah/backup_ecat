@@ -36,44 +36,44 @@
                                         $id_inv_pl = $_GET['id_inv_pl'];
 
                                         $sql = "SELECT
-                                                tb_spk_pl.tgl_pesanan_pl,
-                                                COALESCE(GROUP_CONCAT(tb_spk_pl.no_spk_pl SEPARATOR ', '), 'N/A') AS no_spk_pl,
-                                                tb_spk_pl.no_po,
-                                                tb_spk_pl.fee_marketing,
-                                                tb_sales_ecat.nama_sales,
-                                                tb_perusahaan.nama_perusahaan,
-                                                tb_perusahaan.alamat_perusahaan,
-                                                tb_provinsi.nama_provinsi,
-                                                inv_pl.no_inv_pl,
-                                                inv_pl.tgl_inv_pl,
-                                                inv_pl.notes,
-                                                status_kirim.jenis_pengiriman,
-                                                status_kirim.tgl_kirim,
-                                                tb_driver.nama_driver,
-                                                ekspedisi.nama_ekspedisi,
-                                                status_kirim.dikirim_oleh,
-                                                status_kirim.penanggung_jawab
-                                            FROM
-                                                inv_pl
-                                            LEFT JOIN
-                                                tb_spk_pl ON inv_pl.id_inv_pl = tb_spk_pl.id_inv_pl
-                                            LEFT JOIN
-                                                tb_sales_ecat ON tb_spk_pl.id_sales = tb_sales_ecat.id_sales
-                                            LEFT JOIN
-                                                tb_perusahaan ON tb_spk_pl.id_perusahaan = tb_perusahaan.id_perusahaan
-                                            LEFT JOIN
-                                                tb_provinsi ON tb_perusahaan.id_provinsi = tb_provinsi.id_provinsi
-                                            LEFT JOIN
-                                                status_kirim ON inv_pl.id_inv_pl = status_kirim.id_inv_ecat
-                                            LEFT JOIN
-                                                tb_driver ON status_kirim.id_driver = tb_driver.id_driver
-                                            LEFT JOIN
-                                                ekspedisi ON status_kirim.id_ekspedisi = ekspedisi.id_ekspedisi
-                                            WHERE
-                                                inv_pl.id_inv_pl = '$id_inv_pl' AND
-                                                tb_spk_pl.status_spk_pl = 'Diterima'
-                                            GROUP BY
-                                                inv_pl.id_inv_pl";
+                                                    tb_spk_pl.tgl_pesanan_pl,
+                                                    COALESCE(GROUP_CONCAT(tb_spk_pl.no_spk_pl SEPARATOR ', '), 'N/A') AS no_spk_pl,
+                                                    tb_spk_pl.no_po,
+                                                    tb_spk_pl.fee_marketing,
+                                                    tb_sales_ecat.nama_sales,
+                                                    tb_perusahaan.nama_perusahaan,
+                                                    tb_perusahaan.alamat_perusahaan,
+                                                    tb_provinsi.nama_provinsi,
+                                                    inv_pl.no_inv_pl,
+                                                    inv_pl.tgl_inv_pl,
+                                                    inv_pl.notes,
+                                                    status_kirim.jenis_pengiriman,
+                                                    status_kirim.tgl_kirim,
+                                                    tb_driver.nama_driver,
+                                                    ekspedisi.nama_ekspedisi,
+                                                    status_kirim.dikirim_oleh,
+                                                    status_kirim.penanggung_jawab
+                                                FROM
+                                                    inv_pl
+                                                LEFT JOIN
+                                                    tb_spk_pl ON inv_pl.id_inv_pl = tb_spk_pl.id_inv_pl -- Menggunakan id_inv_pl dari inv_pl
+                                                LEFT JOIN
+                                                    tb_sales_ecat ON tb_spk_pl.id_sales = tb_sales_ecat.id_sales
+                                                LEFT JOIN
+                                                    tb_perusahaan ON tb_spk_pl.id_perusahaan = tb_perusahaan.id_perusahaan
+                                                LEFT JOIN
+                                                    tb_provinsi ON tb_perusahaan.id_provinsi = tb_provinsi.id_provinsi
+                                                LEFT JOIN
+                                                    status_kirim ON inv_pl.id_inv_pl = status_kirim.id_inv_ecat
+                                                LEFT JOIN
+                                                    tb_driver ON status_kirim.id_driver = tb_driver.id_driver
+                                                LEFT JOIN
+                                                    ekspedisi ON status_kirim.id_ekspedisi = ekspedisi.id_ekspedisi
+                                                WHERE
+                                                    inv_pl.id_inv_pl = '$id_inv_pl' AND
+                                                    tb_spk_pl.status_spk_pl = 'Dikirim'
+                                                GROUP BY
+                                                    inv_pl.id_inv_pl";
 
                                         $result = mysqli_query($koneksi, $sql);
 
@@ -300,7 +300,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                         <button type="submit" class="btn btn-primary">Transaksi Selesai</button>
-                        <button type="button" class="btn btn-primary">Komplain</button>
+                        <button type="button" class="btn btn-primary" onclick="tampilkanKomplainModal()">Komplain</button>
                     </div>
                     </div>
                 </form>
@@ -348,6 +348,140 @@
             imgSrc = 'Uploads/' + idInvPl + '.png'; 
             $('#buktiTerimaImg').attr('src', imgSrc); 
         });
+    </script>
+
+    <!-- Modal Komplain -->
+    <div class="modal fade" id="komplainModal" tabindex="-1" aria-labelledby="komplainModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form id="komplainForm" method="post" action="proses/proses_komplain.php">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="komplainModalLabel">Ajukan Komplain</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="tanggalKomplain" class="form-label"><strong>Tanggal Komplain</strong></label>
+                            <input type="date" class="form-control" id="tanggalKomplain" name="tgl_komplain">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">No. Komplain</label>
+                            <input type="text" class="form-control bg-light" id="no_komplain" name="no_komplain" readonly>
+                        </div>
+                        <p style="margin-bottom: 5px;"><strong>Pilih alasan komplain Anda :</strong></p>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="komplain" id="komplainBarangRusak" value="Barang Rusak">
+                            <label class="form-check-label" for="komplainBarangRusak">Barang Rusak</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="komplain" id="komplainTidakSesuaiPesanan" value="Barang Tidak Sesuai Pesanan">
+                            <label class="form-check-label" for="komplainTidakSesuaiPesanan">Barang Tidak Sesuai Pesanan</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="komplain" id="komplainPengirimanTerlambat" value="Pengiriman Terlambat">
+                            <label class="form-check-label" for="komplainPengirimanTerlambat">Pengiriman Terlambat</label>
+                        </div>
+                        <p style="margin-top: 20px; margin-bottom: 5px;"><strong>Retur Barang</strong></p>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="retur_barang" id="returBarangYa" value="Ya">
+                            <label class="form-check-label" for="returBarangYa">Ya</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="retur_barang" id="returBarangTidak" value="Tidak">
+                            <label class="form-check-label" for="returBarangTidak">Tidak</label>
+                        </div>
+                        <div class="mb-3" id="refundDanaContainer" style="display: none; margin-top: 15px;">
+                            <label for="refundDana" class="form-label"><strong>Refund Dana</strong></label>
+                            <div id="refundDanaOptions" style="display: none;">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="refund_dana" id="refundDanaYa" value="Ya">
+                                    <label class="form-check-label" for="refundDanaYa">Ya</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="refund_dana" id="refundDanaTidak" value="Tidak">
+                                    <label class="form-check-label" for="refundDanaTidak">Tidak</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group mt-3">
+                            <label for="keterangan" class="form-label"><strong>Keterangan</strong></label>
+                            <textarea class="form-control" id="keterangan" name="keterangan" rows="3"></textarea>
+                        </div>
+
+                        <!-- hidden input untuk id transaksi jika diperlukan -->
+                        <input type="hidden" name="id_transaksi" value="<?php echo $id_transaksi; ?>">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary">Kirim Komplain</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Menampilkan opsi Refund Dana saat radio button "Ya" dipilih untuk Retur Barang
+        $('input[name="retur_barang"]').change(function() {
+            if ($(this).val() === 'Ya') {
+                $('#refundDanaContainer').show();
+                $('#refundDanaOptions').show();
+            } else {
+                $('#refundDanaContainer').hide();
+                $('#refundDanaOptions').hide();
+            }
+        });
+    </script>
+
+    <script>
+        // Fungsi untuk menampilkan modal komplain
+        function tampilkanKomplainModal() {
+            $('#komplainModal').modal('show');
+            $('#konfirmasiModal').modal('hide'); // Menutup modal konfirmasi
+        }
+
+        // Fungsi untuk menampilkan modal konfirmasi
+        function tampilkanModal() {
+            $('#konfirmasiModal').modal('show');
+            $('#komplainModal').modal('hide'); 
+        }
+
+        // Event listener untuk menampilkan modal konfirmasi saat modal komplain ditutup
+        $('#komplainModal').on('hidden.bs.modal', function () {
+            tampilkanModal(); 
+        });
+    </script>
+    <!-- JAVASCRIPT U/ NO_KOMPLAIN -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+        var inputNoSPK = document.getElementById('no_komplain');
+
+        // Fetch nomor terakhir dari server
+        fetch('get_latest_no_komplain.php')
+            .then(response => response.text())
+            .then(lastInvEcat => {
+                // Mengubah nomor urut terakhir menjadi integer
+                var latestINVNumber = parseInt(lastInvEcat) || 0;
+
+                var currentDate = new Date();
+                var currentYear = currentDate.getFullYear();
+                var currentMonth = currentDate.getMonth() + 1;
+
+                // Menghasilkan nomor SPK yang unik dengan nomor urut terakhir + 1
+                var newSPKNumber = latestINVNumber + 1;
+
+                // Format nomor SPK baru hanya dengan mengganti angka di bagian depan
+                var formattedNoSPK = ("000" + newSPKNumber).slice(-3) + "/CC/ECAT/" + getRomanNumeral(currentMonth) + "/" + currentYear;
+
+                // Menetapkan nilai nomor SPK pada input form
+                inputNoSPK.value = formattedNoSPK;
+            })
+            .catch(error => console.error('Error fetching latest SPK number:', error));
+        });
+
+        function getRomanNumeral(num) {
+            var romanNumerals = ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII"];
+            return romanNumerals[num];
+        }
     </script>
 </body>
 </html>
