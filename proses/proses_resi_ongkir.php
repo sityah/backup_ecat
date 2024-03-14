@@ -27,7 +27,9 @@
 
             // Proses upload bukti terima ke direktori
             $target_dir = "../uploads/";
-            $target_file = $target_dir . basename($nama_file);
+            $extension = pathinfo($nama_file, PATHINFO_EXTENSION); // Mendapatkan ekstensi file
+            $new_filename = $id_inv_ecat . '.' . $extension; // Membuat nama file baru dengan id_inv_ecat
+            $target_file = $target_dir . $new_filename;
 
             if(move_uploaded_file($file_tmp, $target_file)) {
                 // Baca isi file yang diunggah
@@ -57,8 +59,6 @@
             } else {
                 echo "Sorry, there was an error uploading your file.";
             }
-        } else {
-            echo "File upload failed with error code: " . $_FILES['bukti_terima']['error'];
         }
     ?>
 </body>
