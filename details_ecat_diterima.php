@@ -357,7 +357,7 @@
             var idInvEcat = button.data('inv'); 
             var imgSrc = ''; 
 
-            imgSrc = 'Uploads/' + idInvEcat + '.png'; 
+            imgSrc = 'uploads/' + idInvEcat + '.png'; 
             $('#buktiTerimaImg').attr('src', imgSrc); 
         });
 
