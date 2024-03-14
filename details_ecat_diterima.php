@@ -357,7 +357,13 @@
             var idInvEcat = button.data('inv'); 
             var imgSrc = ''; 
 
-            imgSrc = 'Uploads/' + idInvEcat + '.png'; 
+            // Cek apakah nama file sudah mengandung ekstensi .png
+            if (idInvEcat.includes('.png')) {
+                imgSrc = 'Uploads/' + idInvEcat; // Jika sudah, gunakan langsung
+            } else {
+                imgSrc = 'Uploads/' + idInvEcat + '.png'; // Jika belum, tambahkan ekstensi .png
+            }
+
             $('#buktiTerimaImg').attr('src', imgSrc); 
         });
 
