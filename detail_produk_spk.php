@@ -577,9 +577,9 @@
                 $no = 1;
 
                 $sql = "SELECT 
-                            COALESCE(tpr.id_produk_ecat) AS id_produk,
-                            COALESCE(tpr.nama_produk) AS nama_produk,
-                            COALESCE(mr_tpr.nama_merk) AS nama_merk,
+                            COALESCE(tpr.id_produk_ecat, '') AS id_produk,
+                            COALESCE(tpr.nama_produk, '') AS nama_produk,
+                            COALESCE(mr_tpr.nama_merk, '') AS nama_merk,
                             tpr.satuan,
                             spr.id_stock_prod_ecat,
                             spr.stock,
@@ -589,6 +589,9 @@
                         LEFT JOIN tb_produk_ecat AS tpr ON (tpr.id_produk_ecat = spr.id_produk_ecat)
                         LEFT JOIN tb_kat_penjualan AS tkp ON (tkp.id_kat_penjualan = spr.id_kat_penjualan)
                         LEFT JOIN tb_merk AS mr_tpr ON (tpr.id_merk = mr_tpr.id_merk)
+                        WHERE tpr.id_produk_ecat IS NOT NULL
+                            AND tpr.nama_produk IS NOT NULL
+                            AND mr_tpr.nama_merk IS NOT NULL
                         ORDER BY nama_produk ASC";
 
                 $query = mysqli_query($koneksi2, $sql);
