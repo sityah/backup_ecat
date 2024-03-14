@@ -106,12 +106,6 @@
                         $ktuuid = "KT$tahun$bulan$uuid$hari"; 
                     ?>
                     <input type="hidden" class="form-control" name="id_kota_kab" id="id" value = "<?php echo $ktuuid ?>">
-                    <div class="row mb-3 mt-2">
-                        <div class="col">
-                            <label class="form-label"><strong>Nama Kota / Kabupaten *</strong></label>
-                            <input type="text" name="nama_kota_kab" class="form-control capitalize" pattern="[A-Za-z]+" required>
-                        </div>
-                    </div>
                     <div id="selectData" class="mb-3">
                         <!-- Provinsi -->
                         <div class="col-sm mb-3">
@@ -127,6 +121,12 @@
                                 }
                                 ?>
                             </select>
+                        </div>
+                    </div>
+                    <div class="row mb-3 mt-2">
+                        <div class="col">
+                            <label class="form-label"><strong>Nama Kota / Kabupaten *</strong></label>
+                            <input type="text" name="nama_kota_kab" class="form-control capitalize" pattern="[A-Za-z]+" required>
                         </div>
                     </div>
                     <div class="modal-footer">
