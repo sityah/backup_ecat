@@ -10,7 +10,7 @@
     <?php include "page/header.php"; ?>
     <?php date_default_timezone_set('Asia/Jakarta'); ?>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="stylesheet" href="/staging-ecat.mandirialkesindo.co.id/lightGallery-1.10.0/dist/css/lightgallery.min.css" />
+    <link rel="stylesheet" href="../staging-ecat.mandirialkesindo.co.id/lightGallery-1.10.0/dist/css/lightgallery.min.css" />
 </head>
 
 <body>
@@ -349,7 +349,7 @@
         </div>
     </div>
 
-    <script src="/staging-ecat.mandirialkesindo.co.id/lightGallery-1.10.0/dist/js/lightgallery-all.min.js"></script>
+    <script src="../staging-ecat.mandirialkesindo.co.id/lightGallery-1.10.0/dist/js/lightgallery-all.min.js"></script>
     <script>
         // Function untuk menampilkan modal bukti terima
         $('#modalBuktiTerima').on('show.bs.modal', function(event) {
