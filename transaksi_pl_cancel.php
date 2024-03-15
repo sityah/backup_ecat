@@ -146,10 +146,8 @@
                                         include "koneksi.php";
                                         // Query untuk mengambil data dari tabel tb_spk_pl
                                         $query = "SELECT *
-                                                FROM 
-                                                    tb_spk_pl
-                                                WHERE 
-                                                    tb_spk_pl.status_spk_pl = 'Dikirim'";
+                                                FROM inv_pl
+                                                WHERE status_transaksi = 'Dikirim'";
                                         $result = mysqli_query($koneksi, $query);
 
                                         // Hitung jumlah baris (data) yang ditemukan
@@ -173,10 +171,8 @@
                                         include "koneksi.php";
                                         // Query untuk mengambil data dari tabel tb_spk_pl
                                         $query = "SELECT *
-                                                FROM 
-                                                    tb_spk_pl
-                                                WHERE 
-                                                    tb_spk_pl.status_spk_pl = 'Diterima'";
+                                                FROM inv_pl
+                                                WHERE status_transaksi = 'Diterima'";
                                         $result = mysqli_query($koneksi, $query);
 
                                         // Hitung jumlah baris (data) yang ditemukan
@@ -200,10 +196,8 @@
                                         include "koneksi.php";
                                         // Query untuk mengambil data dari tabel tb_spk_pl
                                         $query = "SELECT *
-                                                FROM 
-                                                    tb_spk_pl
-                                                WHERE 
-                                                    tb_spk_pl.status_spk_pl = 'Transaksi Selesai'";
+                                                FROM inv_pl
+                                                WHERE status_transaksi = 'Transaksi Selesai'";
                                         $result = mysqli_query($koneksi, $query);
 
                                         // Hitung jumlah baris (data) yang ditemukan
@@ -227,10 +221,8 @@
                                         include "koneksi.php";
                                         // Query untuk mengambil data dari tabel tb_spk_pl
                                         $query = "SELECT *
-                                                FROM 
-                                                    tb_spk_pl
-                                                WHERE 
-                                                    tb_spk_pl.status_spk_pl = 'Cancel'";
+                                                FROM inv_pl
+                                                WHERE status_transaksi = 'Cancel'";
                                         $result = mysqli_query($koneksi, $query);
 
                                         // Hitung jumlah baris (data) yang ditemukan
