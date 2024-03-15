@@ -400,19 +400,31 @@
                                                         </ul>
                                                     </div>
                                                     <?php
-                                                        // Mengambil nilai total_inv_pl dari inv_pl
                                                         include "koneksi.php"; // Sesuaikan dengan file koneksi Anda
-                                                        
-                                                        // Lakukan query untuk mengambil total_inv_pl dari tabel inv_pl berdasarkan id_inv_pl tertentu
+
+                                                        // Mengambil nilai total_inv_pl dari inv_pl
                                                         $query_total = "SELECT total_inv_pl FROM inv_pl WHERE id_inv_pl = '$id_inv_pl'"; // Sesuaikan dengan logika aplikasi Anda
                                                         $result_total = mysqli_query($koneksi, $query_total);
 
+                                                        // Mengambil nilai fee_marketing dari tb_spk_pl
+                                                        $query_fee_marketing = "SELECT fee_marketing FROM tb_spk_pl WHERE id_inv_pl = '$id_inv_pl'";
+                                                        $result_fee_marketing = mysqli_query($koneksi, $query_fee_marketing);
+
                                                         // Periksa apakah query berhasil dieksekusi dan hasilnya ditemukan
-                                                        if ($result_total && mysqli_num_rows($result_total) > 0) {
+                                                        if ($result_total && mysqli_num_rows($result_total) > 0 && $result_fee_marketing && mysqli_num_rows($result_fee_marketing) > 0) {
                                                             $row_total = mysqli_fetch_assoc($result_total);
                                                             $total_inv_pl = $row_total['total_inv_pl'];
 
-                                                            // Tampilkan nilai total_inv_pl di dalam card
+                                                            $row_fee_marketing = mysqli_fetch_assoc($result_fee_marketing);
+                                                            $fee_marketing = $row_fee_marketing['fee_marketing'];
+
+                                                            // Menghitung Total Fee Marketing
+                                                            $total_fee_marketing = ($fee_marketing / 100) * $total_inv_pl;
+
+                                                            // Menghitung Total Akhir
+                                                            $total_akhir = $total_inv_pl - $total_fee_marketing;
+
+                                                            // Tampilkan nilai total_inv_ecat dan total_fee_marketing di dalam card
                                                             echo "<div class='col-lg-2 col-md-2 total-card' id='totalInvoiceCard'>";
                                                             echo "    <div class='card border d-flex flex-column'>";
                                                             echo "        <div class='card-body d-flex align-items-center justify-content-center'>";
@@ -423,34 +435,35 @@
                                                             echo "        </div>";
                                                             echo "    </div>";
                                                             echo "</div>";
+
+                                                            echo "<div class='col-lg-2 col-md-2 total-card' id='totalFeeMarketingCard'>";
+                                                            echo "    <div class='card border d-flex flex-column'>";
+                                                            echo "        <div class='card-body d-flex align-items-center justify-content-center'>";
+                                                            echo "            <div class='text-center'>";
+                                                            echo "                <span class='fw d-block mb-1'>Total Fee Marketing (%)</span>";
+                                                            echo "                <h3 class='card-title mb-2'>" . number_format($total_fee_marketing) . "</h3>";
+                                                            echo "            </div>";
+                                                            echo "        </div>";
+                                                            echo "    </div>";
+                                                            echo "</div>";
+
+                                                            // Tampilkan nilai total_akhir di dalam card
+                                                            echo "<div class='col-lg-2 col-md-2 total-card' id='totalAkhirCard'>";
+                                                            echo "    <div class='card border d-flex flex-column'>";
+                                                            echo "        <div class='card-body d-flex align-items-center justify-content-center'>";
+                                                            echo "            <div class='text-center'>";
+                                                            echo "                <span class='fw d-block mb-1'>Total Akhir</span>";
+                                                            echo "                <h3 class='card-title mb-2'>" . number_format($total_akhir) . "</h3>";
+                                                            echo "            </div>";
+                                                            echo "        </div>";
+                                                            echo "    </div>";
+                                                            echo "</div>";
                                                         } else {
-                                                            echo "Data tidak ditemukan"; // Pesan jika data tidak ditemukan
+                                                            echo "Data tidak ditemukan"; 
                                                         }
-                                                        
-                                                        mysqli_close($koneksi); // Tutup koneksi database
+
+                                                        mysqli_close($koneksi); 
                                                     ?>
-
-                                                    <div class="col-lg-2 col-md-2 total-card" id="totalFeeMarketingCard">
-                                                        <div class="card border d-flex flex-column">
-                                                            <div class="card-body d-flex align-items-center justify-content-center">
-                                                                <div class="text-center">
-                                                                    <span class="fw d-block mb-1">Total Fee Marketing (20%)</span>
-                                                                    <h3 class="card-title mb-2">50,000,000</h3>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-lg-2 col-md-2 total-card" id="totalAkhirCard">
-                                                        <div class="card border d-flex flex-column">
-                                                            <div class="card-body d-flex align-items-center justify-content-center">
-                                                                <div class="text-center">
-                                                                    <span class="fw d-block mb-1">Total Akhir</span>
-                                                                    <h3 class="card-title mb-2">75,000,000</h3>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
                                                     
                                                 </div>
                                                 <table class="table table-striped" id="selectedProductsTable" style="width:100%">
