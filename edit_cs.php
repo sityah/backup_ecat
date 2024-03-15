@@ -57,7 +57,7 @@
                                             <input type="hidden" id="id_customer" name="id_customer" class="form-control" value="<?php echo $data['id_customer']; ?>" required>
                                             <div class="mt-3">
                                                 <label>Nama Contact Person </label>
-                                                <input type="text" class="form-control capitalize" id="cp" name="nama_contact_person" pattern="[A-Za-z]+" value="<?php echo $data['nama_contact_person']?>">
+                                                <input type="text" class="form-control capitalize" id="cp" name="nama_contact_person" value="<?php echo $data['nama_contact_person']?>">
                                             </div>
                                             <div class="mt-3">
                                                 <label>Nama Perusahaan</label>
