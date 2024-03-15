@@ -23,10 +23,10 @@
                 <div class="content-wrapper">
                     <div class="container-xxl flex-grow-1 container-p-y">
                         <div class="card mb-4 p-2">
-                            <h5 class="card-header text-center"><b>DETAIL INVOICE E-CATALOG</b></h5>
+                            <h5 class="card-header text-center"><b>DETAIL INVOICE PENUNJUKAN LANGSUNG</b></h5>
                             <div class="card-body border m-2">
                             <div class="mt-4 text-end me-3">
-                                <button type="button" class="btn btn-secondary mb-3">E-Catalog</button>
+                                <button type="button" class="btn btn-secondary mb-3">Penunjukan Langsung</button>
                             </div>
                             <div class="d-flex justify-content-between flex-wrap">
                                 <?php

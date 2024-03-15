@@ -25,7 +25,7 @@
                             <h5 class="card-header text-center"><b>DETAIL TRANSAKSI CANCEL</b></h5>
                             <div class="card-body border m-2">
                             <div class="mt-4 text-end me-3">
-                                <button type="button" class="btn btn-secondary mb-3">E-Catalog</button>
+                                <button type="button" class="btn btn-secondary mb-3">Penunjukan Langsung</button>
                             </div>
                             <div class="d-flex justify-content-between flex-wrap">
                                 <?php
