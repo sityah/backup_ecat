@@ -15,6 +15,14 @@
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (isset($_POST["simpan-sales"])) {
+                // Ambil id_user dari sesi saat ini
+                $id_user = $_SESSION['tiket_id'];
+        
+                // Query untuk mendapatkan nama_user berdasarkan id_user
+                $query_user = mysqli_query($koneksi, "SELECT nama_user FROM tb_user WHERE id_user = '$id_user'");
+                $row_user = mysqli_fetch_assoc($query_user);
+                $nama_user = $row_user['nama_user'];
+        
                 $id_sales = $_POST['id_sales'];
                 $status_sales = $_POST['status_sales'];
                 $id_provinsi = $_POST['id_provinsi_select'];
@@ -27,30 +35,29 @@
                 $no_telp_sales = $_POST['no_telp_sales'];
                 $email_sales = $_POST['email_sales'];
                 $created_date = date("Y-m-d H:i:s");
-
+        
                 // Menghapus folder yang terbuat sebelumnya
                 $path = "Sales/" . $id_sales;
                 if (is_dir($path)) {
                     rmdir($path);
                 }
-
+        
                 $result_perusahaan = mysqli_query($koneksi, "SELECT nama_perusahaan FROM tb_perusahaan WHERE id_perusahaan = '$id_perusahaan'");
-
+        
                 if ($result_perusahaan) {
                     $row_perusahaan = mysqli_fetch_assoc($result_perusahaan);
-                    //$nama_perusahaan = $row_perusahaan['nama_perusahaan'];
-
+        
                     // Membuat folder baru
                     mkdir($path, 0777, true);
-
+        
                     // Query SQL untuk memasukkan data ke database
                     $query_insert = "INSERT INTO tb_sales_ecat
-                                        (id_sales, id_provinsi, id_kota_kab, nama_sales, alamat, jenis_sales, id_perusahaan, no_npwp, no_telp_sales, email_sales, status_sales, created_date) 
-                                        VALUES ('$id_sales', '$id_provinsi', '$id_kota_kab', '$nama_sales', '$alamat', '$jenis_sales', '$id_perusahaan','$no_npwp', '$no_telp_sales', '$email_sales', '$status_sales', '$created_date')";
-
+                                        (id_sales, id_provinsi, id_kota_kab, nama_sales, alamat, jenis_sales, id_perusahaan, no_npwp, no_telp_sales, email_sales, status_sales, created_date, created_by) 
+                                        VALUES ('$id_sales', '$id_provinsi', '$id_kota_kab', '$nama_sales', '$alamat', '$jenis_sales', '$id_perusahaan','$no_npwp', '$no_telp_sales', '$email_sales', '$status_sales', '$created_date', '$nama_user')";
+        
                     // Eksekusi query insert
                     $result_insert = mysqli_query($koneksi, $query_insert);
-
+        
                     if ($result_insert) {
                         echo '<script>
                                 Swal.fire({
@@ -83,9 +90,18 @@
                             });
                           </script>';
                 }
+            }
 
             // Edit
-            }   elseif (isset($_POST["edit-sales"])) {
+            elseif (isset($_POST["edit-sales"])) {
+                // Ambil id_user dari sesi saat ini
+                $id_user = $_SESSION['tiket_id'];
+
+                // Query untuk mendapatkan nama_user berdasarkan id_user
+                $query_user = mysqli_query($koneksi, "SELECT nama_user FROM tb_user WHERE id_user = '$id_user'");
+                $row_user = mysqli_fetch_assoc($query_user);
+                $nama_user = $row_user['nama_user'];
+
                 $id_sales = $_POST['id_sales'];
                 $id_provinsi = $_POST['selectProvinsi'];
                 $id_kota_kab = $_POST['selectKota'];
@@ -100,19 +116,20 @@
                 $update = date("Y-m-d H:i:s");  
 
                 $update_query = "UPDATE tb_sales_ecat 
-                    SET
-                    nama_sales  = '$nama_sales', 
-                    jenis_sales = '$jenis_sales',
-                    id_provinsi  = '$id_provinsi', 
-                    id_kota_kab = '$id_kota_kab',
-                    id_perusahaan = '$id_perusahaan',
-                    no_npwp = '$no_npwp',
-                    alamat = '$alamat',
-                    no_telp_sales = '$no_telp_sales',
-                    email_sales = '$email_sales',
-                    status_sales = '$status_sales',
-                    update_date = '$update'
-                    WHERE id_sales='$id_sales'";
+                                SET
+                                nama_sales  = '$nama_sales', 
+                                jenis_sales = '$jenis_sales',
+                                id_provinsi  = '$id_provinsi', 
+                                id_kota_kab = '$id_kota_kab',
+                                id_perusahaan = '$id_perusahaan',
+                                no_npwp = '$no_npwp',
+                                alamat = '$alamat',
+                                no_telp_sales = '$no_telp_sales',
+                                email_sales = '$email_sales',
+                                status_sales = '$status_sales',
+                                update_date = '$update',
+                                update_by = '$nama_user' 
+                                WHERE id_sales='$id_sales'";
 
                 $update = mysqli_query($koneksi, $update_query);
 
@@ -137,7 +154,6 @@
                             });
                         </script>';
                 }
-
 
             // Delete
             } elseif (isset($_POST["delete-sales"])) {

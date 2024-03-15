@@ -226,6 +226,7 @@
                             <input type="text" name="email_sales" class="form-control" pattern=".+@.+" placeholder="name@example.com" oninvalid="this.setCustomValidity('Please include an \'@\' in the email address')" oninput="this.setCustomValidity('')" required>
                         </div>
                     </div>
+                    <input type="hidden" name="id_user" value="<?php echo $_SESSION['tiket_id'] ?>">
                     <div class="modal-footer">
                         <button type="button" class="btn btn-outline-secondary" id="tutupmodalCenter" data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary" name="simpan-sales">Save changes</button>

@@ -64,7 +64,7 @@
                                     <input type="hidden" id="id_sales" name="id_sales" class="form-control" value="<?php echo $data['id_sales']; ?>" required>
                                     <div class="mt-3">
                                         <label for="" class="form-label">Nama Sales</label>
-                                        <input type="text" class="form-control capitalize" id="sales" name="nama_sales" pattern="[A-Za-z]+" value="<?php echo $data['nama_sales']?>">
+                                        <input type="text" class="form-control capitalize" id="sales" name="nama_sales" value="<?php echo $data['nama_sales']?>">
                                     </div>
                                     <div class="mt-3">
                                         <label>Alamat </label>
