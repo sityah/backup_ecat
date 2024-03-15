@@ -194,9 +194,7 @@
                                                         <button type="button" class="btn btn-outline-primary" id="btnTampilBuktiTerima" data-inv="<?php echo $id_inv_pl; ?>" data-bs-toggle="modal" data-bs-target="#modalBuktiTerima">
                                                             <i class="tf-icons bx bxs-file-image"></i> Bukti Terima
                                                         </button>
-                                                        <button type="button" class="btn btn-outline-primary" data-bs-toggle="" data-bs-target="#">
-                                                            <i class="tf-icons bx bx-printer"></i> Invoice
-                                                        </button>
+                                                        <button type="button" class="btn btn-outline-primary" onclick="printInvoice('invoice')">Invoice</button>
                                                     </div>
                                                 </div>
                                                 <table class="table table-striped" id="selectedProductsTable" style="width:100%">
@@ -283,6 +281,24 @@
                 scrollX: true
             });
         });
+    </script>
+    <script>
+        function printInvoice(type) {
+            // Assuming you have the invoice ID stored in a variable called id_inv_pl
+            var id_inv_pl = <?php echo json_encode($id_inv_pl); ?>;
+
+            if (type === 'invoice') {
+                // Redirect to the print page with the invoice ID as a parameter
+                window.location.href = "cetak_invoice_pl.php?id_inv_pl=" + id_inv_pl;
+            } else if (type === 'pdf') {
+                // Redirect to the PDF page with the invoice ID as a parameter
+                window.location.href = "cetak_pdf_pl.php?id_inv_pl=" + id_inv_pl;
+            } else if (type === 'kwitansi') {
+                window.location.href = "cetak_kwitansi_pl.php?id_inv_pl=" + id_inv_pl;
+            } else if (type === 'surat jalan') {
+                window.location.href = "cetak_surat_jalan_pl.php?id_inv_pl=" + id_inv_pl;
+            }
+        }
     </script>
 
     <!-- Modal Bukti Terima -->

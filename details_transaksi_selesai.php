@@ -195,9 +195,7 @@
                                                         <button type="button" class="btn btn-outline-primary" id="btnTampilBuktiTerima" data-inv="<?php echo $id_inv_ecat; ?>" data-bs-toggle="modal" data-bs-target="#modalBuktiTerima">
                                                             <i class="tf-icons bx bxs-file-image"></i> Bukti Terima
                                                         </button>
-                                                        <button type="button" class="btn btn-outline-primary" data-bs-toggle="" data-bs-target="#">
-                                                            <i class="tf-icons bx bx-printer"></i> Invoice
-                                                        </button>
+                                                        <button type="button" class="btn btn-outline-primary" onclick="printInvoice('invoice')">Invoice</button>
                                                     </div>
                                                 </div>
                                                 <table class="table table-striped" id="selectedProductsTable" style="width:100%">
@@ -284,6 +282,21 @@
                 scrollX: true
             });
         });
+    </script>
+    <script>
+        function printInvoice(type) {
+            var id_inv_ecat = <?php echo json_encode($id_inv_ecat); ?>;
+
+            if (type === 'invoice') {
+                window.location.href = "cetak_invoice_ecat.php?id_inv_ecat=" + id_inv_ecat;
+            } else if (type === 'pdf') {
+                window.location.href = "cetak_pdf_ecat.php?id_inv_ecat=" + id_inv_ecat;
+            } else if (type === 'kwitansi') {
+                window.location.href = "cetak_kwitansi_ecat.php?id_inv_ecat=" + id_inv_ecat;
+            } else if (type === 'surat jalan') {
+                window.location.href = "cetak_surat_jalan_ecat.php?id_inv_ecat=" + id_inv_ecat;
+            }
+        } 
     </script>
 
     <!-- Modal Bukti Terima -->
