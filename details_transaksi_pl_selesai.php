@@ -35,48 +35,44 @@
                                         $id_inv_pl = $_GET['id_inv_pl'];
 
                                         $sql = "SELECT
-                                                tb_spk_pl.tgl_pesanan_pl,
-                                                COALESCE(GROUP_CONCAT(tb_spk_pl.no_spk_pl SEPARATOR ', '), 'N/A') AS no_spk_pl,
-                                                tb_spk_pl.no_po,
-                                                tb_spk_pl.fee_marketing,
-                                                tb_sales_ecat.nama_sales,
-                                                tb_perusahaan.nama_perusahaan,
-                                                tb_perusahaan.alamat_perusahaan,
-                                                tb_provinsi.nama_provinsi,
-                                                inv_pl.no_inv_pl,
-                                                inv_pl.tgl_inv_pl,
-                                                inv_pl.notes,
-                                                status_kirim.jenis_pengiriman,
-                                                status_kirim.jenis_penerima,
-                                                status_kirim.tgl_kirim,
-                                                tb_driver.nama_driver,
-                                                ekspedisi.nama_ekspedisi,
-                                                status_kirim.dikirim_oleh,
-                                                status_kirim.penanggung_jawab,
-                                                inv_penerima.nama_penerima
-                                            FROM
-                                                inv_pl
-                                            LEFT JOIN
-                                                tb_spk_pl ON inv_pl.id_inv_pl = tb_spk_pl.id_inv_pl 
-                                            LEFT JOIN
-                                                tb_sales_ecat ON tb_spk_pl.id_sales = tb_sales_ecat.id_sales
-                                            LEFT JOIN
-                                                tb_perusahaan ON tb_spk_pl.id_perusahaan = tb_perusahaan.id_perusahaan
-                                            LEFT JOIN
-                                                tb_provinsi ON tb_perusahaan.id_provinsi = tb_provinsi.id_provinsi
-                                            LEFT JOIN
-                                                status_kirim ON inv_pl.id_inv_pl = status_kirim.id_inv_ecat
-                                            LEFT JOIN
-                                                inv_penerima ON inv_pl.id_inv_pl = inv_penerima.id_inv_ecat
-                                            LEFT JOIN
-                                                tb_driver ON status_kirim.id_driver = tb_driver.id_driver
-                                            LEFT JOIN
-                                                ekspedisi ON status_kirim.id_ekspedisi = ekspedisi.id_ekspedisi
-                                            WHERE
-                                                inv_pl.id_inv_pl = '$id_inv_pl' AND
-                                                tb_spk_pl.status_spk_pl = 'Diterima'
-                                            GROUP BY
-                                                inv_pl.id_inv_pl";
+                                                    tb_spk_pl.tgl_pesanan_pl,
+                                                    COALESCE(GROUP_CONCAT(tb_spk_pl.no_spk_pl SEPARATOR ', '), 'N/A') AS no_spk_pl,
+                                                    tb_spk_pl.no_po,
+                                                    tb_spk_pl.fee_marketing,
+                                                    tb_sales_ecat.nama_sales,
+                                                    tb_perusahaan.nama_perusahaan,
+                                                    tb_perusahaan.alamat_perusahaan,
+                                                    tb_provinsi.nama_provinsi,
+                                                    inv_pl.no_inv_pl,
+                                                    inv_pl.tgl_inv_pl,
+                                                    inv_pl.notes,
+                                                    status_kirim.jenis_pengiriman,
+                                                    status_kirim.tgl_kirim,
+                                                    tb_driver.nama_driver,
+                                                    ekspedisi.nama_ekspedisi,
+                                                    status_kirim.dikirim_oleh,
+                                                    status_kirim.penanggung_jawab
+                                                FROM
+                                                    inv_pl
+                                                LEFT JOIN
+                                                    tb_spk_pl ON inv_pl.id_inv_pl = tb_spk_pl.id_inv_pl -- Menggunakan id_inv_pl dari inv_pl
+                                                LEFT JOIN
+                                                    tb_sales_ecat ON tb_spk_pl.id_sales = tb_sales_ecat.id_sales
+                                                LEFT JOIN
+                                                    tb_perusahaan ON tb_spk_pl.id_perusahaan = tb_perusahaan.id_perusahaan
+                                                LEFT JOIN
+                                                    tb_provinsi ON tb_perusahaan.id_provinsi = tb_provinsi.id_provinsi
+                                                LEFT JOIN
+                                                    status_kirim ON inv_pl.id_inv_pl = status_kirim.id_inv_ecat
+                                                LEFT JOIN
+                                                    tb_driver ON status_kirim.id_driver = tb_driver.id_driver
+                                                LEFT JOIN
+                                                    ekspedisi ON status_kirim.id_ekspedisi = ekspedisi.id_ekspedisi
+                                                WHERE
+                                                    inv_pl.id_inv_pl = '$id_inv_pl' AND
+                                                    tb_spk_pl.status_spk_pl = 'Dikirim'
+                                                GROUP BY
+                                                    inv_pl.id_inv_pl";
 
                                         $result = mysqli_query($koneksi, $sql);
 
@@ -143,6 +139,12 @@
                                             echo '<td class="p-2 py-0">:</td>';
                                             echo '<td>' . $row["jenis_pengiriman"] . '</td>';
                                             echo '</tr>';
+                                            echo '<tr>';
+                                            echo '<td class="mb-3" style="width: 180px">Tgl Pengiriman</td>';
+                                            echo '<td class="p-2 py-0">:</td>';
+                                            echo '<td>' . $row["tgl_kirim"] . '</td>';
+                                            echo '</tr>';
+                                            // Menampilkan Nama Driver jika jenis_pengiriman adalah "Driver"
                                             if ($row["jenis_pengiriman"] === "Driver") {
                                                 echo '<tr>';
                                                 echo '<td class="mb-3" style="width: 180px">Nama Driver</td>';
@@ -150,6 +152,7 @@
                                                 echo '<td>' . $row["nama_driver"] . '</td>';
                                             }
                                             echo '</tr>';
+                                            // Menampilkan Nama Ekspedisi, Dikirim Oleh, dan Penanggung Jawab jika jenis_pengiriman adalah "Ekspedisi"
                                             if ($row["jenis_pengiriman"] === "Ekspedisi") {
                                                 echo '<tr>';
                                                 echo '<td class="mb-3" style="width: 180px">Nama Ekspedisi</td>';
@@ -157,14 +160,14 @@
                                                 echo '<td>' . $row["nama_ekspedisi"] . '</td>';
                                                 echo '</tr>';
                                                 echo '<tr>';
-                                                echo '<td class="mb-3" style="width: 180px">Jenis Penerima</td>';
+                                                echo '<td class="mb-3" style="width: 180px">Dikirim Oleh</td>';
                                                 echo '<td class="p-2 py-0">:</td>';
-                                                echo '<td>' . $row["jenis_penerima"] . '</td>';
+                                                echo '<td>' . $row["dikirim_oleh"] . '</td>';
                                                 echo '</tr>';
                                                 echo '<tr>';
-                                                echo '<td class="mb-3" style="width: 180px">Nama Penerima</td>';
+                                                echo '<td class="mb-3" style="width: 180px">Penanggung Jawab</td>';
                                                 echo '<td class="p-2 py-0">:</td>';
-                                                echo '<td>' . $row["nama_penerima"] . '</td>';
+                                                echo '<td>' . $row["penanggung_jawab"] . '</td>';
                                                 echo '</tr>';
                                             }
                                             echo '</table>';
