@@ -144,10 +144,8 @@
                                         include "koneksi.php";
                                         // Query untuk mengambil data dari tabel tb_spk_ecat
                                         $query = "SELECT *
-                                                FROM 
-                                                    tb_spk_pl
-                                                WHERE 
-                                                    tb_spk_pl.status_spk_pl = 'Dikirim'";
+                                                FROM inv_pl
+                                                WHERE status_transaksi = 'Dikirim'";
                                         $result = mysqli_query($koneksi, $query);
 
                                         // Hitung jumlah baris (data) yang ditemukan
