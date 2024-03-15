@@ -27,7 +27,9 @@
 
             // Proses upload bukti terima ke direktori
             $target_dir = "../uploads/";
-            $target_file = $target_dir . basename($nama_file);
+            $extension = pathinfo($nama_file, PATHINFO_EXTENSION); 
+            $new_filename = $id_inv_pl . '.' . $extension; 
+            $target_file = $target_dir . $new_filename;
 
             if(move_uploaded_file($file_tmp, $target_file)) {
                 // Baca isi file yang diunggah

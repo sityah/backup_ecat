@@ -1,7 +1,5 @@
 <?php include "akses.php" ?>
 
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,6 +10,7 @@
     <?php include "page/header.php"; ?>
     <?php date_default_timezone_set('Asia/Jakarta'); ?>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="/staging-ecat.mandirialkesindo.co.id/lightGallery-1.10.0/dist/css/lightgallery.min.css" />
 </head>
 
 <body>
@@ -333,7 +332,7 @@
                     <div class="border p-3">
                         <div class="row">
                             <div class="col-md-6">
-                                <img id="buktiTerimaImg" src="" alt="Bukti Terima" style="max-width: 100%;">
+                                <img id="buktiTerimaImg" data-src="<?php echo $imgSrc; ?>" alt="Bukti Terima" style="max-width: 100%;" />
                             </div>
                             <div class="col-md-6 d-flex flex-column justify-content-center align-items-start">
                                 <div class="text-center">
@@ -350,43 +349,30 @@
         </div>
     </div>
 
+    <script src="/staging-ecat.mandirialkesindo.co.id/lightGallery-1.10.0/dist/js/lightgallery-all.min.js"></script>
     <script>
         // Function untuk menampilkan modal bukti terima
         $('#modalBuktiTerima').on('show.bs.modal', function(event) {
             var button = $(event.relatedTarget); 
             var idInvEcat = button.data('inv'); 
-            var imgSrc = ''; 
-
-            imgSrc = 'uploads/' + idInvEcat + '.png'; 
-            $('#buktiTerimaImg').attr('src', imgSrc); 
+            var imgSrc = 'uploads/' + idInvEcat + '.png'; 
+            $('#buktiTerimaImg').attr('src', imgSrc).attr('data-src', imgSrc); 
         });
 
-        // Function untuk memperbesar (zoom) gambar ketika diklik
+        // Inisialisasi lightGallery pada gambar dengan ID 'buktiTerimaImg' ketika diklik
         $(document).on('click', '#buktiTerimaImg', function() {
-            $('#modalBuktiTerima').modal('hide'); // Menutup modal bukti terima
-            $('#modalZoom').modal('show'); // Menampilkan modal zoom
-            $('#zoomedImage').attr('src', $(this).attr('src'));
-        });
+            // Sembunyikan modal bukti terima
+            $('#modalBuktiTerima').modal('hide');
 
-        // Function untuk menampilkan kembali modal bukti terima ketika modal zoom ditutup
-        $('#modalZoom').on('hide.bs.modal', function() {
-            $('#modalBuktiTerima').modal('show'); 
+            // Inisialisasi lightGallery
+            $(this).lightGallery({
+                dynamic: true,
+                dynamicEl: [{
+                    src: $(this).data('src') // URL gambar yang akan ditampilkan
+                }]
+            });
         });
     </script>
-
-    <!-- Modal Zoom untuk memperbesar gambar -->
-    <div class="modal fade" id="modalZoom" tabindex="-1" aria-labelledby="modalZoomLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body d-flex justify-content-center align-items-center">
-                    <img id="zoomedImage" src="" alt="Zoomed Image" style="max-width: 1000px; height: 450px; margin-bottom: 30px;">
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- Modal Komplain -->
     <div class="modal fade" id="komplainModal" tabindex="-1" aria-labelledby="komplainModalLabel" aria-hidden="true">
