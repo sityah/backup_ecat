@@ -12,6 +12,14 @@
         include "../koneksi.php"; 
 
         if (isset($_POST["simpan-perusahaan"])) {
+            // Ambil id_user dari sesi saat ini
+            $id_user = $_SESSION['tiket_id'];
+        
+            // Query untuk mendapatkan nama_user berdasarkan id_user
+            $query_user = mysqli_query($koneksi, "SELECT nama_user FROM tb_user WHERE id_user = '$id_user'");
+            $row_user = mysqli_fetch_assoc($query_user);
+            $nama_user = $row_user['nama_user'];
+
             $id_perusahaan = $_POST['id_perusahaan'];
             $nama_perusahaan = $_POST['nama_perusahaan'];
             $id_provinsi = $_POST['id_provinsi_select'];
@@ -33,8 +41,8 @@
 
                 // Query SQL untuk memasukkan data ke database
                 $query_insert = "INSERT INTO tb_perusahaan
-                                    (id_perusahaan, id_kota_kab, id_provinsi, jenis_perusahaan, nama_perusahaan, alamat_perusahaan, no_telp_perusahaan, email_perusahaan) 
-                                    VALUES ('$id_perusahaan', '$id_kota_kab', '$id_provinsi', '$jenis_perusahaan', '$nama_perusahaan', '$alamat_perusahaan', '$no_telp_perusahaan', '$email_perusahaan')";
+                                    (id_perusahaan, id_kota_kab, id_provinsi, jenis_perusahaan, nama_perusahaan, alamat_perusahaan, no_telp_perusahaan, email_perusahaan, created_by) 
+                                    VALUES ('$id_perusahaan', '$id_kota_kab', '$id_provinsi', '$jenis_perusahaan', '$nama_perusahaan', '$alamat_perusahaan', '$no_telp_perusahaan', '$email_perusahaan', '$nama_user')";
 
                 // Eksekusi query insert
                 $result_insert = mysqli_query($koneksi, $query_insert);
@@ -63,6 +71,14 @@
             } 
 
         } elseif (isset($_POST["edit-perusahaan"])) {
+            // Ambil id_user dari sesi saat ini
+            $id_user = $_SESSION['tiket_id'];
+
+            // Query untuk mendapatkan nama_user berdasarkan id_user
+            $query_user = mysqli_query($koneksi, "SELECT nama_user FROM tb_user WHERE id_user = '$id_user'");
+            $row_user = mysqli_fetch_assoc($query_user);
+            $nama_user = $row_user['nama_user'];
+
             $id_perusahaan = $_POST['id_perusahaan'];
             $nama_perusahaan = $_POST['nama_perusahaan'];
             $alamat_perusahaan = $_POST['alamat_perusahaan'];
@@ -79,7 +95,8 @@
             nama_perusahaan  = '$nama_perusahaan', 
             alamat_perusahaan  = '$alamat_perusahaan',
             no_telp_perusahaan  = '$no_telp_perusahaan',
-            email_perusahaan  = '$email_perusahaan'
+            email_perusahaan  = '$email_perusahaan',
+            update_by = '$nama_user'
             WHERE id_perusahaan='$id_perusahaan'");
 
             if ($updated) {
