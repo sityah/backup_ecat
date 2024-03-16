@@ -1,7 +1,7 @@
 <?php
 include "koneksi.php";
 
-// Pastikan id_spk_ecat diset sebelum melakukan perubahan
+// Pastikan id_spk_pl diset sebelum melakukan perubahan
 if (isset($_GET['id_spk_pl'])) {
     $id_spk_pl = $_GET['id_spk_pl'];
 
@@ -15,230 +15,291 @@ if (isset($_GET['id_spk_pl'])) {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SURAT PERINTAH KERJA</title>
+<title>SPK E-CATALOG</title>
 <style>
     body {
-        font-family: Arial, sans-serif;
+        font-family: Times New Roman, serif;
+        font-size: 14px; 
+        margin: auto;
+        width: 21cm; 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #f2f2f2;
+    }
+    .print-area {
+        width: 21cm; 
+        border: none; 
+        padding: 20px; 
+        background-color: white;
+        margin: auto;
     }
     .container {
-        width: 80%;
-        margin: 0 auto;
+        width: 95%;
+        margin: auto;
     }
     .header {
         text-align: center;
-        margin-bottom: 20px;
+        margin-bottom: 40px;
+        font-size: 11px;
     }
     .left-column {
+        width: 60%;
         float: left;
-        width: 50%;
+    }
+    .left-column p {
+        margin: 0; 
+    }
+    .left-column p span {
+        margin-right: 5px; 
     }
     .right-column {
+        width: 40%;
         float: right;
-        width: 50%;
         text-align: right;
     }
     table {
         width: 100%;
         border-collapse: collapse;
-        margin-bottom: 20px;
+        margin-bottom: 10px;
     }
     th, td {
         border: 1px solid #000;
-        padding: 8px;
+        padding: 4px; 
         text-align: left;
     }
-    .note {
-        margin-bottom: 20px;
+    .signatures-container {
+        display: flex;
+        justify-content: center;
     }
     .signatures {
-        width: 50%;
-        float: left;
-        margin-bottom: 40px; 
+        width: 30%; 
+        margin-right: 20px; 
+        text-align: center; 
+        margin-bottom: 20px; 
     }
-    .label {
-        float: right;
-        text-align: right;
-    }
-    .petugas-box {
-        border: 1px solid #000;
-        padding: 8px;
-        display: inline-block;
-    }
-    @media print {
-            .print-btn, .back-btn {
-                display: none !important;
-            }
-        }
+
 </style>
 </head>
 <body>
-    <div class="row">
-        <div class="left-column">
-            <a href="detail_produk_spk_pl.php?id_spk_pl=<?php echo $id_spk_pl; ?>" class="btn btn-outline-primary back-btn" onclick="reloadPage()">Kembali</a>
-        </div>
-        <div class="right-column">
-            <a href="#" onclick="window.print();" class="btn btn-outline-primary print-btn">Cetak SPK</a>
-        </div>
-    </div>
-    <div class="container">
-        <div class="header">
-            <h1>SURAT PERINTAH KERJA</h1>
-        </div>
-        <div class="left-column">
-        <?php
-            include "koneksi.php";
-
-            if (isset($_GET['id_spk_pl'])) {
-            $id_spk_pl = $_GET['id_spk_pl'];
-
-            $sql = "SELECT
-                    tb_spk_pl.tgl_pesanan_pl,
-                    tb_spk_pl.no_spk_pl,
-                    tb_spk_pl.tgl_spk_pl,
-                    tb_spk_pl.no_po,
-                    tb_spk_pl.fee_marketing,
-                    tb_sales_ecat.nama_sales,
-                    tb_perusahaan.nama_perusahaan,
-                    tb_perusahaan.alamat_perusahaan,
-                    tb_provinsi.nama_provinsi
-                FROM
-                    tb_spk_pl
-                JOIN
-                    tb_sales_ecat ON tb_spk_pl.id_sales = tb_sales_ecat.id_sales
-                JOIN
-                    tb_perusahaan ON tb_spk_pl.id_perusahaan = tb_perusahaan.id_perusahaan
-                JOIN
-                    tb_provinsi ON tb_perusahaan.id_provinsi = tb_provinsi.id_provinsi
-                WHERE
-                    tb_spk_pl.id_spk_pl = '$id_spk_pl'";
-
-            $result = mysqli_query($koneksi, $sql);
-
-            if (mysqli_num_rows($result) > 0) {
-                $row = mysqli_fetch_assoc($result);
-                echo '
-                    <div class="left-column">
-                        <p>No. SPK : ' . $row["no_spk_pl"] . '</p>
-                        <p>No. PO : ' . $row["no_po"] . '</p>
-                        <p>Sales : ' . $row["nama_sales"] . '</p>
-                    </div>
-                ';
-            }            
-            } else {
-            echo "Tidak ada data yang ditemukan";
-            }
-
-            mysqli_close($koneksi);
-            ?>
-        </div>
-        <div class="right-column">
-            <p><?php echo "Bekasi, " . date("d F Y"); ?></p>
-        </div>
-        <table>
-            <thead>
-                <tr>
-                    <th scope="col" style="width: 5%;">No</th>
-                    <th scope="col" style="width: 50%;">Nama Produk</th>
-                    <th scope="col" style="width: 15%;">Satuan</th>
-                    <th scope="col" style="width: 15%;">Merk</th>
-                    <th scope="col" style="width: 15%;">Quantity</th>
-                </tr>
-            </thead>
-            <tbody>
+    <div class="print-area">
+        <div class="container">
+            <div class="header">
+                <h1>SURAT PERINTAH KERJA</h1>
+            </div>
+            <div class="left-column">
                 <?php
-                    include "koneksi.php";
-                    // Query untuk mengambil data dari tabel tb_customer
-                    $query = "SELECT 
-                                sr.id_spk_pl,
-                                tps.id_tmp_pl,
-                                tps.id_produk_ecat,
-                                spr.stock, 
-                                tpr.nama_produk, 
-                                tpr.satuan,
-                                tps.qty,
-                                tps.status_tmp,
-                                tpr.harga_produk,
-                                tm.nama_merk  
-                            FROM mandir36_db_ecat_staging.tmp_produk_spk_pl AS tps
-                            LEFT JOIN mandir36_db_ecat_staging.tb_spk_pl AS sr ON sr.id_spk_pl = tps.id_spk_pl
-                            LEFT JOIN mandir36_staging.stock_produk_ecat AS spr ON tps.id_produk_ecat = spr.id_produk_ecat
-                            LEFT JOIN mandir36_staging.tb_produk_ecat AS tpr ON tps.id_produk_ecat = tpr.id_produk_ecat
-                            LEFT JOIN mandir36_staging.tb_merk AS tm ON tpr.id_merk = tm.id_merk 
-                            WHERE sr.id_spk_pl = '$id_spk_pl' AND tps.status_tmp = 1";
+                include "koneksi.php";
+
+                if (isset($_GET['id_spk_pl'])) {
+                    $id_spk_pl = $_GET['id_spk_pl'];
+
+                    $query = "SELECT
+                                tb_spk_pl.no_spk_pl,
+                                tb_spk_pl.tgl_spk_pl,
+                                tb_spk_pl.no_po,
+                                tb_sales_ecat.nama_sales,
+                                tb_perusahaan.nama_perusahaan
+                            FROM
+                                tb_spk_pl
+                            JOIN
+                                tb_sales_ecat ON tb_spk_pl.id_sales = tb_sales_ecat.id_sales
+                            JOIN
+                                tb_perusahaan ON tb_spk_pl.id_perusahaan = tb_perusahaan.id_perusahaan
+                            WHERE
+                                tb_spk_pl.id_spk_pl = '$id_spk_pl'";
                     $result = mysqli_query($koneksi, $query);
 
-                    // Hasil query
-                    $no = 1;
-                    while ($row = mysqli_fetch_assoc($result)) {
-                        echo "<tr>";
-                        echo "<th scope='row'>" . $no++ . "</th>";
-                        echo "<td>" . $row['nama_produk'] . "</td>"; 
-                        echo "<td>" . $row['satuan'] . "</td>";  
-                        echo "<td>" . $row['nama_merk'] . "</td>"; 
-                        echo "<td>" . $row['qty'] . "</td>"; 
-                        echo "</tr>";
+                    // Check if the query returned any rows
+                    if ($result && mysqli_num_rows($result) > 0) {
+                        $row = mysqli_fetch_assoc($result);
+
+                        // Output the fetched values
+                        echo '<div class="left-column" style="line-height: 0.1; margin-bottom: 5px;">
+                            <table style="border: none; width: 100%; font-size: 13px;">
+                                <tbody>
+                                    <tr>
+                                        <td style="border: none; padding: 2px 10px 2px 0; width: 300px;">No. SPK</td>
+                                        <td style="border: none; padding: 2px 10px 2px 0;">:</td>
+                                        <td style="border: none; padding: 9px 9px 9px 0; width: 530px; vertical-align: top;">' .
+                                            $row["no_spk_pl"].
+                                        '</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: none; padding: 2px 10px 2px 0; width: 500px;">Tgl. SPK</td>
+                                        <td style="border: none; padding: 2px 10px 2px 0;">:</td>
+                                        <td style="border: none; padding: 9px 9px 9px 0; width: 530px; vertical-align: top;">' .
+                                            $row["tgl_spk_pl"].
+                                        '</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: none; padding: 2px 10px 2px 0; width: 300px;">ID Paket</td>
+                                        <td style="border: none; padding: 2px 10px 2px 0;">:</td>
+                                        <td style="border: none; padding: 9px 9px 9px 0; width: 530px; vertical-align: top;">' .
+                                            $row["no_po"].
+                                        '</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: none; padding: 2px 10px 2px 0; width: 300px;">Satker</td>
+                                        <td style="border: none; padding: 2px 10px 2px 0;">:</td>
+                                        <td style="border: none; padding: 9px 9px 9px 0; width: 530px; vertical-align: top;">' .
+                                            $row["nama_perusahaan"].
+                                        '</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>';
+                    } else {
+                        echo "No data found for the specified SPK ID.";
                     }
-                    mysqli_close($koneksi);
+                }
                 ?>
-            </tbody>
-        </table>
-        <div class="note">
-        <?php
-            include "koneksi.php";
+            </div>
+            <?php
+                // Lokasi (misal: Bekasi)
+                $lokasi = "Bekasi";
 
-            if (isset($_GET['id_spk_pl'])) {
-            $id_spk_pl = $_GET['id_spk_pl'];
+                // Tanggal (tgl_spk_pl)
+                $tanggal = ""; // inisialisasi tanggal
+                if (isset($_GET['id_spk_pl'])) {
+                    $id_spk_pl = $_GET['id_spk_pl'];
+                    $query = "SELECT tgl_spk_pl FROM tb_spk_pl WHERE id_spk_pl = '$id_spk_pl'";
+                    $result = mysqli_query($koneksi, $query);
+                    if ($result && mysqli_num_rows($result) > 0) {
+                        $row = mysqli_fetch_assoc($result);
+                        $tanggal = $row["tgl_spk_pl"];
+                    }
+                }
 
-            $sql = "SELECT
-                    tb_spk_pl.notes
-                FROM
-                    tb_spk_pl
-                WHERE
-                    tb_spk_pl.id_spk_pl = '$id_spk_pl'";
-
-            $result = mysqli_query($koneksi, $sql);
-
-            if (mysqli_num_rows($result) > 0) {
-                $row = mysqli_fetch_assoc($result);
-                echo '
-                    <div class="column">
-                        <p>Notes : ' . $row["notes"] . '</p>
-                    </div>
-                ';
-            }
-            } 
-
-            mysqli_close($koneksi);
+                echo "<div class=\"right-column\">";
+                echo "<p>$lokasi, $tanggal</p>";
+                echo "</div>";
             ?>
-        </div>
-        <div class="signatures">
-            <p>Mengetahui,</p>
-            <div class="content-img-ttd text-right">
-                <br><br><br>
+            <table>
+                <thead>
+                    <tr>
+                        <th scope="col" style="width: 5%; text-align: center;">No</th>
+                        <th scope="col" style="width: 50%; text-align: center;">Nama Produk</th>
+                        <th scope="col" style="width: 15%; text-align: center;">Satuan</th>
+                        <th scope="col" style="width: 15%; text-align: center;">Merk</th>
+                        <th scope="col" style="width: 15%; text-align: center;">Quantity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                        include "koneksi.php";
+                        // Query untuk mengambil data dari tabel tb_customer
+                        $query = "SELECT 
+                                    sr.id_spk_pl,
+                                    tps.id_tmp_pl,
+                                    tps.id_produk_ecat,
+                                    spr.stock, 
+                                    tpr.nama_produk, 
+                                    tpr.satuan,
+                                    tps.qty,
+                                    tps.status_tmp,
+                                    tpr.harga_produk,
+                                    tm.nama_merk  
+                                FROM mandir36_db_ecat_staging.tmp_produk_spk_pl AS tps
+                                LEFT JOIN mandir36_db_ecat_staging.tb_spk_pl AS sr ON sr.id_spk_pl = tps.id_spk_pl
+                                LEFT JOIN mandir36_staging.stock_produk_ecat AS spr ON tps.id_produk_ecat = spr.id_produk_ecat
+                                LEFT JOIN mandir36_staging.tb_produk_ecat AS tpr ON tps.id_produk_ecat = tpr.id_produk_ecat
+                                LEFT JOIN mandir36_staging.tb_merk AS tm ON tpr.id_merk = tm.id_merk 
+                                WHERE sr.id_spk_pl = '$id_spk_pl' AND tps.status_tmp = 1";
+                        $result = mysqli_query($koneksi, $query);
+
+                        // Hasil query
+                        $no = 1;
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            echo "<tr>";
+                            echo "<th scope='row' style='text-align: center;'>" . $no++ . "</th>"; 
+                            echo "<td style='text-align: left;'>" . $row['nama_produk'] . "</td>";
+                            echo "<td style='text-align: center;'>" . $row['satuan'] . "</td>"; 
+                            echo "<td style='text-align: center;'>" . $row['nama_merk'] . "</td>"; 
+                            echo "<td style='text-align: center;'>" . $row['qty'] . "</td>";
+                            echo "</tr>";
+                        }                            
+                        mysqli_close($koneksi);
+                    ?>
+                </tbody>
+            </table>
+            <div class="note">
+            <?php
+                include "koneksi.php";
+
+                if (isset($_GET['id_spk_pl'])) {
+                $id_spk_pl = $_GET['id_spk_pl'];
+
+                $sql = "
+                        SELECT
+                        tb_spk_pl.notes
+                    FROM
+                        tb_spk_pl
+                    WHERE
+                        tb_spk_pl.id_spk_pl = '$id_spk_pl'
+
+                ";
+
+                $result = mysqli_query($koneksi, $sql);
+
+                if (mysqli_num_rows($result) > 0) {
+                    $row = mysqli_fetch_assoc($result);
+                    echo '
+                        <div class="column">
+                            <p><strong>Notes : ' . $row["notes"] . '</strong></p>
+                        </div>
+                    ';
+                }
+                } 
+
+                mysqli_close($koneksi);
+                ?>
             </div>
-            <div class="content-hormat text-left">
-                <b style="text-decoration: underline;">Purwono</b><br>
-                Kepala Gudang
-            </div>
-        </div>
-        <div class="signatures">
-            <p>Mengetahui,</p>
-            <div class="content-img-ttd text-right">
-                <br><br><br>
-            </div>
-            <div class="content-hormat text-left">
-                <b style="text-decoration: underline;">Lisa</b><br>
-                Penanggung Jawab Teknis
-            </div>
-        </div>
-        <div class="row">
-            &nbsp;&nbsp;&nbsp;
-            <div class="right-column" style="border: 1px solid black; padding: 10px; text-align: left; width: fit-content;">
-                <div class="content-hormat">
-                    <b>Nama Petugas : </b><br>
+            <div class="signatures-container">
+                <div class="signatures">
+                    <p>Mengetahui,</p>
+                    <div class="content-img-ttd text-right">
+                        <br><br><br>
+                    </div>
+                    <div class="content-hormat text-left">
+                        <b style="text-decoration: underline;">Purwono</b><br>
+                        Kepala Gudang
+                    </div>
+                </div>
+                <div class="signatures">
+                    <p>Mengetahui,</p>
+                    <div class="content-img-ttd text-right">
+                        <br><br><br>
+                    </div>
+                    <div class="content-hormat text-left">
+                        <b style="text-decoration: underline;">Lisa</b><br>
+                        Penanggung Jawab Teknis
+                    </div>
+                </div>
+                <div class="signatures">
+                    <div class="content-hormat text-left" style="border: 1px solid #000; padding: 10px; text-align: left; display: inline-block;">
+                        <?php
+                            include "koneksi.php";
+
+                            if (isset($_GET['id_spk_pl'])) {
+                                $id_spk_pl = $_GET['id_spk_pl'];
+
+                                $sql = "SELECT petugas_pl FROM tb_spk_pl WHERE id_spk_pl = '$id_spk_pl'";
+                                $result = mysqli_query($koneksi, $sql);
+
+                                if (mysqli_num_rows($result) > 0) {
+                                    $row = mysqli_fetch_assoc($result);
+                                    echo 'Nama Petugas : ' . $row["petugas_pl"];
+                                }
+                            } 
+
+                            mysqli_close($koneksi);
+                        ?>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </body>
 </html>
+
