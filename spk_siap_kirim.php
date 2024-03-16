@@ -221,6 +221,7 @@
                                             <th scope="col" style="width: 15%;">Tgl. SPK</th>
                                             <th scope="col" style="width: 15%;">Nama Paket</th>
                                             <th scope="col" style="width: 15%;">Nama Sales</th>
+                                            <th scope="col" style="width: 15%;">Satker</th>
                                             <th scope="col" style="width: 15%;">Total SPK</th>
                                             <th scope="col" style="width: 10%;">Aksi</th>
                                         </tr>
@@ -230,11 +231,14 @@
                                             include "koneksi.php";
                                             $query = "SELECT 
                                                         tb_spk_ecat.*, 
-                                                        tb_sales_ecat.nama_sales
+                                                        tb_sales_ecat.nama_sales,
+                                                        tb_perusahaan.nama_perusahaan
                                                     FROM 
                                                         tb_spk_ecat
                                                     LEFT JOIN 
                                                         tb_sales_ecat ON tb_spk_ecat.id_sales = tb_sales_ecat.id_sales
+                                                    LEFT JOIN 
+                                                        tb_perusahaan ON tb_spk_ecat.id_perusahaan = tb_perusahaan.id_perusahaan
                                                     WHERE 
                                                         tb_spk_ecat.status_spk_ecat = 'Siap Kirim'";
                                             $result = mysqli_query($koneksi, $query);
@@ -249,6 +253,7 @@
                                                 echo "<td>" . $row['tgl_spk_ecat'] . "</td>";  
                                                 echo "<td>" . $row['nama_paket'] . "</td>"; 
                                                 echo "<td>" . $row['nama_sales'] . "</td>"; 
+                                                echo "<td>" . $row['nama_perusahaan'] . "</td>"; 
                                                 echo "<td>" . number_format($row['total_spk_ecat'], 0, ',', '.') . "</td>"; 
                                                 echo "<td>
                                                         <a href='detail_produk_spk_siap_kirim.php?id_spk_ecat=" . $row['id_spk_ecat'] . "' class='btn btn-info btn-sm mt-2'>
