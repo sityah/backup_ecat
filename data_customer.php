@@ -175,7 +175,7 @@
                         </div>
                         <div class="row mb-3">
                             <div class="col">
-                                <label class="form-label"><strong>Email *</strong></label>
+                                <label class="form-label"><strong>Email</strong></label>
                                 <input type="text" name="email" class="form-control" pattern=".+@.+" placeholder="name@example.com" required oninvalid="this.setCustomValidity('Please include an \'@\' in the email address')" oninput="this.setCustomValidity('')">
                             </div>
                         </div>

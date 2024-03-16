@@ -222,8 +222,8 @@
                     </div>
                     <div class="row mb-3">
                         <div class="col">
-                            <label class="form-label"><strong>Email *</strong></label>
-                            <input type="text" name="email_sales" class="form-control" pattern=".+@.+" placeholder="name@example.com" oninvalid="this.setCustomValidity('Please include an \'@\' in the email address')" oninput="this.setCustomValidity('')" required>
+                            <label class="form-label"><strong>Email</strong></label>
+                            <input type="text" name="email_sales" class="form-control" pattern=".+@.+" placeholder="name@example.com" oninvalid="this.setCustomValidity('Please include an \'@\' in the email address')" oninput="this.setCustomValidity('')">
                         </div>
                     </div>
                     <input type="hidden" name="id_user" value="<?php echo $_SESSION['tiket_id'] ?>">
