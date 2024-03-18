@@ -492,102 +492,203 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="refreshPage()" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <div class="table-responsive">
-        <table class="table table-striped" id="pl_modal">
-        <thead>
-            <tr class="text-white" style="background-color: #051683;">
-                <th class="text-center p-3" style="width: 5%; color: #ffffff;">No</th>
-                <th class="text-center p-3" style="width: 40%; color: #ffffff;">Nama Produk</th>
-                <th class="text-center p-3" style="width: 15%; color: #ffffff;">Satuan</th>
-                <th class="text-center p-3" style="width: 10%; color: #ffffff;">Merk</th>
-                <th class="text-center p-3" style="width: 20%; color: #ffffff;">Stock</th>
-                <th class="text-center p-3" style="width: 10%; color: #ffffff;">Aksi</th>
-            </tr>
-        </thead>
-            <tbody id="productTableBody">
-                <?php
-                include "koneksi.php";
-                //$id = $_GET['id'];
-                $selected_produk = [];
-               // $id_spk = $id_spk_reg;
-                $no = 1;
-
-                $sql = "SELECT 
-                            COALESCE(tpr.id_produk_ecat, '') AS id_produk,
-                            COALESCE(tpr.nama_produk, '') AS nama_produk,
-                            COALESCE(mr_tpr.nama_merk, '') AS nama_merk,
-                            tpr.satuan,
-                            spr.id_stock_prod_ecat,
-                            spr.stock,
-                            tkp.min_stock, 
-                            tkp.max_stock
-                        FROM stock_produk_ecat AS spr
-                        LEFT JOIN tb_produk_ecat AS tpr ON (tpr.id_produk_ecat = spr.id_produk_ecat)
-                        LEFT JOIN tb_kat_penjualan AS tkp ON (tkp.id_kat_penjualan = spr.id_kat_penjualan)
-                        LEFT JOIN tb_merk AS mr_tpr ON (tpr.id_merk = mr_tpr.id_merk)
-                        WHERE tpr.id_produk_ecat IS NOT NULL
-                            AND tpr.nama_produk IS NOT NULL
-                            AND mr_tpr.nama_merk IS NOT NULL
-                        ORDER BY nama_produk ASC";
-
-                $query = mysqli_query($koneksi2, $sql);
-
-                while ($data = mysqli_fetch_array($query)) {
-                    $id_produk = $data['id_produk'];
-                    $id_produk_substr = substr($id_produk, 0, 2);
-                    $isChecked = in_array($id_produk, $selected_produk);
-                    $isDisabled = false;
-
-                    if ($data['stock'] == 0) {
-                        $isDisabled = true; 
-                    }
-                ?>
-                    <tr>
-                        <td class="text-center text-nowrap"><?php echo $no; ?></td>
-                        <td class="text-nowrap"><?php echo $data['nama_produk']; ?></td>
-                        <td class="text-center text-nowrap">
-                            <?php 
-                            if($id_produk_substr == 'BR'){
-                                echo $data['satuan'];
-                            } else {
-                                echo "Set";
-                            }
-                            ?>
-                        </td>
-                        <td class="text-center text-nowrap"><?php echo $data['nama_merk']; ?></td>
-                        <td class="text-center text-nowrap"><?php echo number_format($data['stock']); ?></td>
-                        <td class="text-center text-nowrap">
+        <!-- Nav pills -->
+        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="pills-set-tab" data-bs-toggle="pill" data-bs-target="#pills-set" type="button" role="tab" aria-controls="pills-set" aria-selected="true"><i class="tf-icons bx bx-layer"></i>  SET</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pills-satuan-tab" data-bs-toggle="pill" data-bs-target="#pills-satuan" type="button" role="tab" aria-controls="pills-satuan" aria-selected="false"><i class="tf-icons bx bx-package"></i>  SATUAN</button>
+            </li>
+        </ul>
+        <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="pills-set" role="tabpanel" aria-labelledby="pills-set-tab">
+                <div class="table-responsive">
+                    <table class="table table-striped" id="pl_modal_set">
+                        <thead>
+                            <tr class="text-white" style="background-color: #051683;">
+                                <th class="text-center p-3" style="width: 5%; color: #ffffff;">No</th>
+                                <th class="text-center p-3" style="width: 40%; color: #ffffff;">Nama Produk</th>
+                                <th class="text-center p-3" style="width: 15%; color: #ffffff;">Satuan</th>
+                                <th class="text-center p-3" style="width: 10%; color: #ffffff;">Merk</th>
+                                <th class="text-center p-3" style="width: 20%; color: #ffffff;">Stock</th>
+                                <th class="text-center p-3" style="width: 10%; color: #ffffff;">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="productTableBody">
                             <?php
-                            // Tambahkan logika PHP untuk memeriksa apakah produk sudah ada dalam tabel tmp_produk_spk_ecat
-                            $query_check_product = "SELECT COUNT(*) as count FROM mandir36_db_ecat_staging.tmp_produk_spk_pl WHERE id_spk_pl = '$id_spk_pl' AND id_produk_ecat = '$id_produk'";
-                            $result_check_product = mysqli_query($koneksi, $query_check_product);
-                            $row_check_product = mysqli_fetch_assoc($result_check_product);
-                            $count = $row_check_product['count'];
+                            include "koneksi.php";
+                            //$id = $_GET['id'];
+                            $selected_produk = [];
+                        // $id_spk = $id_spk_reg;
+                            $no = 1;
 
-                            // Jika produk sudah ada, tambahkan atribut hidden pada button
-                            if ($count > 0) {
-                                $hidden_attribute = "hidden";
-                            } else {
-                                $hidden_attribute = "";
-                            }
+                            $sql = "SELECT 
+                                        COALESCE(tpr.id_produk_ecat) AS id_produk,
+                                        COALESCE(tpr.nama_produk) AS nama_produk,
+                                        COALESCE(mr_tpr.nama_merk) AS nama_merk,
+                                        tpr.satuan,
+                                        spr.id_stock_prod_ecat,
+                                        spr.stock,
+                                        tkp.min_stock, 
+                                        tkp.max_stock
+                                    FROM stock_produk_ecat AS spr
+                                    LEFT JOIN tb_produk_ecat AS tpr ON (tpr.id_produk_ecat = spr.id_produk_ecat)
+                                    LEFT JOIN tb_kat_penjualan AS tkp ON (tkp.id_kat_penjualan = spr.id_kat_penjualan)
+                                    LEFT JOIN tb_merk AS mr_tpr ON (tpr.id_merk = mr_tpr.id_merk)
+                                    WHERE satuan = 'set'
+                                    ORDER BY nama_produk ASC";
+
+                            $query = mysqli_query($koneksi2, $sql);
+
+                            while ($data = mysqli_fetch_array($query)) {
+                                $id_produk = $data['id_produk'];
+                                $id_produk_substr = substr($id_produk, 0, 2);
+                                $isChecked = in_array($id_produk, $selected_produk);
+                                $isDisabled = false;
+
+                                if ($data['stock'] == 0) {
+                                    $isDisabled = true; 
+                                }
                             ?>
-                            <button class="btn-pilih btn btn-primary btn-sm" data-id="<?php echo $id_produk; ?>" data-spk="<?php echo $id_spk_pl; ?>" <?php echo ($isChecked || $isDisabled) ? 'disabled' : ''; echo $hidden_attribute; ?>>Pilih</button>
-                        </td>
-                    </tr>
-                    <?php $no++; ?>
-                <?php } ?>
-            </tbody>
-        </table>
-        <nav aria-label="Page navigation">
-          <ul class="pagination justify-content-center" id="pagination"></ul>
-        </nav>
+                                <tr>
+                                    <td class="text-center text-nowrap"><?php echo $no; ?></td>
+                                    <td class="text-nowrap"><?php echo $data['nama_produk']; ?></td>
+                                    <td class="text-center text-nowrap">
+                                        <?php 
+                                        if($id_produk_substr == 'BR'){
+                                            echo $data['satuan'];
+                                        } else {
+                                            echo "Set";
+                                        }
+                                        ?>
+                                    </td>
+                                    <td class="text-center text-nowrap"><?php echo $data['nama_merk']; ?></td>
+                                    <td class="text-center text-nowrap"><?php echo number_format($data['stock']); ?></td>
+                                    <td class="text-center text-nowrap">
+                                        <?php
+                                        // Tambahkan logika PHP untuk memeriksa apakah produk sudah ada dalam tabel tmp_produk_spk_pl
+                                        $query_check_product = "SELECT COUNT(*) as count FROM mandir36_db_ecat_staging.tmp_produk_spk_pl WHERE id_spk_pl = '$id_spk_pl' AND id_produk_ecat = '$id_produk'";
+                                        $result_check_product = mysqli_query($koneksi, $query_check_product);
+                                        $row_check_product = mysqli_fetch_assoc($result_check_product);
+                                        $count = $row_check_product['count'];
+
+                                        // Jika produk sudah ada, tambahkan atribut hidden pada button
+                                        if ($count > 0) {
+                                            $hidden_attribute = "hidden";
+                                        } else {
+                                            $hidden_attribute = "";
+                                        }
+                                        ?>
+                                        <button class="btn-pilih btn btn-primary btn-sm" data-id="<?php echo $id_produk; ?>" data-spk="<?php echo $id_spk_pl; ?>" <?php echo ($isChecked || $isDisabled) ? 'disabled' : ''; echo $hidden_attribute; ?>>Pilih</button>
+                                    </td>
+                                </tr>
+                                <?php $no++; ?>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                    <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center" id="pagination"></ul>
+                    </nav>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="pills-satuan" role="tabpanel" aria-labelledby="pills-satuan-tab">
+                <div class="table-responsive">
+                    <table class="table table-striped" id="pl_modal_satuan">
+                        <thead>
+                            <tr class="text-white" style="background-color: #051683;">
+                                <th class="text-center p-3" style="width: 5%; color: #ffffff;">No</th>
+                                <th class="text-center p-3" style="width: 40%; color: #ffffff;">Nama Produk</th>
+                                <th class="text-center p-3" style="width: 15%; color: #ffffff;">Satuan</th>
+                                <th class="text-center p-3" style="width: 10%; color: #ffffff;">Merk</th>
+                                <th class="text-center p-3" style="width: 20%; color: #ffffff;">Stock</th>
+                                <th class="text-center p-3" style="width: 10%; color: #ffffff;">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="productTableBody">
+                            <?php
+                            include "koneksi.php";
+                            //$id = $_GET['id'];
+                            $selected_produk = [];
+                        // $id_spk = $id_spk_reg;
+                            $no = 1;
+
+                            $sql = "SELECT 
+                                        COALESCE(tpr.id_produk_ecat) AS id_produk,
+                                        COALESCE(tpr.nama_produk) AS nama_produk,
+                                        COALESCE(mr_tpr.nama_merk) AS nama_merk,
+                                        tpr.satuan,
+                                        spr.id_stock_prod_ecat,
+                                        spr.stock,
+                                        tkp.min_stock, 
+                                        tkp.max_stock
+                                    FROM stock_produk_ecat AS spr
+                                    LEFT JOIN tb_produk_ecat AS tpr ON (tpr.id_produk_ecat = spr.id_produk_ecat)
+                                    LEFT JOIN tb_kat_penjualan AS tkp ON (tkp.id_kat_penjualan = spr.id_kat_penjualan)
+                                    LEFT JOIN tb_merk AS mr_tpr ON (tpr.id_merk = mr_tpr.id_merk)
+                                    WHERE satuan = 'Pcs'
+                                    ORDER BY nama_produk ASC";
+
+                            $query = mysqli_query($koneksi2, $sql);
+
+                            while ($data = mysqli_fetch_array($query)) {
+                                $id_produk = $data['id_produk'];
+                                $id_produk_substr = substr($id_produk, 0, 2);
+                                $isChecked = in_array($id_produk, $selected_produk);
+                                $isDisabled = false;
+
+                                if ($data['stock'] == 0) {
+                                    $isDisabled = true; 
+                                }
+                            ?>
+                                <tr>
+                                    <td class="text-center text-nowrap"><?php echo $no; ?></td>
+                                    <td class="text-nowrap"><?php echo $data['nama_produk']; ?></td>
+                                    <td class="text-center text-nowrap">
+                                        <?php 
+                                        if($id_produk_substr == 'BR'){
+                                            echo $data['satuan'];
+                                        } else {
+                                            echo "Set";
+                                        }
+                                        ?>
+                                    </td>
+                                    <td class="text-center text-nowrap"><?php echo $data['nama_merk']; ?></td>
+                                    <td class="text-center text-nowrap"><?php echo number_format($data['stock']); ?></td>
+                                    <td class="text-center text-nowrap">
+                                        <?php
+                                        // Tambahkan logika PHP untuk memeriksa apakah produk sudah ada dalam tabel tmp_produk_spk_pl
+                                        $query_check_product = "SELECT COUNT(*) as count FROM mandir36_db_ecat_staging.tmp_produk_spk_pl WHERE id_spk_pl = '$id_spk_pl' AND id_produk_ecat = '$id_produk'";
+                                        $result_check_product = mysqli_query($koneksi, $query_check_product);
+                                        $row_check_product = mysqli_fetch_assoc($result_check_product);
+                                        $count = $row_check_product['count'];
+
+                                        // Jika produk sudah ada, tambahkan atribut hidden pada button
+                                        if ($count > 0) {
+                                            $hidden_attribute = "hidden";
+                                        } else {
+                                            $hidden_attribute = "";
+                                        }
+                                        ?>
+                                        <button class="btn-pilih btn btn-primary btn-sm" data-id="<?php echo $id_produk; ?>" data-spk="<?php echo $id_spk_pl; ?>" <?php echo ($isChecked || $isDisabled) ? 'disabled' : ''; echo $hidden_attribute; ?>>Pilih</button>
+                                    </td>
+                                </tr>
+                                <?php $no++; ?>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
       </div>
     </div>
   </div>
 </div>
 <script type="text/javascript">
-    new DataTable('#pl_modal');
+    new DataTable('#pl_modal_set');
+</script>
+<script type="text/javascript">
+    new DataTable('#pl_modal_satuan');
 </script>
 <script>
   $(document).ready(function() {
