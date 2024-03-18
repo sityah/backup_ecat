@@ -143,7 +143,7 @@ if (isset($_GET['id_spk_ecat'])) {
                                     <tr>
                                         <td style="border: none; padding: 2px 10px 2px 0; width: 300px;">Satker</td>
                                         <td style="border: none; padding: 2px 10px 2px 0;">:</td>
-                                        <td style="border: none; padding: 9px 9px 9px 0; width: 530px; vertical-align: top;">' .
+                                        <td style="border: none; padding: 9px 9px 9px 0; width: 600px; vertical-align: top;">' .
                                             $row["nama_perusahaan"].
                                         '</td>
                                     </tr>
