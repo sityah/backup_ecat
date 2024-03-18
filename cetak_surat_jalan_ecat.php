@@ -125,12 +125,38 @@
 
                     if (mysqli_num_rows($result) > 0) {
                         $row = mysqli_fetch_assoc($result);
-                        echo '
-                            <div class="left-column" style="line-height: 0.9;">
-                                <p><strong>No. Invoice : </strong>' . $row["no_inv_ecat"] . '</p>
-                                <p><strong>Tgl. Invoice : </strong>' . $row["tgl_inv_ecat"] . '</p>
-                            </div>
-                        ';
+                        echo '<table style="border: none; width: 100%; font-size: 13px;">
+                                <tbody style="width: 100%;">
+                                <tr>
+                                    <td style="border: none; padding: 2px 5px 2px 0; width: 18%;">No. Invoice</td>
+                                    <td style="border: none; padding: 2px 5px 2px 0; width: 3%;">:</td>
+                                    <td style="border: none; padding: 2px 5px 2px 0; width: 79%; vertical-align: top;">' .
+                                        $row["no_inv_ecat"].
+                                    '</td>
+                                </tr>
+                                <tr>
+                                    <td style="border: none; padding: 2px 5px 2px 0; width: 18%;">Tgl. Invoice</td>
+                                    <td style="border: none; padding: 2px 5px 2px 0; width: 3%;">:</td>
+                                    <td style="border: none; padding: 2px 5px 2px 0; width: 79%; vertical-align: top;">' .
+                                        $row["tgl_inv_ecat"].
+                                    '</td>
+                                </tr>
+                                <tr>
+                                    <td style="border: none; padding: 2px 5px 2px 0; width: 18%;">ID Paket</td>
+                                    <td style="border: none; padding: 2px 5px 2px 0; width: 3%;">:</td>
+                                    <td style="border: none; padding: 2px 5px 2px 0; width: 79%; vertical-align: top;">' .
+                                        $row["no_paket"].
+                                    '</td>
+                                </tr>
+                                <tr>
+                                    <td style="border: none; padding: 2px 5px 2px 0; width: 18%;">Nama Paket</td>
+                                    <td style="border: none; padding: 2px 5px 2px 0; width: 3%;">:</td>
+                                    <td style="border: none; padding: 2px 5px 2px 0; width: 79%; vertical-align: top;">' .
+                                        $row["nama_paket"].
+                                    '</td>
+                                </tr>
+                            </tbody>
+                            </table>';
                     }            
                     } else {
                     echo "Tidak ada data yang ditemukan";
