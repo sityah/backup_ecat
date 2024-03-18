@@ -126,7 +126,7 @@
                     <div class="row mb-3 mt-2">
                         <div class="col">
                             <label class="form-label"><strong>Nama Kota / Kabupaten *</strong></label>
-                            <input type="text" name="nama_kota_kab" class="form-control capitalize" pattern="[A-Za-z]+" required>
+                            <input type="text" name="nama_kota_kab" class="form-control capitalize" required>
                         </div>
                     </div>
                     <div class="modal-footer">
