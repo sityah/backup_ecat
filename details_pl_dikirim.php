@@ -738,7 +738,7 @@
                         <input type="text" id="noResi" name="no_resi" class="form-control" required>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label"><strong>Bukti Terima</strong></label>
+                        <label class="form-label"><strong>Bukti Resi Kirim</strong></label>
                         <input type="file" id="buktiTerima" name="bukti_terima" class="form-control" required>
                     </div>
                 </div>
