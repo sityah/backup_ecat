@@ -213,15 +213,15 @@
                         </div>
                         <div class="tab-content">
                             <div class="tab-pane fade show active" id="navs-justified-messages" role="tabpanel">
-                                <table class="table" id="spk_ecat" style="width:100%">
+                            <table class="table" id="spk_ecat" style="width:100%">
                                     <thead>
                                         <tr>
-                                            <th>No</th>
-                                            <th>No. Invoice</th>
-                                            <th>Tgl. Invoice</th>
-                                            <th>Nama Sales</th>
-                                            <th>Note</th>
-                                            <th>Aksi</th>
+                                            <th style="width: 5%; text-align: center;">No</th>
+                                            <th style="width: 20%; text-align: center;">No. Invoice</th>
+                                            <th style="width: 15%; text-align: center;">Tgl. Invoice</th>
+                                            <th style="width: 15%; text-align: center;">ID Paket</th>
+                                            <th style="width: 35%; text-align: center;">Nama Satker</th>
+                                            <th style="width: 10%; text-align: center;">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -233,6 +233,8 @@
                                                         inv_ecat.tgl_inv_ecat, 
                                                         inv_ecat.notes, 
                                                         tb_sales_ecat.nama_sales, 
+                                                        tb_perusahaan.nama_perusahaan, 
+                                                        tb_spk_ecat.no_paket,
                                                         GROUP_CONCAT(tb_spk_ecat.id_spk_ecat) AS id_spk_ecat,
                                                         GROUP_CONCAT(tb_spk_ecat.no_spk_ecat) AS no_spk_ecat
                                                     FROM 
@@ -241,6 +243,8 @@
                                                         tb_spk_ecat ON inv_ecat.id_inv_ecat = tb_spk_ecat.id_inv_ecat
                                                     LEFT JOIN 
                                                         tb_sales_ecat ON tb_spk_ecat.id_sales = tb_sales_ecat.id_sales
+                                                    LEFT JOIN 
+                                                        tb_perusahaan ON tb_spk_ecat.id_perusahaan = tb_perusahaan.id_perusahaan
                                                     WHERE 
                                                         inv_ecat.status_transaksi = 'Invoice Dibuat'
                                                     GROUP BY 
@@ -252,11 +256,11 @@
                                             $no = 1;
                                             while ($row = mysqli_fetch_assoc($result)) {
                                                 echo "<tr>";
-                                                echo "<td scope='row'>" . $no++ . "</td>";
-                                                echo "<td>" . $row['no_inv_ecat'] . "</td>"; 
-                                                echo "<td>" . $row['tgl_inv_ecat'] . "</td>";  
-                                                echo "<td>" . $row['nama_sales'] . "</td>";
-                                                echo "<td>" . $row['notes'] . "</td>";  
+                                                echo "<td scope='row' style='text-align: center;'>" . $no++ . "</td>";
+                                                echo "<td style='text-align: center;'>" . $row['no_inv_ecat'] . "</td>"; 
+                                                echo "<td style='text-align: center;'>" . $row['tgl_inv_ecat'] . "</td>";  
+                                                echo "<td style='text-align: center;'>" . $row['no_paket'] . "</td>"; 
+                                                echo "<td style='text-align: center;'>" . $row['nama_perusahaan'] . "</td>";
                                                 echo "<td>
                                                         <a href='details_invoice_ecat.php?id_inv_ecat=" . $row['id_inv_ecat'] . "' class='btn btn-info btn-sm mt-2'>
                                                             <i class='bx bx-show'></i>

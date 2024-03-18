@@ -231,15 +231,15 @@
                         </div>
                         <div class="tab-content">
                             <div class="tab-pane fade show active" id="navs-justified-messages" role="tabpanel">
-                                <table class="table" id="spk_ecat" style="width:100%">
+                            <table class="table" id="spk_ecat" style="width:100%">
                                     <thead>
                                         <tr>
-                                            <th>No</th>
-                                            <th>No. Invoice</th>
-                                            <th>Tgl. Invoice</th>
-                                            <th>Nama Sales</th>
-                                            <th>Note</th>
-                                            <th>Aksi</th>
+                                            <th style="width: 5%; text-align: center;">No</th>
+                                            <th style="width: 15%; text-align: center;">No. Invoice</th>
+                                            <th style="width: 15%; text-align: center;">Tgl. Invoice</th>
+                                            <th style="width: 15%; text-align: center;">No. PO</th>
+                                            <th style="width: 40%; text-align: center;">Nama Satker</th>
+                                            <th style="width: 10%; text-align: center;">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -248,13 +248,13 @@
                                             $query = "SELECT inv_pl.id_inv_pl, 
                                                             inv_pl.no_inv_pl, 
                                                             inv_pl.tgl_inv_pl, 
-                                                            inv_pl.notes, 
                                                             GROUP_CONCAT(tb_spk_pl.id_spk_pl) AS id_spk_pl,
                                                             GROUP_CONCAT(tb_spk_pl.no_spk_pl) AS no_spk_pl,
-                                                            GROUP_CONCAT(sales.nama_sales) AS nama_sales
+                                                            GROUP_CONCAT(tb_spk_pl.no_po) AS no_po,
+                                                            GROUP_CONCAT(perusahaan.nama_perusahaan) AS nama_perusahaan
                                                     FROM inv_pl
                                                     LEFT JOIN tb_spk_pl ON inv_pl.id_inv_pl = tb_spk_pl.id_inv_pl
-                                                    LEFT JOIN tb_sales_ecat AS sales ON tb_spk_pl.id_sales = sales.id_sales
+                                                    LEFT JOIN tb_perusahaan AS perusahaan ON tb_spk_pl.id_perusahaan = perusahaan.id_perusahaan
                                                     WHERE inv_pl.status_transaksi = 'Invoice Dibuat'
                                                     GROUP BY inv_pl.id_inv_pl, 
                                                             inv_pl.no_inv_pl, 
@@ -267,11 +267,11 @@
                                             $no = 1;
                                             while ($row = mysqli_fetch_assoc($result)) {
                                                 echo "<tr>";
-                                                echo "<td scope='row'>" . $no++ . "</td>";
-                                                echo "<td>" . $row['no_inv_pl'] . "</td>"; 
-                                                echo "<td>" . $row['tgl_inv_pl'] . "</td>";  
-                                                echo "<td>" . $row['nama_sales'] . "</td>";
-                                                echo "<td>" . $row['notes'] . "</td>";  
+                                                echo "<td scope='row' style='text-align: center;'>" . $no++ . "</td>";
+                                                echo "<td style='text-align: center;'>" . $row['no_inv_pl'] . "</td>"; 
+                                                echo "<td style='text-align: center;'>" . $row['tgl_inv_pl'] . "</td>";  
+                                                echo "<td style='text-align: center;'>" . $row['no_po'] . "</td>";
+                                                echo "<td style='text-align: center;'>" . $row['nama_perusahaan'] . "</td>";
                                                 echo "<td>
                                                         <a href='details_invoice_pl.php?id_inv_pl=" . $row['id_inv_pl'] . "' class='btn btn-info btn-sm mt-2'>
                                                             <i class='bx bx-show'></i>
