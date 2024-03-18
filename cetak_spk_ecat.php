@@ -87,7 +87,7 @@ if (isset($_GET['id_spk_ecat'])) {
             <div class="header">
                 <h1>SURAT PERINTAH KERJA</h1>
             </div>
-            <div class="left-column">
+            <div class="left-column" style="width: 60%; float: left;">
                 <?php
                 include "koneksi.php";
 
@@ -116,40 +116,38 @@ if (isset($_GET['id_spk_ecat'])) {
                         $row = mysqli_fetch_assoc($result);
 
                         // Output the fetched values
-                        echo '<div class="left-column" style="line-height: 0.1; margin-bottom: 5px;">
-                            <table style="border: none; width: 100%; font-size: 13px;">
-                                <tbody>
-                                    <tr>
-                                        <td style="border: none; padding: 2px 10px 2px 0; width: 300px;">No. SPK</td>
-                                        <td style="border: none; padding: 2px 10px 2px 0;">:</td>
-                                        <td style="border: none; padding: 9px 9px 9px 0; width: 530px; vertical-align: top;">' .
-                                            $row["no_spk_ecat"].
-                                        '</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="border: none; padding: 2px 10px 2px 0; width: 350px;">Tgl. SPK</td>
-                                        <td style="border: none; padding: 2px 10px 2px 0;">:</td>
-                                        <td style="border: none; padding: 9px 9px 9px 0; width: 530px; vertical-align: top;">' .
-                                            $row["tgl_spk_ecat"].
-                                        '</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="border: none; padding: 2px 10px 2px 0; width: 300px;">ID Paket</td>
-                                        <td style="border: none; padding: 2px 10px 2px 0;">:</td>
-                                        <td style="border: none; padding: 9px 9px 9px 0; width: 530px; vertical-align: top;">' .
-                                            $row["no_paket"].
-                                        '</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="border: none; padding: 2px 10px 2px 0; width: 300px;">Satker</td>
-                                        <td style="border: none; padding: 2px 10px 2px 0;">:</td>
-                                        <td style="border: none; padding: 9px 9px 9px 0; width: 700px; vertical-align: top;">' .
-                                            $row["nama_perusahaan"].
-                                        '</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>';
+                        echo '<table style="border: none; width: 100%; font-size: 13px;">
+                                <tbody style="width: 100%;">
+                                <tr>
+                                    <td style="border: none; padding: 2px 5px 2px 0; width: 18%;">No. SPK</td>
+                                    <td style="border: none; padding: 2px 5px 2px 0; width: 3%;">:</td>
+                                    <td style="border: none; padding: 2px 5px 2px 0; width: 79%; vertical-align: top;">' .
+                                        $row["no_spk_ecat"].
+                                    '</td>
+                                </tr>
+                                <tr>
+                                    <td style="border: none; padding: 2px 5px 2px 0; width: 18%;">Tgl. SPK</td>
+                                    <td style="border: none; padding: 2px 5px 2px 0; width: 3%;">:</td>
+                                    <td style="border: none; padding: 2px 5px 2px 0; width: 79%; vertical-align: top;">' .
+                                        $row["tgl_spk_ecat"].
+                                    '</td>
+                                </tr>
+                                <tr>
+                                    <td style="border: none; padding: 2px 5px 2px 0; width: 18%;">ID Paket</td>
+                                    <td style="border: none; padding: 2px 5px 2px 0; width: 3%;">:</td>
+                                    <td style="border: none; padding: 2px 5px 2px 0; width: 79%; vertical-align: top;">' .
+                                        $row["no_paket"].
+                                    '</td>
+                                </tr>
+                                <tr>
+                                    <td style="border: none; padding: 2px 5px 2px 0; width: 18%;">Satker</td>
+                                    <td style="border: none; padding: 2px 5px 2px 0; width: 3%;">:</td>
+                                    <td style="border: none; padding: 2px 5px 2px 0; width: 79%; vertical-align: top;">' .
+                                        $row["nama_perusahaan"].
+                                    '</td>
+                                </tr>
+                            </tbody>
+                            </table>';
                     } else {
                         echo "No data found for the specified SPK ID.";
                     }
