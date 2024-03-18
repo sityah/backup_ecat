@@ -251,7 +251,7 @@ $spkuuid2 = "SPKPL$tahun2$bulan2$uuid2$hari2";
             var currentDate = new Date();
 
             // Mendapatkan tanggal dalam format (dd/mm/yyyy, 00:00)
-            var formattedDate = ("0" + currentDate.getDate()).slice(-2) + "/" + ("0" + (currentDate.getMonth() + 1)).slice(-2) + "/" + currentDate.getFullYear() + ", " + ("0" + currentDate.getHours()).slice(-2) + ":" + ("0" + currentDate.getMinutes()).slice(-2);
+            var formattedDate = ("0" + currentDate.getDate()).slice(-2) + "/" + ("0" + (currentDate.getMonth() + 1)).slice(-2) + "/" + currentDate.getFullYear();
 
             // Mengatur nilai input tanggal SPK form pertama dan form kedua menjadi tanggal sekarang
             inputTglspk.value = formattedDate;
