@@ -615,12 +615,13 @@
             <table class="table table-striped" id="ecat_modal">
                 <thead>
                     <tr>
-                        <th scope="col" style="width: 5%;">No</th>
-                        <th scope="col" style="width: 15%;">No. SPK</th>
-                        <th scope="col" style="width: 15%;">Tgl. SPK</th>
-                        <th scope="col" style="width: 15%;">Nama Sales</th>
-                        <th scope="col" style="width: 15%;">Total SPK</th>
-                        <th scope="col" style="width: 15%;">Pilih</th>
+                        <th scope="col" style="width: 2%; text-align: center;">No</th>
+                        <th scope="col" style="width: 10%; text-align: center;">No. SPK</th>
+                        <th scope="col" style="width: 15%; text-align: center;">Tgl. SPK</th>
+                        <th scope="col" style="width: 25%; text-align: center;">Nama Satker</th>
+                        <th scope="col" style="width: 15%; text-align: center;">ID Paket</th>
+                        <th scope="col" style="width: 18%; text-align: center;">Nama Paket</th>
+                        <th scope="col" style="width: 10%; text-align: center;">Pilih</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -636,13 +637,17 @@
                                         tb_spk_ecat.id_inv_ecat, 
                                         tb_spk_ecat.no_spk_ecat, 
                                         tb_spk_ecat.tgl_spk_ecat,
-                                        tb_spk_ecat.total_spk_ecat,  
+                                        tb_spk_ecat.no_paket,
+                                        tb_spk_ecat.nama_paket,    
                                         tb_spk_ecat.status_spk_ecat,
-                                        tb_sales_ecat.nama_sales
+                                        tb_sales_ecat.nama_sales,
+                                        tb_perusahaan.nama_perusahaan
                                     FROM 
                                         tb_spk_ecat
                                     JOIN 
                                         tb_sales_ecat ON tb_spk_ecat.id_sales = tb_sales_ecat.id_sales
+                                    JOIN 
+                                        tb_perusahaan ON tb_spk_ecat.id_perusahaan = tb_perusahaan.id_perusahaan
                                     WHERE 
                                         tb_spk_ecat.id_sales IN (SELECT id_sales FROM tb_spk_ecat WHERE id_inv_ecat = '$id_inv_ecat')
                                         AND tb_spk_ecat.status_spk_ecat = 'Siap Kirim'";
@@ -652,12 +657,13 @@
                             $no = 1;
                             while ($rowSPK = mysqli_fetch_assoc($resultSPK)) {
                                 echo "<tr>";
-                                echo "<td>" . $no++ . "</td>";
-                                echo "<td>" . $rowSPK['no_spk_ecat'] . "</td>";
-                                echo "<td>" . $rowSPK['tgl_spk_ecat'] . "</td>";
-                                echo "<td>" . $rowSPK['nama_sales'] . "</td>";
-                                echo "<td>" . number_format($rowSPK['total_spk_ecat'], 0, ',', '.') . "</td>";
-                                echo "<td><input type='checkbox' class='form-check-input spk-checkbox' data-sales='" . $rowSPK['id_sales'] . "' data-no-inv='" . $id_inv_ecat . "' data-spk='" . $rowSPK['id_spk_ecat'] . "'></td>";
+                                echo "<td style='width: 2%; text-align: center;'>" . $no++ . "</td>";
+                                echo "<td style='width: 10%; text-align: center;'>" . $rowSPK['no_spk_ecat'] . "</td>";
+                                echo "<td style='width: 15%; text-align: center;'>" . $rowSPK['tgl_spk_ecat'] . "</td>";
+                                echo "<td style='width: 25%; text-align: center;'>" . $rowSPK['nama_perusahaan'] . "</td>";
+                                echo "<td style='width: 15%; text-align: center;'>" . $rowSPK['no_paket'] . "</td>";
+                                echo "<td style='width: 18%; text-align: center;'>" . $rowSPK['nama_paket'] . "</td>";
+                                echo "<td style='width: 10%; text-align: center;'><input type='checkbox' class='form-check-input spk-checkbox' data-sales='" . $rowSPK['id_sales'] . "' data-no-inv='" . $id_inv_ecat . "' data-spk='" . $rowSPK['id_spk_ecat'] . "'></td>";
                                 echo "</tr>";
                             }
                         } else {
