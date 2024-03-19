@@ -130,6 +130,9 @@
                                     mysqli_close($koneksi);
                                 ?>
                             </div>
+                            <div class="mt-4 text-center">
+                                <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#modalEditTgl">Edit Tgl Invoice</button>
+                            </div>
 
                             <form id="insertForm" method="post" action="proses/proses_kirim_pl.php">
                                 <input type="hidden" id="no_inv_pl" name="no_inv_pl" value="<?php echo $id_inv_pl; ?>">
@@ -829,3 +832,30 @@
     }
 </script>
 
+<!-- Modal Edit Tgl Invoice -->
+<div class="modal fade" id="modalEditTgl" tabindex="-1" aria-labelledby="modalEditTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalEditTitle">Edit Tanggal Invoice</h5>
+            </div>
+            <form action="proses/edit_details_pl.php" method="POST">
+                <input type="hidden" name="id_inv_pl" value="<?php echo $id_inv_pl; ?>">
+                <div class="modal-body">
+                    <div class="mb-3 mt-2">
+                        <div class="row">
+                            <div class="col mb-3">
+                                <label class="form-label">Tanggal Invoice</label>
+                                <input type="date" id="tgl_inv_pl" name="tgl_inv_pl" class="form-control" value="<?php echo $tgl_inv_pl; ?>">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" name="edit-tgl">Save changes</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

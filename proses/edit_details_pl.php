@@ -52,6 +52,45 @@
             // Tutup koneksi ke database
             mysqli_close($koneksi);
         }
+
+        if(isset($_POST['edit-tgl'])) {
+            $tgl_inv_pl = $_POST['tgl_inv_pl'];
+            $id_inv_pl = $_POST['id_inv_pl'];
+
+            // Update tgl_inv_pl di tabel inv_pl
+            $query_update_inv_pl = "UPDATE inv_pl SET tgl_inv_pl = '$tgl_inv_pl' WHERE id_inv_pl = '$id_inv_pl'";
+            
+            // Eksekusi query untuk mengupdate tgl_inv_pl di tabel inv_pl
+            $result_update_inv_pl = mysqli_query($koneksi, $query_update_inv_pl);
+
+            if($result_update_inv_pl) {
+                echo "<script>
+                        Swal.fire({
+                            title: 'Success!',
+                            text: 'Berhasil Mengedit Tanggal!',
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location='../details_invoice_pl.php?id_inv_pl=$id_inv_pl';
+                            }
+                        });
+                      </script>";
+            } else {
+                echo "<script>
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'Gagal Mengedit Tanggal!',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location='../details_invoice_pl.php?id_inv_pl=$id_inv_pl';
+                            }
+                        });
+                      </script>";
+            }
+        }
     ?>
 </body>
 </html>
