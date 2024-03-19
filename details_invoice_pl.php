@@ -203,7 +203,7 @@
                                                                                     <?php
                                                                                         include "koneksi.php";
                                                                                         $query_ekspedisi = "SELECT id_ekspedisi, nama_ekspedisi FROM ekspedisi";
-                                                                                        $result_ekspedisi = mysqli_query($koneksi, $query_ekspedisi);
+                                                                                        $result_ekspedisi = mysqli_query($koneksi2, $query_ekspedisi);
                                                                                         while ($data_ekspedisi = mysqli_fetch_array($result_ekspedisi)) {
                                                                                             echo '<option value="' . $data_ekspedisi['id_ekspedisi'] . '">' . $data_ekspedisi['nama_ekspedisi'] . '</option>';
                                                                                         }
