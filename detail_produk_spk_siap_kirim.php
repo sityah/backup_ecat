@@ -159,10 +159,11 @@
                                                     <tr>
                                                         <th scope="col" style="width: 5%;">No</th>
                                                         <th scope="col" style="width: 40%;">Nama Produk</th>
-                                                        <th scope="col" style="width: 15%;">Satuan</th>
-                                                        <th scope="col" style="width: 15%;">Merk</th>
-                                                        <th scope="col" style="width: 15%;">Harga</th>
+                                                        <th scope="col" style="width: 10%;">Satuan</th>
+                                                        <th scope="col" style="width: 10%;">Merk</th>
+                                                        <th scope="col" style="width: 10%;">Harga</th>
                                                         <th scope="col" style="width: 10%;">Quantity</th>
+                                                        <th scope="col" style="width: 15%;">Total Harga</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -178,6 +179,7 @@
                                                                     tpr.satuan,
                                                                     tps.qty,
                                                                     tps.status_trx,
+                                                                    tps.total_harga,
                                                                     tpr.harga_produk,
                                                                     tm.nama_merk
                                                                 FROM 
@@ -203,6 +205,7 @@
                                                             echo "<td>" . $row['satuan'] . "</td>";  
                                                             echo "<td>" . $row['nama_merk'] . "</td>"; 
                                                             echo "<td>" . number_format($row['harga_produk'], 0, ',', '.') . "</td>"; 
+                                                            echo "<td>" . number_format($row['total_harga'], 0, ',', '.') . "</td>"; 
                                                             echo "<td>" . $row['qty'] . "</td>"; 
                                                             echo "</tr>";
                                                         }
