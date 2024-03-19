@@ -23,30 +23,49 @@
         margin: auto;
     }
     .container {
-        width: 95%;
+        width: 100%;
         margin: auto;
     }
-    .header {
-        text-align: right;
-        margin-bottom: 20px;
+    .left-column-header-img {
+        width: 70%;
+        float: left;
+        margin-bottom: 35px;
+    }
+    .right-column-header {
+        width: 28%;
+        float: right;
+        text-align: center;
+        margin-bottom: 22px;
+        border: 1px solid #000; 
+        padding: 10px; 
+        box-sizing: border-box; 
+    }
+    .right-column-header h1 {
+        font-size: 18px; 
+        margin: 0; 
+        display: inline-block; 
+        border-bottom: 2px solid #000;
+    }
+    .right-column-header p {
+        text-align: left; 
+        margin: 5px 0; 
+        font-size: 11px;
     }
     .left-column {
         width: 60%;
         float: left;
+        margin-bottom: 5px;
     }
     .right-column {
         width: 40%;
         float: right;
         text-align: right;
+        margin-bottom: 5px;
     }
     table {
         width: 100%;
         border-collapse: collapse;
         margin-bottom: 5px;
-    }
-    .left-column-terbilang {
-        width: 100%;
-        float: left;
     }
     th, td {
         border: 1px solid #000;
@@ -58,19 +77,73 @@
         padding: 5px; 
         display: inline-block; 
         margin-bottom: 20px;
-        border-radius: 8px;
     }
     .info-box p {
         text-align: left; 
         margin: 5px;
+    }
+    .keterangan {
+        border: 1px solid #000; 
+        padding: 10px 10px 5px 10px; 
+        text-align: justify;
+    }
+    .keterangan p {
+        font-size: 12px; 
+        margin: 5px 0;
+    }
+    .keterangan b {
+        font-size: 13px;
+        margin: 0; 
+    }
+    .signatures-container {
+        display: flex;
+        justify-content: center;
+    }
+    .signatures {
+        width: 50%; 
+        margin-right: 20px; 
+        text-align: center; 
+        margin-bottom: 30px; 
     }
 </style>
 </head>
 <body>
     <div class="print-area">
         <div class="container">
-            <div class="header">
+            <img src="assets/img/header-kma.jpg" alt="Header" class="left-column-header-img">
+            <div class="right-column-header">
                 <h1>SURAT JALAN</h1>
+                <?php
+                    include "koneksi.php";
+
+                    if (isset($_GET['id_inv_ecat'])) {
+                        $id_inv_ecat = $_GET['id_inv_ecat'];
+
+                        $sql = "SELECT 
+                                    inv_ecat.no_inv_ecat,
+                                    status_kirim.tgl_kirim
+                                FROM 
+                                    inv_ecat
+                                LEFT JOIN 
+                                    status_kirim ON inv_ecat.id_inv_ecat = status_kirim.id_inv_ecat
+                                WHERE 
+                                    inv_ecat.id_inv_ecat = '$id_inv_ecat'";
+
+                        $result = mysqli_query($koneksi, $sql);
+
+                        if (mysqli_num_rows($result) > 0) {
+                            $row = mysqli_fetch_assoc($result);
+                            echo "<p>No. Invoice : " . $row['no_inv_ecat'] . "</p>";
+                            echo "<p>Tgl. Kirim : " . $row['tgl_kirim'] . "</p>";
+                        } else {
+                            echo "Tidak ada data yang ditemukan";
+                        }
+                    } else {
+                        echo "Tidak ada data yang ditemukan";
+                    }
+
+                    mysqli_close($koneksi);
+                ?>
             </div>
             <div class="left-column">
                 <?php
@@ -128,31 +201,16 @@
                         echo '<table style="border: none; width: 100%; font-size: 13px;">
                                 <tbody style="width: 100%;">
                                 <tr>
-                                    <td style="border: none; padding: 2px 5px 2px 0; width: 18%;">No. Invoice</td>
-                                    <td style="border: none; padding: 2px 5px 2px 0; width: 3%;">:</td>
+                                    <td style="border: none; padding: 2px 5px 2px 0; width: 18%;"><strong>Kepada :</strong></td>
+                                </tr>
+                                <tr>
                                     <td style="border: none; padding: 2px 5px 2px 0; width: 79%; vertical-align: top;">' .
-                                        $row["no_inv_ecat"].
+                                        $row["nama_perusahaan"].
                                     '</td>
                                 </tr>
                                 <tr>
-                                    <td style="border: none; padding: 2px 5px 2px 0; width: 18%;">Tgl. Invoice</td>
-                                    <td style="border: none; padding: 2px 5px 2px 0; width: 3%;">:</td>
                                     <td style="border: none; padding: 2px 5px 2px 0; width: 79%; vertical-align: top;">' .
-                                        $row["tgl_inv_ecat"].
-                                    '</td>
-                                </tr>
-                                <tr>
-                                    <td style="border: none; padding: 2px 5px 2px 0; width: 18%;">ID Paket</td>
-                                    <td style="border: none; padding: 2px 5px 2px 0; width: 3%;">:</td>
-                                    <td style="border: none; padding: 2px 5px 2px 0; width: 79%; vertical-align: top;">' .
-                                        $row["no_paket"].
-                                    '</td>
-                                </tr>
-                                <tr>
-                                    <td style="border: none; padding: 2px 5px 2px 0; width: 18%;">Nama Paket</td>
-                                    <td style="border: none; padding: 2px 5px 2px 0; width: 3%;">:</td>
-                                    <td style="border: none; padding: 2px 5px 2px 0; width: 79%; vertical-align: top;">' .
-                                        $row["nama_paket"].
+                                        $row["alamat_perusahaan"].
                                     '</td>
                                 </tr>
                             </tbody>
@@ -170,11 +228,8 @@
                 if (mysqli_num_rows($result) > 0) {
                     echo '
                         <div class="info-box">
-                            <p><strong>Kepada :</strong></p>
-                            <p>' . $row["nama_perusahaan"] . '</p>
-                            <p>' . $row["alamat_perusahaan"] . '</p>
-                        </div>
-                    ';
+                            <p><strong>ID Paket :</strong> ' . $row["no_paket"] . '</p>
+                        </div>';
                 }            
                 ?>
             </div>
@@ -228,7 +283,7 @@
                             echo "<tr>";
                             echo "<th scope='row' style='text-align: center;'>" . $no++ . "</th>";
                             echo "<td style='text-align: left;'>" . $row['nama_produk'] . "</td>"; 
-                            echo "<td style='text-align: center;'>" . $row['qty'] . "</td>";  
+                            echo "<td style='text-align: center;'>" . $row['qty'] . " " . $row['satuan'] . "</td>";  
                             echo "</tr>";
                             
                         }
@@ -238,24 +293,33 @@
                 </tbody>
             </table>
             </div>
+            <br><br>
+            <div class="keterangan">
+                <b style="font-size: 13px;">Keterangan :</b>
+                <p>1. Barang tersebut diatas telah diterima dalam keadaan baik dan bagus.</p>
+                <p>2. Barang tersebut di atas apabila dikembalikan/retur dalam keadaan baik dan berfungsi dalam waktu 7 hari terhitung dari tanggal penerimaan barang.</p>
+            </div>
             <br><br><br>
-            <div>
-                <table style="width: 100%; border: none; margin-top: 30px;">
-                    <thead>
-                        <tr>
-                            <th scope="col" style="width: 34%; text-align: center; border: none; vertical-align: top;">Disetujui oleh,</th>
-                            <th scope="col" style="width: 33%; text-align: center; border: none; vertical-align: top;">Diantar oleh,</th>
-                            <th scope="col" style="width: 33%; text-align: center; border: none; vertical-align: top;">Diterima oleh,</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td style="text-align: center; height: 100px; border: none;">____________</td>
-                            <td style="text-align: center; height: 100px; border: none;">____________</td>
-                            <td style="text-align: center; height: 100px; border: none;">____________</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="signatures-container">
+                <div class="signatures">
+                    <p>Disetujui oleh,</p>
+                    <div class="content-img-ttd text-right">
+                        <br><br><br>
+                    </div>
+                    <div class="content-hormat text-left">
+                        <b style="text-decoration: underline;">Lisa</b><br>
+                        Penanggung Jawab Teknis
+                    </div>
+                </div>
+                <div class="signatures">
+                    <p>Diterima oleh,</p>
+                    <div class="content-img-ttd text-right">
+                        <br><br><br>
+                    </div>
+                    <div class="content-hormat text-left">
+                        <b>________________</b><br>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
