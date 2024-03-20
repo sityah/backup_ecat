@@ -368,9 +368,17 @@
             $(this).lightGallery({
                 dynamic: true,
                 dynamicEl: [{
-                    src: $(this).data('src') // URL gambar yang akan ditampilkan
+                    src: $(this).data('src') 
                 }]
             });
+        });
+        // Menampilkan kembali modal bukti terima setelah menutup lightGallery
+        $(document).on('onCloseAfter.lg', function(event){
+            $('#modalBuktiTerima').modal('show');
+            var button = $(event.relatedTarget); 
+            var idInvEcat = '<?php echo $id_inv_ecat ?>'; 
+            var imgSrc = 'uploads/' + idInvEcat + '.png'; 
+            $('#buktiTerimaImg').attr('src', imgSrc).attr('data-src', imgSrc); 
         });
     </script>
 
