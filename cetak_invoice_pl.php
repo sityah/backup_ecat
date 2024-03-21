@@ -23,19 +23,40 @@
         margin: auto;
     }
     .container {
-        width: 95%;
+        width: 100%;
         margin: auto;
     }
-    .header {
-        text-align: right;
-        margin-bottom: 20px;
+    .left-column-header-img {
+        width: 67%;
+        float: left;
+        margin-bottom: 50px;
+    }
+    .right-column-header {
+        width: 30%;
+        float: right;
+        text-align: center;
+        margin-bottom: 22px;
+        border: 1px solid #000; 
+        padding: 10px; 
+        box-sizing: border-box; 
+    }
+    .right-column-header h1 {
+        font-size: 18px; 
+        margin: 0; 
+        display: inline-block; 
+        border-bottom: 2px solid #000;
+    }
+    .right-column-header p {
+        text-align: left; 
+        margin: 3px 0; 
+        font-size: 11px;
     }
     .left-column {
-        width: 60%;
+        width: 65%;
         float: left;
     }
     .right-column {
-        width: 40%;
+        width: 35%;
         float: right;
         text-align: right;
     }
@@ -58,29 +79,69 @@
         padding: 5px; 
         display: inline-block; 
         margin-bottom: 20px;
-        border-radius: 8px;
     }
     .info-box p {
         text-align: left; 
         margin: 5px;
     }
-    .info-box-metode {
-        width: 160px; 
-        margin-top: 2px;
-        border: 1px solid #000;
-        padding: 8px; 
-        border-radius: 6px;
+    .keterangan {
+        border: 1px solid #000; 
+        padding: 10px 10px 5px 10px; 
+        text-align: justify;
     }
-    .info-box-metode p {
-        margin: 5px 0; 
+    .keterangan p {
+        font-size: 12px; 
+        margin: 3px 0;
+    }
+    .keterangan b {
+        font-size: 13px;
+        margin: 0; 
+    }
+    .signatures-container {
+        display: flex;
+        justify-content: left;
+    }
+    .signatures {
+        width: 20%; 
+        margin-right: 20px; 
+        text-align: center; 
+        margin-bottom: 30px; 
     }
 </style>
 </head>
 <body>
     <div class="print-area">
         <div class="container">
-            <div class="header">
+            <img src="assets/img/header-kma.jpg" alt="Header" class="left-column-header-img">
+            <div class="right-column-header">
                 <h1>INVOICE</h1>
+                <?php
+                    include "koneksi.php";
+
+                    if (isset($_GET['id_inv_pl'])) {
+                        $id_inv_pl = $_GET['id_inv_pl'];
+
+                        $sql = "SELECT *
+                                FROM 
+                                    inv_pl
+                                WHERE 
+                                    inv_pl.id_inv_pl = '$id_inv_pl'";
+
+                        $result = mysqli_query($koneksi, $sql);
+
+                        if (mysqli_num_rows($result) > 0) {
+                            $row = mysqli_fetch_assoc($result);
+                            echo "<p>No. Invoice : " . $row['no_inv_pl'] . "</p>";
+                            echo "<p>Tgl. Invoice : " . $row['tgl_inv_pl'] . "</p>";
+                        } else {
+                            echo "Tidak ada data yang ditemukan";
+                        }
+                    } else {
+                        echo "Tidak ada data yang ditemukan";
+                    }
+
+                    mysqli_close($koneksi);
+                ?>
             </div>
             <div class="left-column">
                 <?php
@@ -111,7 +172,7 @@
                             FROM
                                 inv_pl
                             LEFT JOIN
-                                tb_spk_pl ON inv_pl.id_inv_pl = tb_spk_pl.id_inv_pl -- Menggunakan id_inv_pl dari inv_pl
+                                tb_spk_pl ON inv_pl.id_inv_pl = tb_spk_pl.id_inv_pl 
                             LEFT JOIN
                                 tb_sales_ecat ON tb_spk_pl.id_sales = tb_sales_ecat.id_sales
                             LEFT JOIN
@@ -135,13 +196,9 @@
                     if (mysqli_num_rows($result) > 0) {
                         $row = mysqli_fetch_assoc($result);
                         echo '
-                            <div class="left-column" style="line-height: 0.9;">
-                                <p><strong>No. Invoice : </strong>' . $row["no_inv_pl"] . '</p>
-                                <p><strong>Tgl. Invoice : </strong>' . $row["tgl_inv_pl"] . '</p>
-                                <p><strong>Nama Sales : </strong>' . $row["nama_sales"] . '</p>
-                                <p><strong>No. PO : </strong>' . $row["no_po"] . '</p>
-                            </div>
-                        ';
+                            <div class="info-box">
+                                <p><strong>No. PO :</strong> ' . $row["no_po"] . '</p>
+                            </div>';
                     }            
                     } else {
                     echo "Tidak ada data yang ditemukan";
@@ -296,30 +353,68 @@
                 </tbody>
             </table>
             </div>
-            <br><br><br>
-            <div class="info-box-metode">
-                <p><strong>Metode Pembayaran :</strong></p>
-                <p>- Transfer Bank BCA</p>
-                <p>- No. Rek : 086468867</p>
-                <p>- Atas Nama : Lasino</p>
-            </div>
-            <div>
-                <table style="width: 100%; border: none; margin-top: 30px;">
-                    <thead>
-                        <tr>
-                            <th scope="col" style="width: 34%; text-align: center; border: none; vertical-align: top;">Disetujui oleh,</th>
-                            <th scope="col" style="width: 33%; text-align: center; border: none; vertical-align: top;">Diantar oleh,</th>
-                            <th scope="col" style="width: 33%; text-align: center; border: none; vertical-align: top;">Diterima oleh,</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td style="text-align: center; height: 100px; border: none;">____________</td>
-                            <td style="text-align: center; height: 100px; border: none;">____________</td>
-                            <td style="text-align: center; height: 100px; border: none;">____________</td>
-                        </tr>
-                    </tbody>
+            <br>
+            <div class="keterangan">
+                <b style="font-size: 13px;">Keterangan :</b>
+                <p>1. Barang tersebut diatas telah diterima dalam keadaan baik dan bagus.</p>
+                <p>2. Barang tersebut di atas apabila dikembalikan/retur dalam keadaan baik dan berfungsi dalam waktu 7 hari terhitung dari tanggal penerimaan barang.</p>
+                <p>3. Pembayaran :</p>
+                <table style="width:100%; margin-bottom: 0;">
+                    <tr>
+                        <td style="width:50%; vertical-align: center; border: none;">
+                            <p style="margin-top: 0; margin-bottom: 0; padding: 1px; padding-left: 8px;">
+                                <strong style="width: 80px; display: inline-block;">Nama Bank</strong><strong>: BANK MANDIRI</strong>
+                            </p>
+                            <p style="margin-top: 0; margin-bottom: 0; padding: 1px; padding-left: 8px;">
+                                <strong style="width: 80px; display: inline-block;">No. Rek</strong><strong>: 156 00 8888 993 8</strong>
+                            </p>
+                            <p style="margin-top: 0; margin-bottom: 0; padding: 1px; padding-left: 8px;">
+                                <strong style="width: 80px; display: inline-block;">Atas Nama</strong><strong>: PT. KARSA MANDIRI ALKESINDO</strong>
+                            </p>
+                        </td>
+                        <td style="width:50%; vertical-align: center; border: none;">
+                            <p style="margin-top: 0; margin-bottom: 0; padding: 1px; padding-left: 8px;">
+                                <strong style="width: 80px; display: inline-block;">Nama Bank</strong><strong>: BANK BCA</strong>
+                            </p>
+                            <p style="margin-top: 0; margin-bottom: 0; padding: 1px; padding-left: 8px;">
+                                <strong style="width: 80px; display: inline-block;">No. Rek</strong><strong>: 521 155 1888</strong>
+                            </p>
+                            <p style="margin-top: 0; margin-bottom: 0; padding: 1px; padding-left: 8px;">
+                                <strong style="width: 80px; display: inline-block;">Atas Nama</strong><strong>: PT. KARSA MANDIRI ALKESINDO</strong>
+                            </p>
+                        </td>
+                    </tr>
                 </table>
+            </div>
+            <br>
+            <div class="signatures-container">
+                <div class="signatures">
+                    <p>Mengetahui :</p>
+                    <div class="content-img-ttd text-right">
+                        <br><br><br>
+                    </div>
+                    <div class="content-hormat text-left">
+                        <b>H. Lasino</b>
+                    </div>
+                </div>
+                <div class="signatures">
+                    <p>Disetujui oleh :</p>
+                    <div class="content-img-ttd text-right">
+                        <br><br><br>
+                    </div>
+                    <div class="content-hormat text-left">
+                        <b>Lisa Ayu F</b>
+                    </div>
+                </div>
+                <div class="signatures">
+                    <p>Diterima oleh :</p>
+                    <div class="content-img-ttd text-right">
+                        <br><br><br>
+                    </div>
+                    <div class="content-hormat text-left">
+                        <b>________________</b><br>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
