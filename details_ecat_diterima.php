@@ -288,22 +288,44 @@
     <div class="modal fade" id="konfirmasiModal" tabindex="-1" aria-labelledby="konfirmasiModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <form id="insertForm" method="post" action="proses/proses_transaksi_selesai.php">
-                    <input type="hidden" name="id_inv_ecat" value="<?php echo $id_inv_ecat; ?>">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="konfirmasiModalLabel">Konfirmasi Perubahan Status</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <input type="hidden" name="id_inv_ecat" value="<?php echo $id_inv_ecat; ?>">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="konfirmasiModalLabel">Konfirmasi Perubahan Status</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Apakah anda yakin ingin menyelesaikan pesanan ini?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-primary" onclick="tampilkanUploadModal()">Transaksi Selesai</button>
+                    <button type="button" class="btn btn-primary" onclick="tampilkanKomplainModal()">Komplain</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Upload BAST -->
+    <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="konfirmasiModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+            <form id="insertForm" method="post" action="proses/proses_transaksi_selesai.php" enctype="multipart/form-data">
+                <input type="hidden" name="id_inv_ecat" value="<?php echo $id_inv_ecat; ?>">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="konfirmasiModalLabel">Selesaikan Transaksi</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-2">
+                        <label class="form-label"><strong>Upload BAST</strong></label>
+                        <input type="file" id="nama_file" name="nama_file" class="form-control" required>
                     </div>
-                    <div class="modal-body">
-                        Apakah anda yakin ingin menyelesaikan pesanan ini?
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary">Transaksi Selesai</button>
-                        <button type="button" class="btn btn-primary" onclick="tampilkanKomplainModal()">Komplain</button>
-                    </div>
-                    </div>
-                </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </div>
+            </form>
+            </div>
         </div>
     </div>
 
@@ -313,10 +335,25 @@
             $('#konfirmasiModal').modal('show');
         }
 
-        // Fungsi untuk mengirimkan formulir setelah konfirmasi
-        function kirimForm() {
-            document.getElementById('insertForm').submit();
+        // Fungsi untuk menampilkan modal upload gambar
+        function tampilkanUploadModal() {
             $('#konfirmasiModal').modal('hide');
+            $('#uploadModal').modal('show');
+        }
+
+        // Fungsi untuk menutup modal upload gambar dan mengirimkan formulir
+        function kirimForm() {
+            // Lakukan pengecekan apakah gambar sudah diunggah
+            var gambar = document.getElementById('gambar');
+            if (gambar.files.length === 0) {
+                // Jika gambar belum diunggah, tampilkan pesan kesalahan
+                alert('Anda harus mengunggah gambar terlebih dahulu.');
+                return; 
+            }
+            
+            // Jika gambar sudah diunggah, kirim formulir
+            document.getElementById('uploadForm').submit();
+            $('#uploadModal').modal('hide');
         }
     </script>
 
