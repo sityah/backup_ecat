@@ -184,7 +184,7 @@
                 var newSPKNumber = latestINVNumber + 1;
 
                 // Format nomor SPK baru hanya dengan mengganti angka di bagian depan
-                var formattedNoSPK = ("000" + newSPKNumber).slice(-3) + "/INV/ECAT/" + getRomanNumeral(currentMonth) + "/" + currentYear;
+                var formattedNoSPK = ("000" + newSPKNumber).slice(-3) + "/KMA/ECAT/" + getRomanNumeral(currentMonth) + "/" + currentYear;
 
                 // Menetapkan nilai nomor SPK pada input form
                 inputNoSPK.value = formattedNoSPK;
