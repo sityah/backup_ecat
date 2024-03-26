@@ -267,6 +267,7 @@
                                                         <button type="button" class="btn btn-outline-primary" onclick="printInvoice('pdf')">PDF</button>
                                                         <button type="button" class="btn btn-outline-primary" onclick="printInvoice('kwitansi')">Kwitansi</button>
                                                         <button type="button" class="btn btn-outline-primary" onclick="printInvoice('surat jalan')">Surat Jalan</button>
+                                                        <button type="button" class="btn btn-outline-primary" id="btnUbahStatus" data-inv="<?php echo $id_inv_pl; ?>" data-bs-toggle="modal" data-bs-target="#konfirmasiModal">Ubah Status</button>
                                                     </div>
                                                     <!-- Modal Ubah Driver -->
                                                     <div class="modal fade" id="editNamaPetugasModal" tabindex="-1" aria-labelledby="inputNamaPetugasModalLabel" aria-hidden="true">
@@ -541,6 +542,26 @@
             </div>
         </div>
     </div>
+    <form action="proses/proses_inv_pl_diterima.php" method="POST">
+    <!-- Modal Konfirmasi -->
+        <div class="modal fade" id="konfirmasiModal" tabindex="-1" aria-labelledby="konfirmasiModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <input type="hidden" name="id_inv_pl" value="<?php echo $id_inv_pl; ?>">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="konfirmasiModalLabel">Konfirmasi Perubahan Status</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Apakah benar pesanan telah diterima?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Ya, Pesanan Telah Diterima</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
 
     <?php include "page/script.php"; ?>
 
