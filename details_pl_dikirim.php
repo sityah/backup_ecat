@@ -54,21 +54,21 @@
                                                     status_kirim.dikirim_oleh,
                                                     status_kirim.penanggung_jawab
                                                 FROM
-                                                    inv_pl
+                                                    mandir36_db_ecat_staging.inv_pl
                                                 LEFT JOIN
-                                                    tb_spk_pl ON inv_pl.id_inv_pl = tb_spk_pl.id_inv_pl 
+                                                    mandir36_db_ecat_staging.tb_spk_pl ON inv_pl.id_inv_pl = tb_spk_pl.id_inv_pl 
                                                 LEFT JOIN
-                                                    tb_sales_ecat ON tb_spk_pl.id_sales = tb_sales_ecat.id_sales
+                                                    mandir36_db_ecat_staging.tb_sales_ecat ON tb_spk_pl.id_sales = tb_sales_ecat.id_sales
                                                 LEFT JOIN
-                                                    tb_perusahaan ON tb_spk_pl.id_perusahaan = tb_perusahaan.id_perusahaan
+                                                    mandir36_db_ecat_staging.tb_perusahaan ON tb_spk_pl.id_perusahaan = tb_perusahaan.id_perusahaan
                                                 LEFT JOIN
-                                                    tb_provinsi ON tb_perusahaan.id_provinsi = tb_provinsi.id_provinsi
+                                                    mandir36_db_ecat_staging.tb_provinsi ON tb_perusahaan.id_provinsi = tb_provinsi.id_provinsi
                                                 LEFT JOIN
-                                                    status_kirim ON inv_pl.id_inv_pl = status_kirim.id_inv_ecat
+                                                    mandir36_db_ecat_staging.status_kirim ON inv_pl.id_inv_pl = status_kirim.id_inv_ecat
                                                 LEFT JOIN
-                                                    tb_driver ON status_kirim.id_driver = tb_driver.id_driver
+                                                    mandir36_db_ecat_staging.tb_driver ON status_kirim.id_driver = tb_driver.id_driver
                                                 LEFT JOIN
-                                                    ekspedisi ON status_kirim.id_ekspedisi = ekspedisi.id_ekspedisi
+                                                    mandir36_staging.ekspedisi ON status_kirim.id_ekspedisi = ekspedisi.id_ekspedisi
                                                 WHERE
                                                     inv_pl.id_inv_pl = '$id_inv_pl' AND
                                                     tb_spk_pl.status_spk_pl = 'Dikirim'
