@@ -249,7 +249,8 @@
                 if (mysqli_num_rows($result) > 0) {
                     echo '
                         <div class="info-box">
-                            <p><strong>ID Paket :</strong> ' . $row["no_paket"] . '</p>
+                            <p><strong style="width: 75px; display: inline-block;">ID Paket</strong>: ' . $row["no_paket"] . '</p>
+                            <p><strong style="width: 75px; display: inline-block;">Nama Paket</strong>: ' . $row["nama_paket"] . '</p>
                         </div>';
                 }            
                 ?>
