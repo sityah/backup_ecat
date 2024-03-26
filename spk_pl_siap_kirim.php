@@ -271,7 +271,7 @@
                                                     LEFT JOIN 
                                                         tb_perusahaan ON tb_spk_pl.id_perusahaan = tb_perusahaan.id_perusahaan
                                                     WHERE 
-                                                        tb_spk_pl.status_spk_pl = 'Siap Kirim";
+                                                        tb_spk_pl.status_spk_pl = 'Siap Kirim'";
                                             $result = mysqli_query($koneksi, $query);
 
                                             // Hasil query
