@@ -107,11 +107,40 @@
         text-align: center; 
         margin-bottom: 30px; 
     }
+    .top-buttons {
+        text-align: center;
+        margin-bottom: 20px; 
+    }
+    .top-buttons button {
+        margin: 0 2px;
+        box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.4); 
+        padding: 8px 16px; 
+        font-size: 14px; 
+        border-radius: 5px; 
+        border: none;
+    }
+    .top-buttons button:nth-child(1) {
+        background-color: orange; 
+        color: white; 
+    }
+    .top-buttons button:nth-child(2) {
+        background-color: red; 
+        color: white; 
+    }
+    @media print {
+        .top-buttons {
+            display: none;
+        }
+    }
 </style>
 </head>
 <body>
     <div class="print-area">
         <div class="container">
+            <div class="top-buttons">
+                <button onclick="window.print()">Print</button>
+                <button onclick="window.history.back()">Kembali</button>
+            </div>
             <img src="assets/img/header-kma.jpg" alt="Header" class="left-column-header-img">
             <div class="right-column-header">
                 <h1>INVOICE</h1>
