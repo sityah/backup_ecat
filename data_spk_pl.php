@@ -18,7 +18,7 @@
             <div class="layout-page">
                 <?php include "page/nav-header.php"; ?>
                 <div class="content-wrapper">
-                    <div class="container-xxl flex-grow-1 container-p-y">
+                    <div class="container-fluid flex-grow-1 container-p-y">
                     <div class="nav-align-top mb-4">
                     <div class="tab-content" style="margin-bottom: 20px;">
                         <button type="button" class="btn btn-secondary" onclick="window.location.href='form_create_spk.php';">

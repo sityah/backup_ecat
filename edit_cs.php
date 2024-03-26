@@ -23,7 +23,7 @@
             <div class="layout-page">
                 <?php include "page/nav-header.php"; ?>
                 <!-- Button trigger modal -->
-                <div class="container-xxl flex-grow-1 container-p-y">
+                <div class="container-fluid flex-grow-1 container-p-y">
                     <main id="main" class="main">
                         <section>
                             <div class="card p-3">

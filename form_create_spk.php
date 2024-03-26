@@ -38,7 +38,7 @@ $spkuuid2 = "SPKPL$tahun2$bulan2$uuid2$hari2";
             <div class="layout-page">
                 <?php include "page/nav-header.php"; ?>
                 <div class="content-wrapper">
-                    <div class="container-xxl flex-grow-1 container-p-y">
+                    <div class="container-fluid flex-grow-1 container-p-y">
                     <main id="main" class="main">
                         <section>
                         <!-- FORM SPK E-CATALOG -->

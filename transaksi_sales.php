@@ -27,7 +27,7 @@
             <div class="layout-page">
                 <?php include "page/nav-header.php"; ?>
                 <div class="content-wrapper">
-                    <div class="container-xxl flex-grow-1 container-p-y">
+                    <div class="container-fluid flex-grow-1 container-p-y">
                         <div class="card mb-4">
                             <h5 class="card-header"><b>Transaksi E-Cat Sales</b></h5>
                             <div class="card-body">

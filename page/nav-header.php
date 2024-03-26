@@ -15,7 +15,7 @@
 <?php
 // Fungsi untuk menghasilkan breadcrumb dinamis
 function generateBreadcrumb() {
-    echo '<nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">';
+    echo '<nav class="layout-navbar container-fluid navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">';
     echo '<ol class="breadcrumb mb-0 p-0 ms-0">';
     echo '<li class="breadcrumb-item"><a href="index.php">Beranda</a></li>';
 

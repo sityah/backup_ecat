@@ -23,7 +23,7 @@
             <div class="layout-page">
                 <?php include "page/nav-header.php"; ?>
                 <div class="content-wrapper">
-                    <div class="container-xxl flex-grow-1 container-p-y">
+                    <div class="container-fluid flex-grow-1 container-p-y">
                         <div class="card">
                             <h5 class="card-header">Data Provinsi</h5>
                             <div class="card-body">

@@ -1,4 +1,4 @@
-<nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
+<nav class="layout-navbar container-fluid navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
             <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
               <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
                 <i class="bx bx-menu bx-sm"></i>
@@ -94,7 +94,7 @@
 <div class="content-wrapper">
             <!-- Content -->
 
-            <div class="container-xxl flex-grow-1 container-p-y">
+            <div class="container-fluid flex-grow-1 container-p-y">
               <div class="row">
                 <div class="col-lg-8 mb-4 order-0">
                   <div class="card">
@@ -192,7 +192,7 @@
                         <div id="growthChart"></div>
                         <div class="text-center fw-semibold pt-3 mb-2">62% Company Growth</div>
 
-                        <div class="d-flex px-xxl-4 px-lg-2 p-4 gap-xxl-3 gap-lg-1 gap-3 justify-content-between">
+                        <div class="d-flex px-fluid-4 px-lg-2 p-4 gap-fluid-3 gap-lg-1 gap-3 justify-content-between">
                           <div class="d-flex">
                             <div class="me-2">
                               <span class="badge bg-label-primary p-2"><i class="bx bx-dollar text-primary"></i></span>

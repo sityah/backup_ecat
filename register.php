@@ -14,7 +14,7 @@
 </head>
 <!-- Content -->
 
-<div class="container-xxl">
+<div class="container-fluid">
     <div class="authentication-wrapper authentication-basic container-p-y">
         <div class="authentication-inner">
             <!-- Register Card -->
