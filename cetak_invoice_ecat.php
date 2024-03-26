@@ -245,64 +245,6 @@
                 ?>
             </div>
             <div>
-            <div class="right-column">
-                <?php
-                    include "koneksi.php";
-
-                    if (isset($_GET['id_inv_ecat'])) {
-                    $id_inv_ecat = $_GET['id_inv_ecat'];
-
-                    $sql = "SELECT
-                                inv_ecat.total_inv_ecat
-                            FROM
-                                inv_ecat
-                            LEFT JOIN
-                                tb_spk_ecat ON inv_ecat.id_inv_ecat = tb_spk_ecat.id_inv_ecat 
-                            WHERE
-                                inv_ecat.id_inv_ecat = '$id_inv_ecat'";
-
-                    $result = mysqli_query($koneksi, $sql);
-
-                    if (mysqli_num_rows($result) > 0) {
-                        $row = mysqli_fetch_assoc($result);
-                        $formatted_total = 'Rp ' . number_format($row["total_inv_ecat"], 0, '', '.');
-                        echo '
-                        ';
-                        // Fungsi konversi angka menjadi terbilang
-                        function terbilang($angka) {
-                            $bilangan = ['', 'Satu', 'Dua', 'Tiga', 'Empat', 'Lima', 'Enam', 'Tujuh', 'Delapan', 'Sembilan', 'Sepuluh', 'Sebelas'];
-                            if ($angka < 12) {
-                                return $bilangan[$angka];
-                            } elseif ($angka < 20) {
-                                return $bilangan[$angka - 10] . ' Belas';
-                            } elseif ($angka < 100) {
-                                return $bilangan[floor($angka / 10)] . ' Puluh ' . $bilangan[$angka % 10];
-                            } elseif ($angka < 200) {
-                                return 'Seratus ' . terbilang($angka - 100);
-                            } elseif ($angka < 1000) {
-                                return terbilang(floor($angka / 100)) . ' Ratus ' . terbilang($angka % 100);
-                            } elseif ($angka < 2000) {
-                                return 'Seribu ' . terbilang($angka - 1000);
-                            } elseif ($angka < 1000000) {
-                                return terbilang(floor($angka / 1000)) . ' Ribu ' . terbilang($angka % 1000);
-                            } elseif ($angka < 1000000000) {
-                                return terbilang(floor($angka / 1000000)) . ' Juta ' . terbilang($angka % 1000000);
-                            } elseif ($angka < 1000000000000) {
-                                return terbilang(floor($angka / 1000000000)) . ' Milyar ' . terbilang($angka % 1000000000);
-                            } elseif ($angka < 1000000000000000) {
-                                return terbilang(floor($angka / 1000000000000)) . ' Trilyun ' . terbilang($angka % 1000000000000);
-                            }
-                }
-
-                    $total_terbilang = terbilang((int)$row["total_inv_ecat"]);
-                    }                                      
-                    } else {
-                    echo "Tidak ada data yang ditemukan";
-                    }
-
-                    mysqli_close($koneksi);
-                ?>
-            </div>
             <table>
                 <thead>
                     <tr>
@@ -315,6 +257,44 @@
                 </thead>
                 <tbody>
                     <?php
+                        function terbilang($angka) {
+                            $bilangan = array(
+                                '',
+                                'satu',
+                                'dua',
+                                'tiga',
+                                'empat',
+                                'lima',
+                                'enam',
+                                'tujuh',
+                                'delapan',
+                                'sembilan',
+                                'sepuluh',
+                                'sebelas'
+                            );
+                            if ($angka < 12) {
+                                return $bilangan[$angka];
+                            } elseif ($angka < 20) {
+                                return terbilang($angka - 10) . ' belas';
+                            } elseif ($angka < 100) {
+                                return terbilang($angka / 10) . ' puluh ' . terbilang($angka % 10);
+                            } elseif ($angka < 200) {
+                                return ' seratus ' . terbilang($angka - 100);
+                            } elseif ($angka < 1000) {
+                                return terbilang($angka / 100) . ' ratus ' . terbilang($angka % 100);
+                            } elseif ($angka < 2000) {
+                                return ' seribu ' . terbilang($angka - 1000);
+                            } elseif ($angka < 1000000) {
+                                return terbilang($angka / 1000) . ' ribu ' . terbilang($angka % 1000);
+                            } elseif ($angka < 1000000000) {
+                                return terbilang($angka / 1000000) . ' juta ' . terbilang($angka % 1000000);
+                            }
+                        }
+
+                        function capitalizeEachWord($str) {
+                            return ucwords(strtolower($str));
+                        }
+
                         include "koneksi.php";
                         // Query untuk mengambil data dari tabel tb_customer
                         $query = "SELECT 
@@ -364,12 +344,31 @@
                         }
                         // Menampilkan baris grand total
                         echo "<tr>";
-                        echo "<th colspan='4' style='text-align:right;'>Grand Total :</th>";
+                        echo "<th colspan='4' style='text-align:right;'>Sub Total </th>";
                         echo "<td style='text-align:right;'><strong>Rp " . number_format($grand_total, 0, ',', '.') . "</strong></td>";
                         echo "</tr>";
 
+                        // Hitung PPN
+                        $ppn = ($grand_total * 11) / 100;
+
                         echo "<tr>";
-                        echo "<th colspan='5' style='text-align:center; padding-left: 10px;'>\"$total_terbilang Rupiah\"</th>";
+                        echo "<th colspan='4' style='text-align:right;'>PPN 11% </th>";
+                        echo "<td style='text-align:right;'><strong>Rp " . number_format($ppn, 0, ',', '.') . "</strong></td>";
+                        echo "</tr>";
+
+                        // Hitung Total Faktur
+                        $total_faktur = $grand_total + $ppn;
+
+                        echo "<tr>";
+                        echo "<th colspan='4' style='text-align:right;'>Total Faktur </th>";
+                        echo "<td style='text-align:right;'><strong>Rp " . number_format($total_faktur, 0, ',', '.') . "</strong></td>";
+                        echo "</tr>";
+
+                        // Mengonversi total_faktur menjadi terbilang
+                        $total_faktur_terbilang = capitalizeEachWord(terbilang($total_faktur));
+
+                        echo "<tr>";
+                        echo "<th colspan='5' style='text-align:center; padding-left: 10px;'>\"" . $total_faktur_terbilang . " Rupiah\"</th>";
                         echo "</tr>";
 
                         mysqli_close($koneksi);
