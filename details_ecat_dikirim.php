@@ -108,6 +108,11 @@
                                             echo '<td>' . $row["nama_paket"] . '</td>';
                                             echo '</tr>';
                                             echo '<tr>';
+                                            echo '<td class="mb-3" style="width: 180px">ID Paket</td>';
+                                            echo '<td class="p-2 py-0">:</td>';
+                                            echo '<td>' . $row["no_paket"] . '</td>';
+                                            echo '</tr>';
+                                            echo '<tr>';
                                             echo '<td class="mb-3" style="width: 180px">Sales</td>';
                                             echo '<td class="p-2 py-0">:</td>';
                                             echo '<td>' . $row["nama_sales"] . '</td>';
