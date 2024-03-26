@@ -118,6 +118,21 @@
                 <?php
                     include "koneksi.php";
 
+                    $bulan = array(
+                        "January" => "Januari",
+                        "February" => "Februari",
+                        "March" => "Maret",
+                        "April" => "April",
+                        "May" => "Mei",
+                        "June" => "Juni",
+                        "July" => "Juli",
+                        "August" => "Agustus",
+                        "September" => "September",
+                        "October" => "Oktober",
+                        "November" => "November",
+                        "December" => "Desember"
+                    );
+
                     if (isset($_GET['id_inv_pl'])) {
                         $id_inv_pl = $_GET['id_inv_pl'];
 
@@ -131,8 +146,15 @@
 
                         if (mysqli_num_rows($result) > 0) {
                             $row = mysqli_fetch_assoc($result);
+                            // Mengubah format tanggal
+                            $tgl_inv_pl = date_create($row['tgl_inv_pl']);
+                            $formatted_day = date_format($tgl_inv_pl, "d");
+                            $formatted_month = date_format($tgl_inv_pl, "F");
+                            $formatted_year = date_format($tgl_inv_pl, "Y");
+                            // Menggunakan array asosiatif untuk mengubah nama bulan ke bahasa Indonesia
+                            $formatted_month_indonesia = $bulan[$formatted_month];
                             echo "<p>No. Invoice : " . $row['no_inv_pl'] . "</p>";
-                            echo "<p>Tgl. Invoice : " . $row['tgl_inv_pl'] . "</p>";
+                            echo "<p>Tgl. Invoice : " . $formatted_day . " " . $formatted_month_indonesia . " " . $formatted_year . "</p>";
                         } else {
                             echo "Tidak ada data yang ditemukan";
                         }

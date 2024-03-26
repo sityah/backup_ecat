@@ -116,6 +116,21 @@
                 <?php
                     include "koneksi.php";
 
+                    $bulan = array(
+                        "January" => "Januari",
+                        "February" => "Februari",
+                        "March" => "Maret",
+                        "April" => "April",
+                        "May" => "Mei",
+                        "June" => "Juni",
+                        "July" => "Juli",
+                        "August" => "Agustus",
+                        "September" => "September",
+                        "October" => "Oktober",
+                        "November" => "November",
+                        "December" => "Desember"
+                    );
+
                     if (isset($_GET['id_inv_ecat'])) {
                         $id_inv_ecat = $_GET['id_inv_ecat'];
 
@@ -133,8 +148,14 @@
 
                         if (mysqli_num_rows($result) > 0) {
                             $row = mysqli_fetch_assoc($result);
+                            // Mengubah format tanggal
+                            $tgl_kirim = date_create($row['tgl_kirim']);
+                            $formatted_day = date_format($tgl_kirim, "d");
+                            $formatted_month = date_format($tgl_kirim, "F");
+                            $formatted_year = date_format($tgl_kirim, "Y");
+                            $formatted_month_indonesia = $bulan[$formatted_month];
                             echo "<p>No. Invoice : " . $row['no_inv_ecat'] . "</p>";
-                            echo "<p>Tgl. Kirim : " . $row['tgl_kirim'] . "</p>";
+                            echo "<p>Tgl. Kirim : " . $formatted_day . " " . $formatted_month_indonesia . " " . $formatted_year . "</p>";
                         } else {
                             echo "Tidak ada data yang ditemukan";
                         }
