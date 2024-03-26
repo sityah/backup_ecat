@@ -114,7 +114,7 @@
                                             echo '<tr>';
                                             echo '<td class="mb-3" style="width: 180px">Fee Marketing</td>';
                                             echo '<td class="p-2 py-0">:</td>';
-                                            echo '<td>' . $row["fee_marketing"] . '</td>';
+                                            echo '<td>' . $row["fee_marketing"] . '%'. '</td>';
                                             echo '</tr>';
                                             echo '</table>';
                                             echo '</div>';
