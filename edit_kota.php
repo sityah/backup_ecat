@@ -59,7 +59,7 @@
                                                     <input type="hidden" name="id_kota_kab" value="<?php echo $data['id_kota_kab']; ?>">
                                                     <div class="form-group">
                                                         <label for="namaKota" class="form-label">Nama Kota</label>
-                                                        <input type="text" class="form-control capitalize" id="namaKota" name="nama_kota_kab" pattern="[A-Za-z]+" value="<?php echo $data['nama_kota_kab']; ?>">
+                                                        <input type="text" class="form-control capitalize" id="namaKota" name="nama_kota_kab" value="<?php echo $data['nama_kota_kab']; ?>">
                                                     </div>
                                                     <div id="selectData" class="mt-3">
                                                         <!-- Provinsi -->
