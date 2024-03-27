@@ -14,7 +14,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <style>
         .btn.badge {
-            margin-top: 10px;
+            margin-bottom: 20px;
         }
     </style>
 </head>
