@@ -14,7 +14,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <style>
         .btn.badge {
-            margin-top: 40px;
+            margin-bottom: 20px;
         }
     </style>
 </head>
@@ -272,37 +272,7 @@
                                                         <button type="button" class="btn btn-outline-primary" onclick="printInvoice('kwitansi')">Kwitansi</button>
                                                         <button type="button" class="btn btn-outline-primary" onclick="printInvoice('surat jalan')">Surat Jalan</button>
                                                         <button type="button" class="btn btn-outline-primary" id="btnUbahStatus" data-inv="<?php echo $id_inv_pl; ?>" data-bs-toggle="modal" data-bs-target="#konfirmasiModal">Ubah Status</button>
-                                                        <?php
-                                                            include "koneksi.php";
-
-                                                            $query_spk_id = "SELECT tb_spk_pl.id_spk_pl
-                                                                            FROM inv_pl 
-                                                                            LEFT JOIN tb_spk_pl ON inv_pl.id_inv_pl = tb_spk_pl.id_inv_pl
-                                                                            WHERE tb_spk_pl.id_inv_pl = '$id_inv_pl'";
-                                                            $result_spk_id = mysqli_query($koneksi, $query_spk_id);
-                                                            $nama_petugas_array = array(); 
-
-                                                            // Hasil query untuk mendapatkan semua nama petugas yang terkait dengan no_inv_pl
-                                                            while ($row_spk_id = mysqli_fetch_assoc($result_spk_id)) {
-                                                                $id_inv_pl = $row_spk_id['id_spk_pl'];
-                                                                
-                                                                // Mengambil nama petugas dari tb_spk_pl berdasarkan id_spk_pl
-                                                                $query_petugas = "SELECT petugas_pl FROM tb_spk_pl WHERE id_spk_pl = '$id_inv_pl'";
-                                                                $result_petugas = mysqli_query($koneksi, $query_petugas);
-                                                                $row_petugas = mysqli_fetch_assoc($result_petugas);
-                                                                $nama_petugas_array[] = $row_petugas['petugas_pl']; 
-                                                            }
-
-                                                            // Menghapus duplikat dan menggabungkan nama petugas dalam satu string
-                                                            $nama_petugas_unique = implode(", ", array_unique($nama_petugas_array));
-
-                                                            // Menampilkan badge dengan nama petugas
-                                                            echo "<button type='button' class='btn btn-secondary badge'>";
-                                                            echo "<i class='bx bxs-user'></i> <b>Petugas : $nama_petugas_unique</b>";
-                                                            echo "</button>";
-
-                                                            mysqli_close($koneksi);
-                                                        ?>
+                                                        
                                                     </div>
                                                     <!-- Modal Ubah Driver -->
                                                     <div class="modal fade" id="editNamaPetugasModal" tabindex="-1" aria-labelledby="inputNamaPetugasModalLabel" aria-hidden="true">
@@ -502,6 +472,37 @@
                                                     ?>
                                                     
                                                 </div>
+                                                <?php
+                                                    include "koneksi.php";
+
+                                                    $query_spk_id = "SELECT tb_spk_pl.id_spk_pl
+                                                                    FROM inv_pl 
+                                                                    LEFT JOIN tb_spk_pl ON inv_pl.id_inv_pl = tb_spk_pl.id_inv_pl
+                                                                    WHERE tb_spk_pl.id_inv_pl = '$id_inv_pl'";
+                                                    $result_spk_id = mysqli_query($koneksi, $query_spk_id);
+                                                    $nama_petugas_array = array(); 
+
+                                                    // Hasil query untuk mendapatkan semua nama petugas yang terkait dengan no_inv_pl
+                                                    while ($row_spk_id = mysqli_fetch_assoc($result_spk_id)) {
+                                                        $id_inv_pl = $row_spk_id['id_spk_pl'];
+                                                        
+                                                        // Mengambil nama petugas dari tb_spk_pl berdasarkan id_spk_pl
+                                                        $query_petugas = "SELECT petugas_pl FROM tb_spk_pl WHERE id_spk_pl = '$id_inv_pl'";
+                                                        $result_petugas = mysqli_query($koneksi, $query_petugas);
+                                                        $row_petugas = mysqli_fetch_assoc($result_petugas);
+                                                        $nama_petugas_array[] = $row_petugas['petugas_pl']; 
+                                                    }
+
+                                                    // Menghapus duplikat dan menggabungkan nama petugas dalam satu string
+                                                    $nama_petugas_unique = implode(", ", array_unique($nama_petugas_array));
+
+                                                    // Menampilkan badge dengan nama petugas
+                                                    echo "<button type='button' class='btn btn-secondary badge'>";
+                                                    echo "<i class='bx bxs-user'></i> <b>Petugas : $nama_petugas_unique</b>";
+                                                    echo "</button>";
+
+                                                    mysqli_close($koneksi);
+                                                ?>
                                                 <table class="table table-striped" id="selectedProductsTable" style="width:100%">
                                                     <thead>
                                                         <tr>
