@@ -278,39 +278,39 @@
                                                         <button type="button" class="btn btn-outline-primary" onclick="printInvoice('kwitansi')">Kwitansi</button>
                                                         <button type="button" class="btn btn-outline-primary" onclick="printInvoice('surat jalan')">Surat Jalan</button>
                                                         <button type="button" class="btn btn-outline-primary" id="btnUbahStatus" data-inv="<?php echo $id_inv_ecat; ?>" data-bs-toggle="modal" data-bs-target="#konfirmasiModal">Ubah Status</button>
-                                                        
+                                                        <?php
+                                                            include "koneksi.php";
+
+                                                            $query_spk_id = "SELECT tb_spk_ecat.id_spk_ecat 
+                                                                            FROM inv_ecat 
+                                                                            LEFT JOIN tb_spk_ecat ON inv_ecat.id_inv_ecat = tb_spk_ecat.id_inv_ecat 
+                                                                            WHERE tb_spk_ecat.id_inv_ecat = '$id_inv_ecat'";
+                                                            $result_spk_id = mysqli_query($koneksi, $query_spk_id);
+                                                            $nama_petugas_array = array(); 
+
+                                                            // Hasil query untuk mendapatkan semua nama petugas yang terkait dengan no_inv_ecat
+                                                            while ($row_spk_id = mysqli_fetch_assoc($result_spk_id)) {
+                                                                $spkId = $row_spk_id['id_spk_ecat'];
+                                                                
+                                                                // Mengambil nama petugas dari tb_spk_ecat berdasarkan id_spk_ecat
+                                                                $query_petugas = "SELECT petugas_ecat FROM tb_spk_ecat WHERE id_spk_ecat = '$spkId'";
+                                                                $result_petugas = mysqli_query($koneksi, $query_petugas);
+                                                                $row_petugas = mysqli_fetch_assoc($result_petugas);
+                                                                $nama_petugas_array[] = $row_petugas['petugas_ecat']; 
+                                                            }
+
+                                                            // Menghapus duplikat dan menggabungkan nama petugas dalam satu string
+                                                            $nama_petugas_unique = implode(", ", array_unique($nama_petugas_array));
+
+                                                            // Menampilkan badge dengan nama petugas
+                                                            echo "<button type='button' class='btn btn-secondary badge'>";
+                                                            echo "<i class='bx bxs-user'></i> <b>Petugas : $nama_petugas_unique</b>";
+                                                            echo "</button>";
+
+                                                            mysqli_close($koneksi);
+                                                        ?>
                                                     </div>
-                                                    <?php
-                                                        include "koneksi.php";
-
-                                                        $query_spk_id = "SELECT tb_spk_ecat.id_spk_ecat 
-                                                                        FROM inv_ecat 
-                                                                        LEFT JOIN tb_spk_ecat ON inv_ecat.id_inv_ecat = tb_spk_ecat.id_inv_ecat 
-                                                                        WHERE tb_spk_ecat.id_inv_ecat = '$id_inv_ecat'";
-                                                        $result_spk_id = mysqli_query($koneksi, $query_spk_id);
-                                                        $nama_petugas_array = array(); 
-
-                                                        // Hasil query untuk mendapatkan semua nama petugas yang terkait dengan no_inv_ecat
-                                                        while ($row_spk_id = mysqli_fetch_assoc($result_spk_id)) {
-                                                            $spkId = $row_spk_id['id_spk_ecat'];
-                                                            
-                                                            // Mengambil nama petugas dari tb_spk_ecat berdasarkan id_spk_ecat
-                                                            $query_petugas = "SELECT petugas_ecat FROM tb_spk_ecat WHERE id_spk_ecat = '$spkId'";
-                                                            $result_petugas = mysqli_query($koneksi, $query_petugas);
-                                                            $row_petugas = mysqli_fetch_assoc($result_petugas);
-                                                            $nama_petugas_array[] = $row_petugas['petugas_ecat']; 
-                                                        }
-
-                                                        // Menghapus duplikat dan menggabungkan nama petugas dalam satu string
-                                                        $nama_petugas_unique = implode(", ", array_unique($nama_petugas_array));
-
-                                                        // Menampilkan badge dengan nama petugas
-                                                        echo "<button type='button' class='btn btn-secondary badge'>";
-                                                        echo "<i class='bx bxs-user'></i> <b>Petugas : $nama_petugas_unique</b>";
-                                                        echo "</button>";
-
-                                                        mysqli_close($koneksi);
-                                                    ?>
+                                                    
                                                     <!-- Modal Ubah Driver -->
                                                     <div class="modal fade" id="editNamaPetugasModal" tabindex="-1" aria-labelledby="inputNamaPetugasModalLabel" aria-hidden="true">
                                                         <div class="modal-dialog modal-dialog-centered">
