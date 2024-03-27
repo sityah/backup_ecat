@@ -216,51 +216,57 @@
                         <div class="tab-content">
                             <div class="tab-pane fade show active" id="navs-justified-messages" role="tabpanel">
                                 <table class="table" id="spk_ecat" style="width:100%">
-                                    <thead>
+                                <thead>
                                         <tr>
-                                            <th>No</th>
-                                            <th>No. Invoice</th>
-                                            <th>Tgl. Invoice</th>
-                                            <th>Nama Sales</th>
-                                            <th>Jenis Pengiriman</th>
-                                            <th>Note</th>
-                                            <th>Aksi</th>
+                                            <th scope="col" style="width: 5%; text-align: center;">No</th>
+                                            <th scope="col" style="width: 10%; text-align: center;">No. Invoice</th>
+                                            <th scope="col" style="width: 12%; text-align: center;">Tgl. Invoice</th>
+                                            <th scope="col" style="width: 15%; text-align: center;">Nama Sales</th>
+                                            <th scope="col" style="width: 10%; text-align: center;">ID Paket</th>
+                                            <th scope="col" style="width: 20%; text-align: center;">Nama Paket</th>
+                                            <th scope="col" style="width: 15%; text-align: center;">Jenis Pengiriman</th>
+                                            <th scope="col" style="width: 5%; text-align: center;">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php
                                             include "koneksi.php";
-                                            $query = "SELECT inv.id_inv_ecat, 
-                                                            inv.no_inv_ecat, 
-                                                            inv.tgl_inv_ecat, 
-                                                            inv.notes, 
-                                                            inv.total_inv_ecat, 
-                                                            kirim.jenis_pengiriman,
-                                                            sales.nama_sales
-                                                    FROM inv_ecat AS inv
-                                                    JOIN status_kirim AS kirim ON inv.id_inv_ecat = kirim.id_inv_ecat
-                                                    JOIN tb_spk_ecat AS spk ON inv.id_inv_ecat = spk.id_inv_ecat
-                                                    JOIN tb_sales_ecat AS sales ON spk.id_sales = sales.id_sales
-                                                    WHERE inv.status_transaksi = 'Diterima'
-                                                    GROUP BY inv.id_inv_ecat, 
-                                                            inv.no_inv_ecat, 
-                                                            inv.tgl_inv_ecat, 
-                                                            inv.notes, 
-                                                            inv.total_inv_ecat, 
-                                                            kirim.jenis_pengiriman,
-                                                            sales.nama_sales";
+                                            $query = "SELECT 
+                                                            inv_ecat.id_inv_ecat, 
+                                                            inv_ecat.no_inv_ecat, 
+                                                            inv_ecat.tgl_inv_ecat, 
+                                                            inv_ecat.notes, 
+                                                            tb_sales_ecat.nama_sales,
+                                                            GROUP_CONCAT(tb_spk_ecat.id_spk_ecat) AS id_spk_ecat,
+                                                            GROUP_CONCAT(tb_spk_ecat.no_spk_ecat) AS no_spk_ecat,
+                                                            GROUP_CONCAT(tb_spk_ecat.no_paket) AS no_paket,
+                                                            GROUP_CONCAT(tb_spk_ecat.nama_paket) AS nama_paket,
+                                                            status_kirim.jenis_pengiriman
+                                                        FROM 
+                                                            inv_ecat
+                                                        LEFT JOIN 
+                                                            tb_spk_ecat ON inv_ecat.id_inv_ecat = tb_spk_ecat.id_inv_ecat
+                                                        LEFT JOIN 
+                                                            tb_sales_ecat ON tb_spk_ecat.id_sales = tb_sales_ecat.id_sales
+                                                        LEFT JOIN
+                                                            status_kirim ON inv_ecat.id_inv_ecat = status_kirim.id_inv_ecat
+                                                        WHERE 
+                                                            inv_ecat.status_transaksi = 'Diterima'
+                                                        GROUP BY 
+                                                            inv_ecat.id_inv_ecat";
                                             $result = mysqli_query($koneksi, $query);
 
                                             // Hasil query
                                             $no = 1;
                                             while ($row = mysqli_fetch_assoc($result)) {
                                                 echo "<tr>";
-                                                echo "<td scope='row'>" . $no++ . "</td>";
-                                                echo "<td>" . $row['no_inv_ecat'] . "</td>"; 
-                                                echo "<td>" . $row['tgl_inv_ecat'] . "</td>"; 
-                                                echo "<td>" . $row['nama_sales'] . "</td>"; 
-                                                echo "<td>" . $row['jenis_pengiriman'] . "</td>";  
-                                                echo "<td>" . $row['notes'] . "</td>";  
+                                                echo "<td scope='row' style='text-align: center;'>" . $no++ . "</td>";
+                                                echo "<td style='text-align: center;'>" . $row['no_inv_ecat'] . "</td>"; 
+                                                echo "<td style='text-align: center;'>" . $row['tgl_inv_ecat'] . "</td>";  
+                                                echo "<td>" . $row['nama_sales'] . "</td>";
+                                                echo "<td style='text-align: center;'>" . $row['no_paket'] . "</td>";
+                                                echo "<td>" . $row['nama_paket'] . "</td>";
+                                                echo "<td style='text-align: center;'>" . $row['jenis_pengiriman'] . "</td>"; 
                                                 echo "<td>
                                                         <a href='details_ecat_diterima.php?id_inv_ecat=" . $row['id_inv_ecat'] . "' class='btn btn-info btn-sm mt-2'>
                                                             <i class='bx bx-show'></i>
