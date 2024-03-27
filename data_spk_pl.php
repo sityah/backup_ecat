@@ -251,7 +251,7 @@
                                                 echo "<td style='text-align: center;'>" . $row['no_spk_pl'] . "</td>"; 
                                                 echo "<td style='text-align: center;'>" . $row['tgl_spk_pl'] . "</td>";  
                                                 echo "<td style='text-align: center;'>" . $row['no_po'] . "</td>";  
-                                                echo "<td'>" . $row['nama_sales'] . "</td>";  
+                                                echo "<td>" . $row['nama_sales'] . "</td>";  
                                                 echo "<td>
                                                         <a href='detail_produk_spk_pl.php?id_spk_pl=" . $row['id_spk_pl'] . "' class='btn btn-info btn-sm mt-2'>
                                                             <i class='bx bx-show'></i>
