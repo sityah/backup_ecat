@@ -198,7 +198,7 @@
                                         <div class="row mb-4">
                                             <div class="table-responsive">
                                                 <div class="d-flex justify-content-between mb-3">
-                                                    <div class="">
+                                                    <div class="" style="width: 80%;">
                                                         <button type="button" class="btn btn-primary" onclick="window.location.href = 'spk_dikirim.php';">
                                                             <i class="tf-icons bx bxs-chevrons-left"></i> Kembali
                                                         </button>
