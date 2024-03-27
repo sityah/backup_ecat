@@ -222,9 +222,9 @@
                                             <th scope="col" style="width: 10%; text-align: center;">No. Invoice</th>
                                             <th scope="col" style="width: 12%; text-align: center;">Tgl. Invoice</th>
                                             <th scope="col" style="width: 15%; text-align: center;">Nama Sales</th>
-                                            <th scope="col" style="width: 10%; text-align: center;">ID Paket</th>
+                                            <th scope="col" style="width: 13%; text-align: center;">ID Paket</th>
                                             <th scope="col" style="width: 20%; text-align: center;">Nama Paket</th>
-                                            <th scope="col" style="width: 15%; text-align: center;">Jenis Pengiriman</th>
+                                            <th scope="col" style="width: 12%; text-align: center;">Jenis Pengiriman</th>
                                             <th scope="col" style="width: 5%; text-align: center;">Aksi</th>
                                         </tr>
                                     </thead>
