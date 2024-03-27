@@ -196,6 +196,37 @@
                                                         </button>
                                                         <button type="button" class="btn btn-outline-primary" onclick="printInvoice('invoice')">Invoice</button>
                                                     </div>
+                                                    <?php
+                                                        include "koneksi.php";
+
+                                                        $query_spk_id = "SELECT tb_spk_pl.id_spk_pl 
+                                                                        FROM inv_pl 
+                                                                        LEFT JOIN tb_spk_pl ON inv_pl.id_inv_pl = tb_spk_pl.id_inv_pl 
+                                                                        WHERE tb_spk_pl.id_inv_pl = '$id_inv_pl'";
+                                                        $result_spk_id = mysqli_query($koneksi, $query_spk_id);
+                                                        $nama_petugas_array = array(); 
+
+                                                        // Hasil query untuk mendapatkan semua nama petugas yang terkait dengan no_inv_pl
+                                                        while ($row_spk_id = mysqli_fetch_assoc($result_spk_id)) {
+                                                            $spkId = $row_spk_id['id_spk_pl'];
+                                                            
+                                                            // Mengambil nama petugas dari tb_spk_pl berdasarkan id_spk_pl
+                                                            $query_petugas = "SELECT petugas_pl FROM tb_spk_pl WHERE id_spk_pl = '$spkId'";
+                                                            $result_petugas = mysqli_query($koneksi, $query_petugas);
+                                                            $row_petugas = mysqli_fetch_assoc($result_petugas);
+                                                            $nama_petugas_array[] = $row_petugas['petugas_pl']; 
+                                                        }
+
+                                                        // Menghapus duplikat dan menggabungkan nama petugas dalam satu string
+                                                        $nama_petugas_unique = implode(", ", array_unique($nama_petugas_array));
+
+                                                        // Menampilkan badge dengan nama petugas
+                                                        echo "<button type='button' class='btn btn-secondary badge'>";
+                                                        echo "<i class='bx bxs-user'></i> <b>Petugas : $nama_petugas_unique</b>";
+                                                        echo "</button>";
+
+                                                        mysqli_close($koneksi);
+                                                    ?>
                                                 </div>
                                                 <table class="table table-striped" id="selectedProductsTable" style="width:100%">
                                                     <thead>
