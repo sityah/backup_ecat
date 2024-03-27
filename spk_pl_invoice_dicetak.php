@@ -231,8 +231,8 @@
                         </div>
                         <div class="tab-content">
                             <div class="tab-pane fade show active" id="navs-justified-messages" role="tabpanel">
-                            <table class="table" id="spk_ecat" style="width:100%">
-                                    <thead>
+                                <table class="table" id="spk_ecat" style="width:100%">
+                                <thead>
                                         <tr>
                                             <th style="width: 5%; text-align: center;">No</th>
                                             <th style="width: 15%; text-align: center;">No. Invoice</th>
@@ -271,7 +271,7 @@
                                                 echo "<td style='text-align: center;'>" . $row['no_inv_pl'] . "</td>"; 
                                                 echo "<td style='text-align: center;'>" . $row['tgl_inv_pl'] . "</td>";  
                                                 echo "<td style='text-align: center;'>" . $row['no_po'] . "</td>";
-                                                echo "<td style='text-align: center;'>" . $row['nama_perusahaan'] . "</td>";
+                                                echo "<td>" . $row['nama_perusahaan'] . "</td>";
                                                 echo "<td>
                                                         <a href='details_invoice_pl.php?id_inv_pl=" . $row['id_inv_pl'] . "' class='btn btn-info btn-sm mt-2'>
                                                             <i class='bx bx-show'></i>

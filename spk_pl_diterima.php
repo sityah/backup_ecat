@@ -239,15 +239,14 @@
                         <div class="tab-content">
                             <div class="tab-pane fade show active" id="navs-justified-messages" role="tabpanel">
                                 <table class="table" id="spk_ecat" style="width:100%">
-                                    <thead>
+                                <thead>
                                         <tr>
-                                            <th>No</th>
-                                            <th>No. Invoice</th>
-                                            <th>Tgl. Invoice</th>
-                                            <th>Nama Sales</th>
-                                            <th>Jenis Pengiriman</th>
-                                            <th>Note</th>
-                                            <th>Aksi</th>
+                                            <th style="width: 5%; text-align: center;">No</th>
+                                            <th style="width: 15%; text-align: center;">No. Invoice</th>
+                                            <th style="width: 15%; text-align: center;">Tgl. Invoice</th>
+                                            <th style="width: 30%; text-align: center;">Nama Sales</th>
+                                            <th style="width: 20%; text-align: center;">Jenis Pengiriman</th>
+                                            <th style="width: 5%; text-align: center;">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -278,12 +277,11 @@
                                             $no = 1;
                                             while ($row = mysqli_fetch_assoc($result)) {
                                                 echo "<tr>";
-                                                echo "<td scope='row'>" . $no++ . "</td>";
-                                                echo "<td>" . $row['no_inv_pl'] . "</td>"; 
-                                                echo "<td>" . $row['tgl_inv_pl'] . "</td>"; 
+                                                echo "<td scope='row' style='text-align: center;'>" . $no++ . "</td>";
+                                                echo "<td style='text-align: center;'>" . $row['no_inv_pl'] . "</td>"; 
+                                                echo "<td style='text-align: center;'>" . $row['tgl_inv_pl'] . "</td>"; 
                                                 echo "<td>" . $row['nama_sales'] . "</td>"; 
-                                                echo "<td>" . $row['jenis_pengiriman'] . "</td>";  
-                                                echo "<td>" . $row['notes'] . "</td>";  
+                                                echo "<td style='text-align: center;'>" . $row['jenis_pengiriman'] . "</td>";  
                                                 echo "<td>
                                                         <a href='details_pl_diterima.php?id_inv_pl=" . $row['id_inv_pl'] . "' class='btn btn-info btn-sm mt-2'>
                                                             <i class='bx bx-show'></i>

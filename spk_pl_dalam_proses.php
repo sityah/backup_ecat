@@ -235,14 +235,14 @@
                         <div class="tab-content">
                             <div class="tab-pane fade show active" id="navs-justified-profile" role="tabpanel">
                                 <table class="table" id="spk_ecat">
-                                    <thead>
+                                <thead>
                                         <tr>
-                                            <th scope="col" style="width: 5%;">No</th>
-                                            <th scope="col" style="width: 15%;">No. SPK</th>
-                                            <th scope="col" style="width: 15%;">Tgl. SPK</th>
-                                            <th scope="col" style="width: 25%;">Nama Paket</th>
-                                            <th scope="col" style="width: 15%;">Nama Sales</th>
-                                            <th scope="col" style="width: 10%;">Aksi</th>
+                                            <th scope="col" style="width: 5%; text-align: center;">No</th>
+                                            <th scope="col" style="width: 15%; text-align: center;">No. SPK</th>
+                                            <th scope="col" style="width: 15%; text-align: center;">Tgl. SPK</th>
+                                            <th scope="col" style="width: 15%; text-align: center;">No PO</th>
+                                            <th scope="col" style="width: 25%; text-align: center;">Nama Sales</th>
+                                            <th scope="col" style="width: 10%; text-align: center;">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -264,10 +264,10 @@
                                             $no = 1;
                                             while ($row = mysqli_fetch_assoc($result)) {
                                                 echo "<tr>";
-                                                echo "<th scope='row'>" . $no++ . "</th>";
-                                                echo "<td>" . $row['no_spk_pl'] . "</td>"; 
-                                                echo "<td>" . $row['tgl_spk_pl'] . "</td>";  
-                                                echo "<td>" . $row['no_po'] . "</td>"; 
+                                                echo "<th scope='row' style='text-align: center;'>" . $no++ . "</th>";
+                                                echo "<td style='text-align: center;'>" . $row['no_spk_pl'] . "</td>"; 
+                                                echo "<td style='text-align: center;'>" . $row['tgl_spk_pl'] . "</td>";  
+                                                echo "<td style='text-align: center;'>" . $row['no_po'] . "</td>"; 
                                                 echo "<td>" . $row['nama_sales'] . "</td>"; 
                                                 echo "<td>
                                                         <a href='detail_produk_spk_pl_dalam_proses.php?id_spk_pl=" . $row['id_spk_pl'] . "' class='btn btn-info btn-sm mt-2'>

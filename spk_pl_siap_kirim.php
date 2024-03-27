@@ -244,17 +244,17 @@
                                     <i class="bx bx-receipt"></i> Buat Invoice
                                 </button>
                                 <table class="table" id="spk_ecat">
-                                    <thead>
+                                <thead>
                                         <tr>
-                                            <th scope="col" style="width: 5%;">Pilih</th>
-                                            <th scope="col" style="width: 5%;">No</th>
-                                            <th scope="col" style="width: 15%;">No. SPK</th>
-                                            <th scope="col" style="width: 15%;">Tgl. SPK</th>
-                                            <th scope="col" style="width: 15%;">Nama Paket</th>
-                                            <th scope="col" style="width: 15%;">Nama Sales</th>
-                                            <th scope="col" style="width: 15%;">Satker</th>
-                                            <th scope="col" style="width: 15%;">Total SPK</th>
-                                            <th scope="col" style="width: 10%;">Aksi</th>
+                                            <th scope="col" style="width: 5%; text-align: center;">Pilih</th>
+                                            <th scope="col" style="width: 5%; text-align: center;">No</th>
+                                            <th scope="col" style="width: 15%; text-align: center;">No. SPK</th>
+                                            <th scope="col" style="width: 12%; text-align: center;">Tgl. SPK</th>
+                                            <th scope="col" style="width: 13%; text-align: center;">No PO</th>
+                                            <th scope="col" style="width: 20%; text-align: center;">Nama Sales</th>
+                                            <th scope="col" style="width: 20%; text-align: center;">Satker</th>
+                                            <th scope="col" style="width: 10%; text-align: center;">Total SPK</th>
+                                            <th scope="col" style="width: 10%; text-align: center;">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -279,13 +279,13 @@
                                             while ($row = mysqli_fetch_assoc($result)) {
                                                 echo "<tr>";
                                                 echo "<td style='text-align: center;'><input type='checkbox' class='spk_checkbox' name='selected_ids[]' value='" . $row['id_spk_pl'] . "'></td>";
-                                                echo "<td scope='row'>" . $no++ . "</td>";
-                                                echo "<td>" . $row['no_spk_pl'] . "</td>"; 
-                                                echo "<td>" . $row['tgl_spk_pl'] . "</td>";  
-                                                echo "<td>" . $row['no_po'] . "</td>"; 
+                                                echo "<td scope='row' style='text-align: center;'>" . $no++ . "</td>";
+                                                echo "<td style='text-align: center;'>" . $row['no_spk_pl'] . "</td>"; 
+                                                echo "<td style='text-align: center;'>" . $row['tgl_spk_pl'] . "</td>";  
+                                                echo "<td style='text-align: center;'>" . $row['no_po'] . "</td>"; 
                                                 echo "<td>" . $row['nama_sales'] . "</td>"; 
-                                                echo "<td>" . $row['nama_perusahaan'] . "</td>";
-                                                echo "<td>" . number_format($row['total_spk_pl'], 0, ',', '.') . "</td>"; 
+                                                echo "<td>" . $row['nama_perusahaan'] . "</td>"; 
+                                                echo "<td style='text-align: right;'>" . number_format($row['total_spk_pl'], 0, ',', '.') . "</td>"; 
                                                 echo "<td>
                                                         <a href='detail_produk_spk_pl_siap_kirim.php?id_spk_pl=" . $row['id_spk_pl'] . "' class='btn btn-info btn-sm mt-2'>
                                                             <i class='bx bx-show'></i>
